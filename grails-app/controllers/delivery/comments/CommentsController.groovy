@@ -2,13 +2,17 @@ package delivery.comments
 
 import com.sma.delivery.beans.comments.CommentsB
 import com.sma.delivery.service.comments.ICommentsService
+import com.sma.delivery.service.establishments.IEstablishmentsService
+import com.sma.delivery.service.user.IUserService
+
 
 class CommentsController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
 
     //services
     def ICommentsService commentsService
-
+    def IEstablishmentsService establishmentsService
+    def IUserService userService
     def index(){
         redirect(action: "list", id:1,)
     }
@@ -24,11 +28,18 @@ class CommentsController {
         [commentsInstanceList: comments, commentsInstanceTotal: comments?.size(),page: page,next:next]
     }
     def create() {
-        [commentsInstance: new CommentsB(params)]
+        [commentsInstance: new CommentsB(params),user: userService.getUsers(),establishments: establishmentsService.getEstablishments()]
+
+
     }
     def save() {
-        def commentsInstance = new CommentsB(params)
-        def newComments = commentsService.save(commentsInstance)
+
+        def establishments = establishmentsService.getById(Integer.valueOf(params['establishments']))
+        def user=userService.getById(Integer.valueOf(params['user']))
+        def newComments = new CommentsB(params)
+        newComments.set_establishments(establishments)
+        newComments.set_user(user)
+         def commentsInstance = commentsService.save(newComments)
         if (!newComments?.getId()) {
             render(view: "create", model: [commentsInstance: commentsInstance])
             return
@@ -52,12 +63,19 @@ class CommentsController {
             return
         }
 
-        [commentsInstance: commentsInstance]
+
+        [commentsInstance: commentsInstance,user:userService.getUsers(), establishments: establishmentsService.getEstablishments()]
+
     }
 
     def update(Long id, Long version) {
-        def commentsInstance = new CommentsB(params)
-        commentsService.save(commentsInstance)
+        def establishments = establishmentsService.getById(Integer.valueOf(params['establishments']))
+        def user=userService.getById(Integer.valueOf(params['user']))
+        def newComments = new CommentsB(params)
+        newComments.set_establishments(establishments)
+        newComments.set_user(user)
+         commentsService.save(newComments)
+
         redirect(action: "list")
     }
 

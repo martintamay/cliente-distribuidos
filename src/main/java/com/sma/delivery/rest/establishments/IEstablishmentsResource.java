@@ -9,6 +9,6 @@ public interface IEstablishmentsResource extends IBaseResource<EstablishmentsDTO
 
     public EstablishmentsResult getAll(Integer page);
     public EstablishmentsResult find(String text);
-
+    public EstablishmentsResult getEstablishments();
 
 }

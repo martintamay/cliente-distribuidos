@@ -1,6 +1,9 @@
 package com.sma.delivery.service.establishments;
 
+import com.sma.delivery.beans.comments.CommentsB;
 import com.sma.delivery.beans.establishments.EstablishmentsB;
+import com.sma.delivery.dto.comments.CommentsDTO;
+import com.sma.delivery.dto.comments.CommentsResult;
 import com.sma.delivery.dto.establishments.EstablishmentsDTO;
 import com.sma.delivery.dto.establishments.EstablishmentsResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
@@ -96,6 +99,18 @@ public class EstablishmentsServiceImpl extends BaseServiceImpl<EstablishmentsB, 
         dto.set_name(bean.getName());
         dto.set_phone_number(bean.getPhone_number());
         dto.set_schedule(bean.getSchedule());
+
         return dto;
+    }
+
+    @Override
+    public List<EstablishmentsB> getEstablishments() {
+        final EstablishmentsResult result = _establishmentsResources.getEstablishments();
+        final List<EstablishmentsDTO> cList = null == result.getEstablishments() ? new ArrayList<EstablishmentsDTO>() : result.getEstablishments();
+        final List<EstablishmentsB> establishments = new ArrayList<EstablishmentsB>();
+        for (EstablishmentsDTO dto : cList) {
+            establishments.add(convertDtoToBean(dto));
+        }
+        return establishments;
     }
 }

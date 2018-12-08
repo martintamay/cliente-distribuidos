@@ -4,6 +4,8 @@ package com.sma.delivery.beans.comments;
 
 import com.sma.delivery.beans.base.BaseBean;
 import com.sma.delivery.beans.establishments.EstablishmentsB;
+import com.sma.delivery.beans.user.UserB;
+
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
@@ -14,14 +16,24 @@ public class CommentsB extends BaseBean {
     private String content;
     private  Boolean deleted;
     private String title;
-    private EstablishmentsB _establishments;
+    private EstablishmentsB establishments;
+    private UserB user;
 
-    public EstablishmentsB get_establishments() {
-        return _establishments;
+    public UserB get_user() {
+        return user;
     }
 
-    public void set_establishments(EstablishmentsB _establishments) {
-        this._establishments = _establishments;
+    public void set_user(UserB user) {
+        this.user = user;
+    }
+
+
+    public EstablishmentsB get_establishments() {
+        return establishments;
+    }
+
+    public void set_establishments(EstablishmentsB establishments) {
+        this.establishments = establishments;
     }
 
     public String getContent() {
@@ -64,7 +76,7 @@ public class CommentsB extends BaseBean {
         }
 
         setContent(params.get("content"));
-        setDeleted (Boolean.valueOf(params.get(deleted)));
+        setDeleted (Boolean.valueOf(params.get("deleted")));
         setTitle(params.get("title"));
 
 

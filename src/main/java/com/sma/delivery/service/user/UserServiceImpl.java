@@ -5,8 +5,8 @@ import com.sma.delivery.dto.user.UserDTO;
 import com.sma.delivery.dto.user.UserResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +32,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 	public void delete(Integer id){
 		_userResource.delete(id);
 	}
+
+
+
 
 	@Override
 	public List<UserB> getAll(Integer page) {
@@ -60,7 +63,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 		return users;
 	}
 
-	@Override
+
+
+@Override
 	@Cacheable(value="client-delivery", key="'user_'+#root.methodName+'_'+#email")
 	public UserB getByEmail(String email) {
 		final UserResult result = _userResource.getByEmail(email);
@@ -76,6 +81,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 		}
 		return null;
 	}
+
+	
+
 
 	@Override
 	public UserB getById(Integer id) {
@@ -112,4 +120,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 		return dto;
 	}
 
+	@Override
+	public List<UserB> getUsers() {
+		final UserResult result = _userResource.getUsers();
+		final List<UserDTO> cList = null == result.getUsers() ? new ArrayList<UserDTO>() : result.getUsers();
+		final List<UserB> users = new ArrayList<UserB>();
+		for (UserDTO dto : cList) {
+			users.add(convertDtoToBean(dto));
+		}
+		return users;
+	}
 }

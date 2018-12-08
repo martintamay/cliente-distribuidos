@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.sma.delivery.dto.user.UserDTO;
 import com.sma.delivery.dto.user.UserResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
-
 import javax.xml.bind.annotation.XmlRootElement;
-
 @Repository("userResource")
 @XmlRootElement(name = "userResult")
 public class UserResourceImpl extends BaseResourceImpl<UserDTO> implements IUserResource {
@@ -31,10 +29,14 @@ public class UserResourceImpl extends BaseResourceImpl<UserDTO> implements IUser
 		return result;
 	}
 
-	@Override
+@Override
 	public UserResult getByEmail(String email) {
-		System.out.println("UserResourceImpl: Buscando "+email+"....");
-		final UserResult result = getWebResource().path("/buscar").queryParam("email", email).get(UserResult.class);
-		return result;
+	System.out.println("UserResourceImpl: Buscando " + email + "....");
+	final UserResult result = getWebResource().path("/buscar").queryParam("email", email).get(UserResult.class);
+	return result;
+}
+	@Override
+	public UserResult getUsers() {
+		return getWebResource().path("/" + 1 + "/" + 200).get(UserResult.class);
 	}
 }

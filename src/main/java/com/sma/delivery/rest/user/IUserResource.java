@@ -8,6 +8,6 @@ public interface IUserResource extends IBaseResource<UserDTO> {
 
 	public UserResult getAll(Integer page);
 	public UserResult find(String text);
-
 	public UserResult getByEmail(String email);
+    public UserResult getUsers();
 }

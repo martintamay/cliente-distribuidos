@@ -3,6 +3,7 @@
     <tr >
 
         <g:sortableColumn property="title" title="Title" />
+        <g:sortableColumn property="user" title="User" />
         <g:sortableColumn property="content" title="Content" />
         <g:sortableColumn property="deleted" title="Deleted" />
         <g:sortableColumn property="establishments" title="Establishments" />
@@ -17,6 +18,14 @@
             <td>
                 ${fieldValue(bean: commentsInstance, field: "title")}
             </td>
+
+
+
+             <td>
+                            ${fieldValue(bean: commentsInstance, field: "user.firstName")}
+                        </td>
+
+
             <td>
                 ${fieldValue(bean: commentsInstance, field: "content")}
             </td>
@@ -25,7 +34,7 @@
             </td>
 
             <td>
-                 ${fieldValue(bean: commentsInstance, field: "establishments")}
+                 ${fieldValue(bean: commentsInstance, field: "establishments.name")}
              </td>
 
             <td>

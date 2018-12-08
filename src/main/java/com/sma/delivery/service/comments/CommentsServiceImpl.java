@@ -8,7 +8,7 @@ import com.sma.delivery.service.establishments.IEstablishmentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.comments.ICommentsResource;
-import com.sma.delivery.rest.establishments.IEstablishmentsResource;
+import com.sma.delivery.service.user.IUserService;
 
 
 import java.util.ArrayList;
@@ -22,7 +22,9 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentsDTO>
     @Autowired
     private ICommentsResource _commentsResource;
     @Autowired
-    private IEstablishmentsService _establishmentsResource;
+    private IEstablishmentsService _establishmentsService;
+    @Autowired
+    private IUserService _userService;
     public CommentsServiceImpl() {
     }
 
@@ -30,6 +32,7 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentsDTO>
     public CommentsB save(CommentsB bean) {
         final CommentsDTO comments = convertBeanToDto(bean);
         final CommentsDTO dto = _commentsResource.save(comments);
+
         final CommentsB commentsB = convertDtoToBean(dto);
         return commentsB;
     }
@@ -84,7 +87,9 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentsDTO>
         params.put("title", dto.get_title());
         params.put("deleted", String.valueOf(dto.get_deleted()));
         final CommentsB commentsB = new CommentsB(params);
-        commentsB.set_establishments(_establishmentsResource.getById(dto.get_establishments_id()));
+
+        commentsB.set_user(_userService.getById(dto.get_users_id()));
+        commentsB.set_establishments(_establishmentsService.getById(dto.get_establishments_id()));
         return commentsB;
     }
 
@@ -96,8 +101,25 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentsDTO>
         dto.set_title(bean.getTitle());
         dto.set_deleted(bean.getDeleted());
         dto.set_establishments_id(bean.get_establishments().getId());
+        dto.set_users_id(bean.get_user().getId());
+
+
+
+
+
 
 
         return dto;
+    }
+
+    @Override
+    public List<CommentsB> getComments() {
+        final CommentsResult result = _commentsResource.getComments();
+        final List<CommentsDTO> cList = null == result.getComments() ? new ArrayList<CommentsDTO>() : result.getComments();
+        final List<CommentsB> comments = new ArrayList<CommentsB>();
+        for (CommentsDTO dto : cList) {
+            comments.add(convertDtoToBean(dto));
+        }
+        return comments;
     }
 }

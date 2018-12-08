@@ -77,12 +77,12 @@ public class EstablishmentsB extends BaseBean {
         if (!StringUtils.isBlank(params.get("id"))) {
             setId(Integer.valueOf(params.get("id")));
         }
+        setName(params.get("name"));
         setDescription(params.get("description"));
         setAddress (params.get("address"));
         setEmail(params.get("email"));
-        setName(params.get("name"));
-        setSchedule(params.get("schedule"));
         setPhone_number(params.get("phoneNumber"));
+        setSchedule(params.get("schedule"));
     }
 
 }

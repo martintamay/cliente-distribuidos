@@ -30,4 +30,10 @@ public class EstablishmentsResourceImpl extends BaseResourceImpl<EstablishmentsD
         return result;
     }
 
+    @Override
+    public EstablishmentsResult getEstablishments() {
+        return getWebResource().path("/" + 1 + "/" + 200).get(EstablishmentsResult.class);
+
+    }
+
 }

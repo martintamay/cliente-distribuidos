@@ -29,4 +29,10 @@ public class CommentsResourceImpl extends BaseResourceImpl<CommentsDTO> implemen
         return result;
     }
 
+    @Override
+    public CommentsResult getComments() {
+        return getWebResource().path("/" + 1 + "/" + 200).get(CommentsResult.class);
+
+    }
+
 }
