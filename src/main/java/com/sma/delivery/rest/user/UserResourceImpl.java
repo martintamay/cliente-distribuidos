@@ -19,17 +19,19 @@ public class UserResourceImpl extends BaseResourceImpl<UserDTO> implements IUser
 		final UserResult result = getWebResource().path("/"+page+"/"+3).get(UserResult.class);
 		return result;
 	}
+
 	@Override
 	public UserDTO getById(Integer id) {
 		return getWebResource().path("/" + id).get(getDtoClass());
 	}
+
 	@Override
 	public UserResult find(String text) {
-		final UserResult result = getWebResource().path("/buscar").queryParam("text", text).get(UserResult.class);
+		final UserResult result = getWebResource().path("/search/"+text).get(UserResult.class);
 		return result;
 	}
 
-@Override
+	@Override
 	public UserResult getByEmail(String email) {
 	System.out.println("UserResourceImpl: Buscando " + email + "....");
 	final UserResult result = getWebResource().path("/buscar").queryParam("email", email).get(UserResult.class);

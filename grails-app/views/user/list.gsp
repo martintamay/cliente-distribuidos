@@ -21,11 +21,8 @@
             <div class="row">
                 <div class="col">
                     <div class="input-group mb-3">
-                        <div id="search_tagsugg" style="float:left">
+                        <div id="search_tagsugg">
                             <input type="text" class="search form-control" id="text" name="text" autocomplete="off" aria-describedby="search">
-                        </div>
-                        <div class="input-group-append">
-                            <button id="search" class="search_button btn btn-primary" type="button" >Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -44,7 +41,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#search').click(function(){
+        $('#text').keyup(function(){
             $.ajax({
                 url:"${createLink(controller: 'user', action: 'search')}",
                 data:{

@@ -1,13 +1,9 @@
 package com.sma.delivery.service.establishments;
 
-import com.sma.delivery.beans.comments.CommentsB;
 import com.sma.delivery.beans.establishments.EstablishmentsB;
-import com.sma.delivery.dto.comments.CommentsDTO;
-import com.sma.delivery.dto.comments.CommentsResult;
 import com.sma.delivery.dto.establishments.EstablishmentsDTO;
 import com.sma.delivery.dto.establishments.EstablishmentsResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
-import delivery.establishments.Establishments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.establishments.IEstablishmentsResource;
