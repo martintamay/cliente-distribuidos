@@ -2,12 +2,17 @@ package delivery.order
 
 import com.sma.delivery.beans.order.OrderB
 import com.sma.delivery.service.order.IOrderService
+import com.sma.delivery.service.establishments.IEstablishmentsService
+import com.sma.delivery.service.user.IUserService
+
 
 class OrderController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
 
     //services
     def IOrderService orderService
+    def IEstablishmentsService establishmentsService
+    def IUserService userService
 
     def index(){
         redirect(action: "list", id:1,)
@@ -27,12 +32,16 @@ class OrderController {
     }
 
     def create() {
-        [orderInstance: new OrderB(params)]
+        [orderInstance: new OrderB(params),user: userService.getUsers(),establishments: establishmentsService.getEstablishments()]
     }
 
     def save() {
-        def orderInstance = new OrderB(params)
-        def newOrder = orderService.save(orderInstance)
+        def establishments = establishmentsService.getById(Integer.valueOf(params['establishments']))
+        def user=userService.getById(Integer.valueOf(params['user']))
+        def newOrder = new OrderB(params)
+        newOrder.setEstablishments(establishments)
+        newOrder.setUser(user)
+        def orderInstance = orderService.save(newOrder)
         if (!newOrder?.getId()) {
             render(view: "create", model: [orderInstance: orderInstance])
             return
@@ -56,12 +65,17 @@ class OrderController {
             return
         }
 
-        [orderInstance: orderInstance]
+        [orderInstance: orderInstance,user:userService.getUsers(), establishments: establishmentsService.getEstablishments()]
     }
 
     def update(Long id, Long version) {
-        def orderInstance = new OrderB(params)
-        orderService.save(orderInstance)
+        def establishments = establishmentsService.getById(Integer.valueOf(params['establishments']))
+        def user=userService.getById(Integer.valueOf(params['user']))
+        def newOrder = new OrderB(params)
+        newOrder.setEstablishments(establishments)
+        newOrder.setUser(user)
+        orderService.save(newOrder)
+
         redirect(action: "list")
     }
 

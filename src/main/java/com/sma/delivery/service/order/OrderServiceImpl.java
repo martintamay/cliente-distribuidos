@@ -4,9 +4,11 @@ import com.sma.delivery.beans.order.OrderB;
 import com.sma.delivery.dto.orders.OrdersDTO;
 import com.sma.delivery.dto.orders.OrdersResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
+import com.sma.delivery.service.establishments.IEstablishmentsService;
+import com.sma.delivery.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.sma.delivery.rest.order.IOrderResource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +18,11 @@ import java.util.Map;
 public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrdersDTO> implements IOrderService {
 
 	@Autowired
-	private com.sma.delivery.rest.order.IOrderResource ordersResource;
+	private  IOrderResource ordersResource;
+	@Autowired
+	private IEstablishmentsService _establishmentsService;
+	@Autowired
+	private IUserService _userService;
 
 	public OrderServiceImpl() {
 	}
@@ -79,6 +85,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrdersDTO> impleme
 		params.put("state", dto.getState());
 		params.put("totalCost", String.valueOf(dto.getTotalCost()));
 		final OrderB orderB = new OrderB(params);
+		orderB.setUser(_userService.getById(dto.getUser_id()));
+		orderB.setEstablishments(_establishmentsService.getById(dto.getEstablishment_id()));
 		return orderB;
 	}
 
@@ -91,6 +99,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrdersDTO> impleme
 		dto.setContactNumber(bean.getContactNumber());
 		dto.setState(bean.getState());
 		dto.setTotalCost(bean.getTotalCost());
+		dto.setEstablishment_id(bean.getEstablishments().getId());
+		dto.setUser_id(bean.getUser().getId());
 		return dto;
 	}
 }

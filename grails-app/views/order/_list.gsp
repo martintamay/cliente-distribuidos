@@ -5,8 +5,11 @@
         <g:sortableColumn property="orderNumber" title="Numero de Orden" />
         <g:sortableColumn property="address" title="Direccion" />
         <g:sortableColumn property="state" title="Estado" />
-                <g:sortableColumn property="contactNumber" title="Numero De Contacto" />
+        <g:sortableColumn property="contactNumber" title="Numero De Contacto" />
         <g:sortableColumn property="totalCost" title="Costo Total" />
+        <g:sortableColumn property="user" title="User" />
+        <g:sortableColumn property="establishments" title="Establishments" />
+
         <th></th>
 
     </tr>
@@ -31,6 +34,15 @@
              <td>
                             ${fieldValue(bean: orderInstance, field: "totalCost")}
                         </td>
+
+
+             <td>
+                     ${fieldValue(bean: orderInstance, field: "user.firstName")}
+             </td>
+
+             <td>
+                     ${fieldValue(bean: commentsInstance, field: "establishments.name")}
+             </td>
             <td>
                 <g:link class="btn btn-outline-secondary" action="show" id="${orderInstance?.id}"><i class="fa fa-eye"></i> </g:link>
                 <g:link class="btn btn-outline-secondary" action="edit" id="${orderInstance?.id}"><i class="fa fa-pencil"></i> </g:link>

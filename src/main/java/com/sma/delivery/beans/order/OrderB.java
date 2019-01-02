@@ -1,6 +1,8 @@
 package com.sma.delivery.beans.order;
 
 import com.sma.delivery.beans.base.BaseBean;
+import com.sma.delivery.beans.establishments.EstablishmentsB;
+import com.sma.delivery.beans.user.UserB;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
@@ -13,6 +15,26 @@ public class OrderB extends BaseBean {
 	private String state;
 	private String contactNumber;
 	private int totalCost;
+	private UserB user;
+	private EstablishmentsB establishments;
+
+	public EstablishmentsB getEstablishments() {
+		return establishments;
+	}
+
+	public void setEstablishments(EstablishmentsB establishments) {
+		this.establishments = establishments;
+	}
+
+	public UserB getUser() {
+		return user;
+	}
+
+	public void setUser(UserB user) {
+		this.user = user;
+	}
+
+
 
 	public int getOrderNumber() {
 		return orderNumber;
