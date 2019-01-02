@@ -30,12 +30,21 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrdersDTO> impleme
 	}
 
 	@Override
-	public void delete(Integer id) {
-
+	public void delete(Integer id){
+		ordersResource.delete(id);
 	}
 	@Override
 	public List<OrderB> find(String text) {
-		return null;
+		final OrdersResult result = ordersResource.find(text);
+		final List<OrdersDTO> cList = null == result.getOrders() ? new ArrayList<OrdersDTO>()
+				: result.getOrders();
+
+		final List<OrderB> orders = new ArrayList<OrderB>();
+		for (OrdersDTO dto : cList) {
+			final OrderB bean = convertDtoToBean(dto);
+			orders.add(bean);
+		}
+		return orders;
 	}
 
 	@Override

@@ -19,4 +19,10 @@ public class OrderResourceImpl extends BaseResourceImpl<OrdersDTO> implements IO
 		return result;
 	}
 
+	@Override
+	public OrdersResult find(String text) {
+		final OrdersResult result = getWebResource().path("/search/"+text).get(OrdersResult.class);
+		return result;
+	}
+
 }

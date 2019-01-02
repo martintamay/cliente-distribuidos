@@ -61,11 +61,11 @@ public class OrderB extends BaseBean {
 		if (!StringUtils.isBlank(params.get("id"))) {
 			setId(Integer.valueOf(params.get("id")));
 		}
-		setOrderNumber(Integer.valueOf(params.get("orderNumber")));
+		setOrderNumber(0);
 		setAddress (params.get("address"));
 		setState(params.get("state"));
 		setContactNumber(params.get("contactNumber"));
-		setTotalCost(Integer.valueOf(params.get("totalCost")));
+		setTotalCost(0);
 
 	}
 

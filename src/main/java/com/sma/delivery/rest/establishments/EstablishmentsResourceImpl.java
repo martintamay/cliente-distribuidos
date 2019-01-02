@@ -3,6 +3,7 @@ package com.sma.delivery.rest.establishments;
 import com.sma.delivery.dto.establishments.EstablishmentsDTO;
 import com.sma.delivery.dto.establishments.EstablishmentsResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
+import delivery.establishments.Establishments;
 import org.springframework.stereotype.Repository;
 
 @Repository("establishmentsResource")
@@ -25,8 +26,7 @@ public class EstablishmentsResourceImpl extends BaseResourceImpl<EstablishmentsD
 
     @Override
     public EstablishmentsResult find(String text) {
-        final EstablishmentsResult result = getWebResource().path("/buscar").queryParam("text", text).get(EstablishmentsResult.class);
-        return result;
+        final EstablishmentsResult result = getWebResource().path("/search/"+text).get(EstablishmentsResult.class);        return result;
     }
 
     @Override
