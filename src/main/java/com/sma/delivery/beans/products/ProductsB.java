@@ -62,10 +62,11 @@ public class ProductsB extends BaseBean {
         if (!StringUtils.isBlank(params.get("id"))) {
             setId(Integer.valueOf(params.get("id")));
         }
-
+        if (!StringUtils.isBlank(params.get("cost"))) {
+            setCost(Integer.valueOf(params.get("cost")));
+        }
         setName(params.get("name"));
         setDescription (params.get("description"));
-        setCost(0);
 
 
     }
