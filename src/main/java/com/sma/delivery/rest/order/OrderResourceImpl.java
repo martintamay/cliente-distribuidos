@@ -25,4 +25,10 @@ public class OrderResourceImpl extends BaseResourceImpl<OrdersDTO> implements IO
 		return result;
 	}
 
+	@Override
+	public OrdersResult getOrders() {
+		return getWebResource().path("/" + 1 + "/" + 200).get(OrdersResult.class);
+
+	}
+
 }

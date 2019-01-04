@@ -103,4 +103,15 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrdersDTO> impleme
 		dto.setUser_id(bean.getUser().getId());
 		return dto;
 	}
+
+	@Override
+	public List<OrderB> getOrders() {
+		final OrdersResult result = ordersResource.getOrders();
+		final List<OrdersDTO> cList = null == result.getOrders() ? new ArrayList<OrdersDTO>() : result.getOrders();
+		final List<OrderB> orders = new ArrayList<OrderB>();
+		for (OrdersDTO dto : cList) {
+			orders.add(convertDtoToBean(dto));
+		}
+		return orders;
+	}
 }
