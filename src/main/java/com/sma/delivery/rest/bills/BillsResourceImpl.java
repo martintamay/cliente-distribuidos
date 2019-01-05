@@ -25,7 +25,7 @@ public class BillsResourceImpl extends BaseResourceImpl<BillsDTO> implements IBi
 
     @Override
     public BillsResult find(String text) {
-        final BillsResult result = getWebResource().path("/buscar").queryParam("text", text).get(BillsResult.class);
+        final BillsResult result = getWebResource().path("/search/"+text).get(BillsResult.class);
         return result;
     }
 

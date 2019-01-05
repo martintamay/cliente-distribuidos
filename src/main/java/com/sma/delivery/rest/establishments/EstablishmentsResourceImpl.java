@@ -26,8 +26,8 @@ public class EstablishmentsResourceImpl extends BaseResourceImpl<EstablishmentsD
 
     @Override
     public EstablishmentsResult find(String text) {
-        final EstablishmentsResult result = getWebResource().path("/search/"+text).get(EstablishmentsResult.class);        return result;
-    }
+        final EstablishmentsResult result = getWebResource().path("/search/"+text).get(EstablishmentsResult.class);
+        return result;    }
 
     @Override
     public EstablishmentsResult getEstablishments() {

@@ -26,7 +26,7 @@ public class BillsDetailsResourceImpl extends BaseResourceImpl<BillsDetailsDTO> 
 
     @Override
     public BillsDetailsResult find(String text) {
-        final BillsDetailsResult result = getWebResource().path("/buscar").queryParam("text", text).get(BillsDetailsResult.class);
+        final BillsDetailsResult result = getWebResource().path("/search/"+text).get(BillsDetailsResult.class);
         return result;
     }
 

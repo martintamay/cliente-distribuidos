@@ -25,7 +25,7 @@ public class CommentsResourceImpl extends BaseResourceImpl<CommentsDTO> implemen
 
     @Override
     public CommentsResult find(String text) {
-        final CommentsResult result = getWebResource().path("/buscar").queryParam("text", text).get(CommentsResult.class);
+        final CommentsResult result = getWebResource().path("/search/"+text).get(CommentsResult.class);
         return result;
     }
 
