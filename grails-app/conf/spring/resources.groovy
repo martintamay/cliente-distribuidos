@@ -12,6 +12,10 @@ import com.sma.delivery.rest.products.ProductsResourceImpl
 import com.sma.delivery.service.products.ProductsServiceImpl
 import com.sma.delivery.rest.bills.BillsResourceImpl
 import com.sma.delivery.service.bills.BillsServiceImpl
+
+import com.sma.delivery.rest.billsDetails.BillsDetailsResourceImpl
+import com.sma.delivery.service.billsDetails.BillsDetailsServiceImpl
+import delivery.billsDetails.BillsDetails
 import login.MyAuthenticationProvider
 import org.springframework.web.servlet.i18n.SessionLocaleResolver
 
@@ -30,9 +34,10 @@ beans = {
     establishmentsService(EstablishmentsServiceImpl)
     productsResource(ProductsResourceImpl)
     productsService(ProductsServiceImpl)
-
     billsResource(BillsResourceImpl)
     billsService(BillsServiceImpl)
+    billsDetailsResource(BillsDetailsResourceImpl)
+    billsDetailsService(BillsDetailsServiceImpl)
 
     localeResolver(SessionLocaleResolver) {
         defaultLocale= new java.util.Locale('es');

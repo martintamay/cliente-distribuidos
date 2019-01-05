@@ -49,6 +49,10 @@
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <g:link class="dropdown-item" controller="user" action="list">Usuarios</g:link>
                                         <g:link class="dropdown-item" controller="order" action="list">Ordenes</g:link>
+                                        <g:link class="dropdown-item" controller="comments" action="list">Comentarios</g:link>
+                                        <g:link class="dropdown-item" controller="establishments" action="list">Restaurantes</g:link>
+                                        <g:link class="dropdown-item" controller="bills" action="list">Factura</g:link>
+                                        <g:link class="dropdown-item" controller="billsDetails" action="list">Factura Detalle</g:link>
                                     </div>
                                 </li>
                                 <g:if test="${org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().name.trim().equals("__grails.anonymous.user__")}">
