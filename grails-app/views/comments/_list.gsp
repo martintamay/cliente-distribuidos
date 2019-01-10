@@ -38,8 +38,10 @@
              </td>
 
             <td>
+                <g:link class="btn btn-outline-secondary" action="show" id="${commentsInstance?.id}"><i class="fa fa-eye"></i> </g:link>
                 <g:link class="btn btn-outline-secondary" action="edit" id="${commentsInstance?.id}"><i class="fa fa-pencil"></i> </g:link>
                 <g:link class="btn btn-outline-danger" action="delete" id="${commentsInstance?.id}"><i class="fa fa-trash-o"></i> </g:link>
+
             </td>
         </tr>
 
