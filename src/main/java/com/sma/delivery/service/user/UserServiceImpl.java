@@ -72,7 +72,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 		final List<UserDTO> cList = null == result.getUsers() ? new ArrayList<UserDTO>()
 				: result.getUsers();
 
-		System.out.println("UserServiceImpl: cant usr "+cList.size());
+
 		for (UserDTO dto : cList) {
 			final UserB bean = convertDtoToBean(dto);
 			if (bean.getEmail().toLowerCase().trim().equals(email.toLowerCase().trim())){

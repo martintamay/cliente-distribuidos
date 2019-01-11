@@ -35,6 +35,7 @@
              </td>
 
             <td>
+                <g:link class="btn btn-outline-secondary" action="show" id="${orderInstance?.id}"><i class="fa fa-eye"></i> </g:link>
                 <g:link class="btn btn-outline-secondary" action="edit" id="${productsInstance?.id}"><i class="fa fa-pencil"></i> </g:link>
                 <g:link class="btn btn-outline-danger" action="delete" id="${productsInstance?.id}"><i class="fa fa-trash-o"></i> </g:link>
             </td>

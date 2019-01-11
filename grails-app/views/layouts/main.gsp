@@ -9,6 +9,8 @@
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
     <asset:stylesheet src="application.css"/>
     <!-- Font Awesome -->
     <asset:stylesheet src="font-awesome.min.css"/>
@@ -91,6 +93,7 @@
     <asset:javascript src="jquery-3.2.1.min.js"/>
     <asset:javascript src="popper.min.js"/>
     <asset:javascript src="bootstrap.min.js"/>
+
 
     <script>
         $(window).scroll(function() {

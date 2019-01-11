@@ -1,5 +1,5 @@
 <table class="table table-striped">
-    <thead>
+     <thead class="thead-dark">
     <tr >
 
         <g:sortableColumn property="title" title="Title" />

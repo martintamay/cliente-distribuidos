@@ -70,4 +70,8 @@ class EstablishmentsController {
         def establishments = establishmentsService.find(text);
         render(view: "_list", model: [establishmentsInstanceList: establishments])
     }
+    def show(Integer id){
+        def establishmentsInstance = establishmentsService.getById(id)
+        [establishmentsInstance: establishmentsInstance]
+    }
 }

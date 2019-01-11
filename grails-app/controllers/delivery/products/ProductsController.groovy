@@ -82,4 +82,8 @@ class ProductsController {
         def products = productsService.find(text);
         render(view: "_list", model: [productsInstanceList: products])
     }
+    def show(Integer id){
+        def productsInstance = productsService.getById(id)
+        [productsInstance: productsInstance]
+    }
 }

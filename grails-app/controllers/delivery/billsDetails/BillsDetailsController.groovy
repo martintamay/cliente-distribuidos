@@ -83,4 +83,8 @@ class BillsDetailsController {
         def billsDetails = billsDetailsService.find(text);
         render(view: "_list", model: [billsDetailsInstanceList: billsDetails])
     }
+    def show(Integer id){
+        def billsDetailsInstance = billsDetailsService.getById(id)
+        [billsDetailsInstance: billsDetailsInstance]
+    }
 }

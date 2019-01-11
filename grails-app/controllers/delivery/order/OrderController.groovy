@@ -88,5 +88,8 @@ class OrderController {
         def orders = orderService.find(text);
         render(view: "_list", model: [orderInstanceList: orders])
     }
-
+    def show(Integer id){
+        def orderInstance = orderService.getById(id)
+        [orderInstance: orderInstance]
+    }
 }

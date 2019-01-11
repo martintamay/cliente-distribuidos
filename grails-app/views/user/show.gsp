@@ -11,7 +11,6 @@
     <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
         <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-        <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
     </ul>
 </div>
 <div id="show-user" class="content scaffold-show" role="main">
@@ -20,41 +19,30 @@
         <div class="message" role="status">${flash.message}</div>
     </g:if>
     <f:display bean="user" />
-    <div class="form-group">
-        <label>
-            Name:
-        </label>
-        <p>${userInstance?.firstName} </p>
-    </div>
+    <g:link class="btn btn-primary pull-right" action="create" id="${userInstance?.id}"><i class="fas fa-plus-square"></i></g:link>
 
-    <div class="form-group">
-        <label>
-            Last Name:
-        </label>
-        <p>${userInstance?.lastName} </p>
-    </div>
-    <div class="form-group">
-        <label>
-            Email:
-        </label>
-        <p>${userInstance?.email} </p>
-    </div>
-    <div class="form-group">
-        <label>
-            Phone Number
-        </label>
-        <p>${userInstance?.phoneNumber} </p>
-    </div>
-    <div class="form-group">
-        <label>
-            Address
-        </label>
-        <p>${userInstance?.address} </p>
-    </div>
+    <table class="table">
+
+        <tbody>
+        <th>Nombre</th> <td>${userInstance?.firstName}</td>
+        <tr> <th>Apellido</th><td>${userInstance?.lastName}</td></tr>
+        <tr> <th>Email</th><td>${userInstance?.email}</td></tr>
+        <tr> <th>Numero De Telefono</th> <td>${userInstance?.phoneNumber}</td></tr>
+        <tr> <th>Direccion</th><td>${userInstance?.address}</td></tr>
+
+        </tbody>
+
+    </table>
+
+
+
+
     <g:form resource="${this.user}" method="DELETE">
         <fieldset class="buttons">
             <g:link class="btn btn-outline-secondary" action="edit" id="${userInstance?.id}"><i class="fa fa-pencil"></i> </g:link>
-            <g:link class="btn btn-outline-danger" action="delete" id="${userInstance?.id}"><i class="fa fa-trash-o"></i> </g:link>                </fieldset>
+            <g:link class="btn btn-outline-danger" action="delete" id="${userInstance?.id}"><i class="fa fa-trash-o"></i> </g:link>
+
+        </fieldset>
     </g:form>
 </div>
 </body>

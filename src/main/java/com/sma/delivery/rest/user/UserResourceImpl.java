@@ -33,7 +33,7 @@ public class UserResourceImpl extends BaseResourceImpl<UserDTO> implements IUser
 
 	@Override
 	public UserResult getByEmail(String email) {
-	System.out.println("UserResourceImpl: Buscando " + email + "....");
+
 	final UserResult result = getWebResource().path("/buscar").queryParam("email", email).get(UserResult.class);
 	return result;
 }
