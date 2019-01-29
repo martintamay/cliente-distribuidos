@@ -14,5 +14,5 @@ public interface IBaseService<BEAN extends BaseBean, DTO extends BaseDTO> {
 
 	public BEAN getById(Integer id);
 
-	public List<BEAN> find(String text);
+	public List<BEAN> find(String text, Integer page);
 }

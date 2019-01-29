@@ -50,8 +50,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 		return users;
 	}
 	@Override
-	public List<UserB> find(String text) {
-		final UserResult result = _userResource.find(text);
+	public List<UserB> find(String text, Integer page) {
+		final UserResult result = _userResource.find(text, page);
 		final List<UserDTO> cList = null == result.getUsers() ? new ArrayList<UserDTO>()
 				: result.getUsers();
 

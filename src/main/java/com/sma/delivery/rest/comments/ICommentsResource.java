@@ -6,8 +6,8 @@ import com.sma.delivery.rest.base.IBaseResource;
 
 public interface ICommentsResource extends IBaseResource<CommentsDTO> {
 
+    public CommentsResult find(String text, Integer page);
     public CommentsResult getAll(Integer page);
-    public CommentsResult find(String text);
     public CommentsResult getComments();
 
 

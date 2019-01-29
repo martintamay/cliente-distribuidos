@@ -57,8 +57,8 @@ public class EstablishmentsServiceImpl extends BaseServiceImpl<EstablishmentsB, 
     }
 
     @Override
-    public List<EstablishmentsB> find(String text) {
-        final EstablishmentsResult result = _establishmentsResources.find(text);
+    public List<EstablishmentsB> find(String text, Integer page) {
+        final EstablishmentsResult result = _establishmentsResources.find(text, page);
         final List<EstablishmentsDTO> cList = null == result.getEstablishments() ? new ArrayList<EstablishmentsDTO>()
                 : result.getEstablishments();
 

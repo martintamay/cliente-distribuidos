@@ -26,8 +26,8 @@ public class ProductsResourceImpl extends BaseResourceImpl<ProductsDTO> implemen
     }
 
     @Override
-    public ProductsResult find(String text) {
-        final ProductsResult result = getWebResource().path("/search/"+text).get(ProductsResult.class);
+    public ProductsResult find(String text, Integer page) {
+        final ProductsResult result = getWebResource().path("/search/"+page+"/"+3+"/"+text).get(ProductsResult.class);
         return result;
     }
 

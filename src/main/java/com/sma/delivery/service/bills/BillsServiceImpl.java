@@ -62,9 +62,9 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillsDTO> implemen
     }
 
     @Override
-    public List<BillsB> find(String text) {
+    public List<BillsB> find(String text, Integer page) {
 
-        final BillsResult result = _billsResource.find(text);
+        final BillsResult result = _billsResource.find(text, page);
         final List<BillsDTO> cList = null == result.getBills() ? new ArrayList<BillsDTO>()
                 : result.getBills();
 

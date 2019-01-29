@@ -20,8 +20,8 @@ public class OrderResourceImpl extends BaseResourceImpl<OrdersDTO> implements IO
 	}
 
 	@Override
-	public OrdersResult find(String text) {
-		final OrdersResult result = getWebResource().path("/search/"+text).get(OrdersResult.class);
+	public OrdersResult find(String text, Integer page) {
+		final OrdersResult result = getWebResource().path("/search/"+page+"/"+3+"/"+text).get(OrdersResult.class);
 		return result;
 	}
 

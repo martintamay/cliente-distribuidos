@@ -63,9 +63,8 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductsDTO>
     }
 
     @Override
-    public List<ProductsB> find(String text) {
-
-        final ProductsResult result = _productsResource.find(text);
+    public List<ProductsB> find(String text, Integer page) {
+        final ProductsResult result = _productsResource.find(text, page);
         final List<ProductsDTO> cList = null == result.getProducts() ? new ArrayList<ProductsDTO>()
                 : result.getProducts();
 

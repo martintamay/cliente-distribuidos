@@ -26,8 +26,8 @@ public class UserResourceImpl extends BaseResourceImpl<UserDTO> implements IUser
 	}
 
 	@Override
-	public UserResult find(String text) {
-		final UserResult result = getWebResource().path("/search/"+text).get(UserResult.class);
+	public UserResult find(String text, Integer page) {
+		final UserResult result = getWebResource().path("/search/"+page+"/"+3+"/"+text).get(UserResult.class);
 		return result;
 	}
 

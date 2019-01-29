@@ -6,8 +6,8 @@ import com.sma.delivery.rest.base.IBaseResource;
 
 public interface IOrderResource extends IBaseResource<OrdersDTO> {
 
+	public OrdersResult find(String text, Integer page);
 	public OrdersResult getAll(Integer page);
-	public OrdersResult find(String text);
 	public OrdersResult getOrders();
 
 

@@ -6,7 +6,8 @@ import com.sma.delivery.rest.base.IBaseResource;
 
 
 public interface IProductsResource extends IBaseResource<ProductsDTO> {
+
+    public ProductsResult find(String text, Integer page);
     public ProductsResult getAll(Integer page);
-    public ProductsResult find(String text);
     public ProductsResult getProducts();
 }

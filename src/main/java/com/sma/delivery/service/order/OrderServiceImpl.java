@@ -40,8 +40,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrdersDTO> impleme
 		ordersResource.delete(id);
 	}
 	@Override
-	public List<OrderB> find(String text) {
-		final OrdersResult result = ordersResource.find(text);
+	public List<OrderB> find(String text, Integer page) {
+		final OrdersResult result = ordersResource.find(text, page);
 		final List<OrdersDTO> cList = null == result.getOrders() ? new ArrayList<OrdersDTO>()
 				: result.getOrders();
 

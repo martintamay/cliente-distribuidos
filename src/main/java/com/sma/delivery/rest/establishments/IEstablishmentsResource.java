@@ -6,8 +6,8 @@ import com.sma.delivery.rest.base.IBaseResource;
 
 public interface IEstablishmentsResource extends IBaseResource<EstablishmentsDTO> {
 
+    public EstablishmentsResult find(String text, Integer page);
     public EstablishmentsResult getAll(Integer page);
-    public EstablishmentsResult find(String text);
     public EstablishmentsResult getEstablishments();
 
 }

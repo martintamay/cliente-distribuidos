@@ -70,12 +70,14 @@ class UserController {
         redirect(action: "list")
     }
 
-    def search(String text){
-        def users = userService.find(text);
-        render(view: "_list", model: [userInstanceList: users])
+    def search(String text,Integer page){
+        def users = userService.find(text,page);
+        def next = userService.find(text,page+1).size();
+        render(view: "_list", model: [userInstanceList: users ,next: next,page: page])
     }
     def show(Integer id){
         def userInstance = userService.getById(id)
         [userInstance: userInstance]
     }
+
 }

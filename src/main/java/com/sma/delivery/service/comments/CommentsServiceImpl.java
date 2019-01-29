@@ -65,9 +65,9 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentsDTO>
     }
 
     @Override
-    public List<CommentsB> find(String text) {
+    public List<CommentsB> find(String text, Integer page) {
 
-        final CommentsResult result = _commentsResource.find(text);
+        final CommentsResult result = _commentsResource.find(text, page);
         final List<CommentsDTO> cList = null == result.getComments() ? new ArrayList<CommentsDTO>()
                 : result.getComments();
 
@@ -102,13 +102,6 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentsDTO>
         dto.set_deleted(bean.getDeleted());
         dto.set_establishments_id(bean.get_establishments().getId());
         dto.set_users_id(bean.get_user().getId());
-
-
-
-
-
-
-
         return dto;
     }
 
