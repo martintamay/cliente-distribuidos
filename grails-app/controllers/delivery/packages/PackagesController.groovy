@@ -3,105 +3,84 @@ package delivery.packages
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
-@Transactional(readOnly = true)
+import com.sma.delivery.beans.packages.PackagesB
+import com.sma.delivery.service.packages.IPackagesService
+
 class PackagesController {
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    //services
+    def IPackagesService packagesService
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Packages.list(params), model:[packagesCount: Packages.count()]
+    def index(){
+        redirect(action: "list", id:1,)
     }
 
-    def show(Packages packages) {
-        respond packages
+    def list(Integer max){
+        getPrincipal().properties.each{ k, v -> println "${k}:${v}" }
+        def packages
+        def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
+        if(params['text']!=null){
+            packages = packagesService.find(params['text']);
+        }else{
+            packages = packagesService.getAll(page)
+        }
+        def next = packagesService.getAll(page+1).size();
+        [packagesInstanceList: packages, packagesInstanceTotal: packages?.size(),page: page,next:next]
     }
 
     def create() {
-        respond new Packages(params)
+        [packagesInstance: new PackagesB(params)]
     }
 
-    @Transactional
-    def save(Packages packages) {
-        if (packages == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
+    def save() {
+        def packagesInstance = new PackagesB(params)
+        def newPackages = packagesService.save(packagesInstance)
+        if (!newPackages?.getId()) {
+            render(view: "create", model: [packagesInstance: packagesInstance])
             return
         }
 
-        if (packages.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond packages.errors, view:'create'
+        flash.message = message(code: 'default.created.message', args: [
+                message(code: 'packages.label', default: 'Packages'),
+                newPackages.getId()
+        ])
+        redirect(action: "list")
+    }
+
+    def edit(Integer id) {
+        def packagesInstance = packagesService.getById(id)
+        if (!packagesInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [
+                    message(code: 'packages.label', default: 'Packages'),
+                    id
+            ])
+            redirect(action: "list")
             return
         }
 
-        packages.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'packages.label', default: 'Packages'), packages.id])
-                redirect packages
-            }
-            '*' { respond packages, [status: CREATED] }
-        }
+        [packagesInstance: packagesInstance]
     }
 
-    def edit(Packages packages) {
-        respond packages
+    def update(Long id, Long version) {
+        def packagesInstance = new PackagesB(params)
+        packagesService.save(packagesInstance)
+        redirect(action: "list")
     }
 
-    @Transactional
-    def update(Packages packages) {
-        if (packages == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        if (packages.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond packages.errors, view:'edit'
-            return
-        }
-
-        packages.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'packages.label', default: 'Packages'), packages.id])
-                redirect packages
-            }
-            '*'{ respond packages, [status: OK] }
-        }
+    def delete(Integer id){
+        packagesService.delete(id)
+        redirect(action: "list")
     }
 
-    @Transactional
-    def delete(Packages packages) {
-
-        if (packages == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        packages.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'packages.label', default: 'Packages'), packages.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+    def search(String text,Integer page){
+        def packages = packagesService.find(text,page);
+        def next = packagesService.find(text,page+1).size();
+        render(view: "_list", model: [packagesInstanceList: packages ,next: next,page: page])
+    }
+    def show(Integer id){
+        def packagesInstance = packagesService.getById(id)
+        [packahesInstance: packagesInstance]
     }
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'packages.label', default: 'Packages'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }
