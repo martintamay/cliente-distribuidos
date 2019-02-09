@@ -1,107 +1,93 @@
 package delivery.promotions
 
-import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
+import com.sma.delivery.beans.promotions.PromotionsB
+import com.sma.delivery.service.promotions.IPromotionsService
 
-@Transactional(readOnly = true)
+
 class PromotionsController {
+    static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    //services
+    def IPromotionsService promotionsService
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Promotions.list(params), model:[promotionsCount: Promotions.count()]
+
+    def index() {
+        redirect(action: "list", id: 1,)
     }
 
-    def show(Promotions promotions) {
-        respond promotions
+    def list(Integer max) {
+        def promotions
+        def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
+        if (params['text'] != null) {
+            promotions = promotionsService.find(params['text']);
+        } else {
+            promotions = promotionsService.getAll(page)
+        }
+        def next = promotionsService.getAll(page + 1).size();
+        [promotionsInstanceList: promotions, promotionsInstanceTotal: promotions?.size(), page: page, next: next]
     }
 
     def create() {
-        respond new Promotions(params)
+        [promotionsInstance: new PromotionsB(params)]
+
+
     }
 
-    @Transactional
-    def save(Promotions promotions) {
-        if (promotions == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
+    def save() {
+
+
+        def newPromotions = new PromotionsB(params)
+
+        def promotionsInstance = promotionsService.save(newPromotions)
+        if (!newPromotions?.getId()) {
+            render(view: "create", model: [promotionsInstance: promotionsInstance])
             return
         }
 
-        if (promotions.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond promotions.errors, view:'create'
+        flash.message = message(code: 'default.created.message', args: [
+                message(code: 'promotions.label', default: 'Promotions'),
+                newPromotions.getId()
+        ])
+        redirect(action: "list")
+    }
+
+    def edit(Integer id) {
+        def promotionsInstance = promotionsService.getById(id)
+        if (!promotionsInstance) {
+            flash.message = message(code: 'default.not.found.message', args: [
+                    message(code: 'promotions.label', default: 'Promotions'),
+                    id
+            ])
+            redirect(action: "list")
             return
         }
 
-        promotions.save flush:true
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'promotions.label', default: 'Promotions'), promotions.id])
-                redirect promotions
-            }
-            '*' { respond promotions, [status: CREATED] }
-        }
+        [promotionsInstance: promotionsInstance]
+
     }
 
-    def edit(Promotions promotions) {
-        respond promotions
+    def update(Long id, Long version) {
+
+        def newPromotions = new PromotionsB(params)
+
+        promotionsService.save(newPromotions)
+
+        redirect(action: "list")
     }
 
-    @Transactional
-    def update(Promotions promotions) {
-        if (promotions == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        if (promotions.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond promotions.errors, view:'edit'
-            return
-        }
-
-        promotions.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'promotions.label', default: 'Promotions'), promotions.id])
-                redirect promotions
-            }
-            '*'{ respond promotions, [status: OK] }
-        }
+    def delete(Integer id) {
+        promotionsService.delete(id)
+        redirect(action: "list")
     }
 
-    @Transactional
-    def delete(Promotions promotions) {
-
-        if (promotions == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        promotions.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'promotions.label', default: 'Promotions'), promotions.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+    def search(String text) {
+        def promotions = promotionsService.find(text);
+        render(view: "_list", model: [promotionsInstanceList: promotions])
     }
 
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'promotions.label', default: 'Promotions'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
+    def show(Integer id) {
+        def promotionsInstance = promotionsService.getById(id)
+        [promotionsInstance: promotionsInstance]
     }
 }

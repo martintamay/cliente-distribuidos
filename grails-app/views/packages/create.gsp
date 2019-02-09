@@ -4,7 +4,7 @@
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'packages.label', default: 'Packages')}" />
-    <title>Agregar Paquetes</title>
+    <title>Agregar Paquete</title>
 </head>
 <body>
 <a href="#create-packages" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -38,3 +38,4 @@
 </div>
 </body>
 </html>
+

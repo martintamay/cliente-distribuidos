@@ -1,7 +1,6 @@
 package com.sma.delivery.beans.packages;
 
 import com.sma.delivery.beans.base.BaseBean;
-import com.sma.delivery.beans.establishments.EstablishmentsB;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
@@ -44,10 +43,14 @@ public class PackagesB extends BaseBean {
         if (!StringUtils.isBlank(params.get("id"))) {
             setId(Integer.valueOf(params.get("id")));
         }
+
+
+        setName(params.get("name"));
+
         if (!StringUtils.isBlank(params.get("cost"))) {
             setCost(Integer.valueOf(params.get("cost")));
         }
-        setName(params.get("name"));
+
 
 
 

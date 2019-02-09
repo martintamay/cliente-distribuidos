@@ -1,6 +1,9 @@
 // Place your Spring DSL code here
+
+import com.sma.delivery.rest.promotions.PromotionsResourceImpl
 import com.sma.delivery.rest.user.UserResourceImpl
 import com.sma.delivery.service.auth.AuthServiceImpl
+import com.sma.delivery.service.promotions.PromotionsServiceImpl
 import com.sma.delivery.service.user.UserServiceImpl
 import com.sma.delivery.rest.order.OrderResourceImpl
 import com.sma.delivery.service.order.OrderServiceImpl
@@ -40,11 +43,10 @@ beans = {
     billsService(BillsServiceImpl)
     billsDetailsResource(BillsDetailsResourceImpl)
     billsDetailsService(BillsDetailsServiceImpl)
-
-
     packagesResource(PackagesResourceImpl)
     packagesService(PackagesServiceImpl)
-
+    promotionsResource(PromotionsResourceImpl)
+    promotionsService(PromotionsServiceImpl)
     localeResolver(SessionLocaleResolver) {
         defaultLocale= new java.util.Locale('es');
     }
