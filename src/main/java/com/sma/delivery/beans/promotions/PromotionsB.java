@@ -3,12 +3,8 @@ package com.sma.delivery.beans.promotions;
 
 import com.sma.delivery.beans.base.BaseBean;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Map;
 
 public class PromotionsB extends BaseBean {
@@ -52,7 +48,7 @@ public class PromotionsB extends BaseBean {
             setId(Integer.valueOf(params.get("id")));
         }
 
-System.out.print(params.get("end_date"));
+            setEnd_date(Date.valueOf(params.get("end_date")));
             params.get("available");
             setName(params.get("name"));
 

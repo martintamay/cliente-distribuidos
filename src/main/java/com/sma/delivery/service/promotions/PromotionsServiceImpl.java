@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.promotions.IPromotionsResource;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -95,7 +96,7 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
 
         dto.setId(bean.getId());
         dto.setName(bean.getName());
-        dto.setEndDate((Time) bean.getEnd_date());
+        dto.setEndDate( bean.getEnd_date());
         dto.setAvailable(bean.getAvailable());
         return dto;
     }
