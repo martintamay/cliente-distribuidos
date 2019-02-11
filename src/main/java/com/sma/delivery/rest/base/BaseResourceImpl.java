@@ -3,17 +3,15 @@ package com.sma.delivery.rest.base;
 import com.sma.delivery.dto.base.BaseDTO;
 import com.sma.delivery.service.auth.IAuthService;
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class BaseResourceImpl<DTO extends BaseDTO> implements IBaseResource<DTO> {
     private final String _resourcePath;
     private final Class<DTO> _dtoClass;
-    private final WebResource _webResource;
+    private final ConfiguredWebResource _webResource;
 
     private static final String BASE_URL = "http://localhost:28080/delivery/rest";
-    private static final String TOKEN = "$2a$11$4oHHbmgsIgx9ISBVDn0h6ezUiOD.Pof0TEkFUJFllk3ms7JPjzQFC";
 
 
     @Autowired
@@ -25,11 +23,10 @@ public abstract class BaseResourceImpl<DTO extends BaseDTO> implements IBaseReso
 
         final Client jerseyClient = Client.create();
 
-        _webResource = jerseyClient.resource(_resourcePath);
-        _webResource.header("token", TOKEN);
+        _webResource = new ConfiguredWebResource(jerseyClient.resource(_resourcePath));
     }
 
-    protected WebResource getWebResource() {
+    protected ConfiguredWebResource getWebResource() {
         return _webResource;
     }
 
