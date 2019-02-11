@@ -1,37 +1,37 @@
 package com.sma.delivery.rest.bills;
 
-import com.sma.delivery.dto.bills.BillsDTO;
-import com.sma.delivery.dto.bills.BillsResult;
+import com.sma.delivery.dto.bills.BillDTO;
+import com.sma.delivery.dto.bills.BillResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
 import org.springframework.stereotype.Repository;
 
 @Repository("billsResource")
-public class BillsResourceImpl extends BaseResourceImpl<BillsDTO> implements IBillsResource {
+public class BillsResourceImpl extends BaseResourceImpl<BillDTO> implements IBillsResource {
 
     public BillsResourceImpl() {
-        super(BillsDTO.class, "/bills");
+        super(BillDTO.class, "/bills");
     }
 
     @Override
-    public BillsResult getAll(Integer page) {
-        final BillsResult result = getWebResource().path("/"+page+"/"+20).get(BillsResult.class);
+    public BillResult getAll(Integer page) {
+        final BillResult result = getWebResource().path("/"+page+"/"+20).get(BillResult.class);
         return result;
     }
 
     @Override
-    public BillsDTO getById(Integer id) {
+    public BillDTO getById(Integer id) {
         return getWebResource().path("/" + id).get(getDtoClass());
     }
 
     @Override
-    public BillsResult find(String text, Integer page) {
-        final BillsResult result = getWebResource().path("/search/"+page+"/"+3+"/"+text).get(BillsResult.class);
+    public BillResult find(String text, Integer page) {
+        final BillResult result = getWebResource().path("/search/"+page+"/"+3+"/"+text).get(BillResult.class);
         return result;
     }
 
     @Override
-    public BillsResult getBills() {
-        return getWebResource().path("/" + 1 + "/" + 200).get(BillsResult.class);
+    public BillResult getBills() {
+        return getWebResource().path("/" + 1 + "/" + 200).get(BillResult.class);
 
     }
 

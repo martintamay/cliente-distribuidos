@@ -3,6 +3,8 @@ package com.sma.delivery.beans.bills;
 import com.sma.delivery.beans.base.BaseBean;
 import com.sma.delivery.beans.order.OrderB;
 import org.apache.commons.lang.StringUtils;
+
+import java.text.ParseException;
 import java.util.Map;
 
 
@@ -40,7 +42,7 @@ public class BillsB extends BaseBean{
 
 
 
-    public BillsB(Map<String, String> params) {
+    public BillsB(Map<String, String> params)  {
         super(params);
     }
     @Override

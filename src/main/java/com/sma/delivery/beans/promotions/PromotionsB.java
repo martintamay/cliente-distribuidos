@@ -6,6 +6,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ public class PromotionsB extends BaseBean {
 
     String name;
     String available;
-    Time end_date;
+    Date end_date;
 
     public String getName() {
         return name;
@@ -32,31 +34,28 @@ public class PromotionsB extends BaseBean {
         this.available = available;
     }
 
-    public Time getEnd_date() {
+    public Date getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(Time end_date) {
+    public void setEnd_date(Date end_date) {
         this.end_date = end_date;
     }
 
-    public PromotionsB(Map<String, String> params) {
+    public PromotionsB(Map<String, String> params)  {
         super(params);
     }
 
     @Override
-    protected void create(Map<String, String> params) {
+    protected void create(Map<String, String> params)  {
         if (!StringUtils.isBlank(params.get("id"))) {
             setId(Integer.valueOf(params.get("id")));
-
-        }
-        if (!StringUtils.isBlank(params.get("end_date"))) {
-            setEnd_date(Time.valueOf(params.get("end_date")));
-
         }
 
-            setAvailable(params.get("available"));
+System.out.print(params.get("end_date"));
+            params.get("available");
             setName(params.get("name"));
+
         }
 
     }

@@ -1,15 +1,15 @@
-<%@ page import="delivery.promotions.Promotions" %>
+<%@ page import="delivery.promotion.Promotion" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="layout" content="main">
-    <g:set var="entityName" value="${message(code: 'promotions.label', default: 'Promotions')}" />
+    <g:set var="entityName" value="${message(code: 'promotion.label', default: 'Promotion')}" />
     <title>Lista de Promociones</title>
 </head>
 <body>
-<a href="#list-promotions" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+<a href="#list-promotion" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 
-<div id="list-promotions" class="container padding-menu" role="main">
+<div id="list-promotion" class="container padding-menu" role="main">
     <div class="card">
         <div class="card-title p-3 mb-2 bg-primary text-white">
             <h3><g:message code="default.list.label" args="[entityName]" /></h3>
@@ -43,7 +43,7 @@
     $(document).ready(function(){
         $('#text').keyup(function(){
             $.ajax({
-                url:"${createLink(controller: 'promotions', action: 'search')}",
+                url:"${createLink(controller: 'promotion', action: 'search')}",
                 data:{
                     text:$('#text').val()
                 },

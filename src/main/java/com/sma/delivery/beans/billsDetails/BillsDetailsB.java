@@ -4,6 +4,7 @@ import com.sma.delivery.beans.base.BaseBean;
 import com.sma.delivery.beans.bills.BillsB;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class BillsDetailsB extends BaseBean{
@@ -43,7 +44,7 @@ public class BillsDetailsB extends BaseBean{
 
 
 
-        public BillsDetailsB(Map<String, String> params) {
+        public BillsDetailsB(Map<String, String> params)  {
             super(params);
         }
         @Override

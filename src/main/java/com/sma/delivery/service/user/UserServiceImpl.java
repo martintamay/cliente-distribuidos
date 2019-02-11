@@ -1,20 +1,21 @@
 package com.sma.delivery.service.user;
 
 import com.sma.delivery.beans.user.UserB;
-import com.sma.delivery.dto.user.UserDTO;
-import com.sma.delivery.dto.user.UserResult;
+import com.sma.delivery.dto.users.UserDTO;
+import com.sma.delivery.dto.users.UserResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service("userService")
-public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements IUserService {
+public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements IUserService {
 
 	@Autowired
 	private com.sma.delivery.rest.user.IUserResource _userResource;
@@ -23,7 +24,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 	}
 
 	@Override
-	public UserB save(UserB bean) {
+	public UserB save(UserB bean) throws ParseException {
 		final UserDTO user = convertBeanToDto(bean);
 		final UserDTO dto = _userResource.save(user);
 		final UserB userB = convertDtoToBean(dto);
@@ -37,7 +38,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 
 
 	@Override
-	public List<UserB> getAll(Integer page) {
+	public List<UserB> getAll(Integer page)  {
 		final UserResult result = _userResource.getAll(page);
 		final List<UserDTO> cList = null == result.getUsers() ? new ArrayList<UserDTO>()
 				: result.getUsers();
@@ -50,7 +51,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 		return users;
 	}
 	@Override
-	public List<UserB> find(String text, Integer page) {
+	public List<UserB> find(String text, Integer page)  {
 		final UserResult result = _userResource.find(text, page);
 		final List<UserDTO> cList = null == result.getUsers() ? new ArrayList<UserDTO>()
 				: result.getUsers();
@@ -65,9 +66,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 
 
 
-@Override
+	@Override
 	@Cacheable(value="client-delivery", key="'user_'+#root.methodName+'_'+#email")
-	public UserB getByEmail(String email) {
+	public UserB getByEmail(String email)  {
 		final UserResult result = _userResource.getByEmail(email);
 		final List<UserDTO> cList = null == result.getUsers() ? new ArrayList<UserDTO>()
 				: result.getUsers();
@@ -86,7 +87,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 
 
 	@Override
-	public UserB getById(Integer id) {
+	public UserB getById(Integer id)  {
 		final UserDTO dto = _userResource.getById(id);
 		final UserB bean = convertDtoToBean(dto);
 
@@ -94,7 +95,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 	}
 
 	@Override
-	protected UserB convertDtoToBean(UserDTO dto) {
+	protected UserB convertDtoToBean(UserDTO dto)  {
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put("id", String.valueOf(dto.getId()));
 		params.put("firstName", dto.getFirstName());
@@ -121,7 +122,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB, UserDTO> implements 
 	}
 
 	@Override
-	public List<UserB> getUsers() {
+	public List<UserB> getUsers()  {
 		final UserResult result = _userResource.getUsers();
 		final List<UserDTO> cList = null == result.getUsers() ? new ArrayList<UserDTO>() : result.getUsers();
 		final List<UserB> users = new ArrayList<UserB>();

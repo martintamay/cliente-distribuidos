@@ -4,6 +4,7 @@ import com.sma.delivery.beans.base.BaseBean;
 import com.sma.delivery.beans.establishments.EstablishmentsB;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class ProductsB extends BaseBean {
@@ -54,7 +55,7 @@ public class ProductsB extends BaseBean {
 
 
 
-    public ProductsB(Map<String, String> params) {
+    public ProductsB(Map<String, String> params)  {
         super(params);
     }
     @Override

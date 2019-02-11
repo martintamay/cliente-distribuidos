@@ -1,13 +1,13 @@
 package com.sma.delivery.rest.products;
 
-import com.sma.delivery.dto.products.ProductsResult;
-import com.sma.delivery.dto.products.ProductsDTO;
+import com.sma.delivery.dto.products.ProductResult;
+import com.sma.delivery.dto.products.ProductDTO;
 import com.sma.delivery.rest.base.IBaseResource;
 
 
-public interface IProductsResource extends IBaseResource<ProductsDTO> {
+public interface IProductsResource extends IBaseResource<ProductDTO> {
 
-    public ProductsResult find(String text, Integer page);
-    public ProductsResult getAll(Integer page);
-    public ProductsResult getProducts();
+    public ProductResult find(String text, Integer page);
+    public ProductResult getAll(Integer page);
+    public ProductResult getProducts();
 }

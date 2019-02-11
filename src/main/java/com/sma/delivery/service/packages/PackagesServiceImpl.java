@@ -2,12 +2,14 @@ package com.sma.delivery.service.packages;
 
 
 import com.sma.delivery.beans.packages.PackagesB;
-import com.sma.delivery.dto.packaged.PackageDTO;
-import com.sma.delivery.dto.packaged.PackageResult;
+import com.sma.delivery.dto.packages.PackageDTO;
+import com.sma.delivery.dto.packages.PackageResult;
 import com.sma.delivery.rest.packages.IPackagesResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +25,7 @@ public class PackagesServiceImpl extends BaseServiceImpl<PackagesB, PackageDTO> 
     }
 
     @Override
-    public PackagesB save(PackagesB bean) {
+    public PackagesB save(PackagesB bean)  {
         final PackageDTO user = convertBeanToDto(bean);
         final PackageDTO dto = _packagesResource.save(user);
         final PackagesB userB = convertDtoToBean(dto);
@@ -37,7 +39,7 @@ public class PackagesServiceImpl extends BaseServiceImpl<PackagesB, PackageDTO> 
 
 
     @Override
-    public List<PackagesB> getAll(Integer page) {
+    public List<PackagesB> getAll(Integer page)  {
         final PackageResult result = _packagesResource.getAll(page);
         final List<PackageDTO> cList = null == result.getPackages() ? new ArrayList<PackageDTO>()
                 : result.getPackages();
@@ -50,7 +52,7 @@ public class PackagesServiceImpl extends BaseServiceImpl<PackagesB, PackageDTO> 
         return users;
     }
     @Override
-    public List<PackagesB> find(String text, Integer page) {
+    public List<PackagesB> find(String text, Integer page)  {
         final PackageResult result = _packagesResource.find(text, page);
         final List<PackageDTO> cList = null == result.getPackages() ? new ArrayList<PackageDTO>()
                 : result.getPackages();
@@ -69,7 +71,7 @@ public class PackagesServiceImpl extends BaseServiceImpl<PackagesB, PackageDTO> 
 
 
     @Override
-    public PackagesB getById(Integer id) {
+    public PackagesB getById(Integer id)  {
         final PackageDTO dto = _packagesResource.getById(id);
         final PackagesB bean = convertDtoToBean(dto);
 
@@ -77,7 +79,7 @@ public class PackagesServiceImpl extends BaseServiceImpl<PackagesB, PackageDTO> 
     }
 
     @Override
-    protected PackagesB convertDtoToBean(PackageDTO dto) {
+    protected PackagesB convertDtoToBean(PackageDTO dto)  {
         final Map<String, String> params = new HashMap<String, String>();
         params.put("id", String.valueOf(dto.getId()));
         params.put("name", dto.getName());
@@ -98,7 +100,7 @@ public class PackagesServiceImpl extends BaseServiceImpl<PackagesB, PackageDTO> 
     }
 
     @Override
-    public List<PackagesB> getPackages() {
+    public List<PackagesB> getPackages()  {
         final PackageResult result = _packagesResource.getPackages();
         final List<PackageDTO> cList = null == result.getPackages() ? new ArrayList<PackageDTO>() : result.getPackages();
         final List<PackagesB> users = new ArrayList<PackagesB>();

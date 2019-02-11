@@ -3,6 +3,7 @@ package com.sma.delivery.beans.role;
 import com.sma.delivery.beans.base.BaseBean;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class RoleB extends BaseBean {
@@ -11,7 +12,7 @@ public class RoleB extends BaseBean {
 
 	private String _authority;
 
-	public RoleB(Map<String, String> params) {
+	public RoleB(Map<String, String> params)  {
 		super(params);
 	}
 

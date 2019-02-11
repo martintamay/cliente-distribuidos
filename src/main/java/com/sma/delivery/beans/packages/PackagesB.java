@@ -3,6 +3,7 @@ package com.sma.delivery.beans.packages;
 import com.sma.delivery.beans.base.BaseBean;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class PackagesB extends BaseBean {
@@ -35,7 +36,7 @@ public class PackagesB extends BaseBean {
 
 
 
-    public PackagesB(Map<String, String> params) {
+    public PackagesB(Map<String, String> params)  {
         super(params);
     }
     @Override
@@ -45,7 +46,7 @@ public class PackagesB extends BaseBean {
         }
 
 
-        setName(params.get("name"));
+      System.out.print(  params.get("name"));
 
         if (!StringUtils.isBlank(params.get("cost"))) {
             setCost(Integer.valueOf(params.get("cost")));

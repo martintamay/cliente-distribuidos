@@ -5,6 +5,7 @@ import com.sma.delivery.beans.establishments.EstablishmentsB;
 import com.sma.delivery.beans.user.UserB;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class OrderB extends BaseBean {
@@ -75,7 +76,7 @@ public class OrderB extends BaseBean {
 	public void setTotalCost(int totalCost) {
 		this.totalCost = totalCost;
 	}
-	public OrderB(Map<String, String> params) {
+	public OrderB(Map<String, String> params)  {
 		super(params);
 	}
 	@Override

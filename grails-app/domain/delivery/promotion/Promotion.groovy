@@ -1,15 +1,13 @@
-package delivery.promotions
+package delivery.promotion
 
 import delivery.orderDetail.OrderDetail
 
-import java.sql.Time
 
-class Promotions {
+class Promotion {
     String name;
-    String   available;
-    Time end_date;
+    String available;
+    Date end_date;
     static hasMany = [orderDetail: OrderDetail]
     static constraints = {
     }
 }
-

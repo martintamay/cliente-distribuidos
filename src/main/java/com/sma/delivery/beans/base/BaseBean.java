@@ -1,6 +1,7 @@
 package com.sma.delivery.beans.base;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Map;
 import java.util.Random;
 
@@ -10,7 +11,7 @@ public abstract class BaseBean implements Serializable {
 	private Integer _id;
 	private final Random _random;
 
-	public BaseBean(Map<String, String> params) {
+	public BaseBean(Map<String, String> params)  {
 		_random = new Random();
 		create(params);
 	}
@@ -27,6 +28,6 @@ public abstract class BaseBean implements Serializable {
 		return _random.nextInt(1000);
 	}
 
-	protected abstract void create(Map<String, String> params);
+	protected abstract void create(Map<String, String> params) ;
 
 }

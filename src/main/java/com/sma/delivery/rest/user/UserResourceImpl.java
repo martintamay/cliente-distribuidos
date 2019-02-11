@@ -2,8 +2,8 @@ package com.sma.delivery.rest.user;
 
 import org.springframework.stereotype.Repository;
 
-import com.sma.delivery.dto.user.UserDTO;
-import com.sma.delivery.dto.user.UserResult;
+import com.sma.delivery.dto.users.UserDTO;
+import com.sma.delivery.dto.users.UserResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
 import javax.xml.bind.annotation.XmlRootElement;
 @Repository("userResource")

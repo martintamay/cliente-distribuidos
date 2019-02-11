@@ -24,6 +24,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -39,8 +40,13 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 		UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) authentication;
 		String email = auth.getName();
 		String password = auth.getCredentials().toString();
-				
-		UserB user = getUser(email);
+
+		UserB user = null;
+		try {
+			user = getUser(email);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		if(user!=null){
 			if (passwordEncoder.matches(password, user.getPassword())) {
 				List<GrantedAuthority> authorities = getUserRoles(user);
@@ -67,7 +73,7 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 			}
 		}else throw new BadCredentialsException("Log in failed: El usuario especificado no existe");//Nunca salta porque la excepcion ya ocurre en UserB user = getUser(username);
 	}
-	private UserB getUser(String email){
+	private UserB getUser(String email) throws ParseException {
 		UserB userB = _userService.getByEmail(email);
 
 		return userB;

@@ -2,8 +2,8 @@ package com.sma.delivery.rest.packages;
 
 import org.springframework.stereotype.Repository;
 
-import com.sma.delivery.dto.packaged.PackageDTO;
-import com.sma.delivery.dto.packaged.PackageResult;
+import com.sma.delivery.dto.packages.PackageDTO;
+import com.sma.delivery.dto.packages.PackageResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
 import javax.xml.bind.annotation.XmlRootElement;
 @Repository("packagesResource")

@@ -1,5 +1,6 @@
 package com.sma.delivery.beans.user;
 
+import java.text.ParseException;
 import java.util.Map;
 import java.util.Set;
 
@@ -69,7 +70,7 @@ public class UserB extends BaseBean {
 		_lastName = lastName;
 	}
 
-	public UserB(Map<String, String> params) {
+	public UserB(Map<String, String> params)  {
 		super(params);
 	}
 

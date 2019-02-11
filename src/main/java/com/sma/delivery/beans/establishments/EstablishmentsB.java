@@ -5,6 +5,7 @@ package com.sma.delivery.beans.establishments;
 import com.sma.delivery.beans.base.BaseBean;
 import org.apache.commons.lang.StringUtils;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class EstablishmentsB extends BaseBean {
@@ -69,7 +70,7 @@ public class EstablishmentsB extends BaseBean {
 
 
 
-    public EstablishmentsB(Map<String, String> params) {
+    public EstablishmentsB(Map<String, String> params)  {
         super(params);
     }
     @Override
@@ -77,7 +78,7 @@ public class EstablishmentsB extends BaseBean {
         if (!StringUtils.isBlank(params.get("id"))) {
             setId(Integer.valueOf(params.get("id")));
         }
-        setName(params.get("name"));
+        System.out.print(params.get("name"));
         setDescription(params.get("description"));
         setAddress (params.get("address"));
         setEmail(params.get("email"));

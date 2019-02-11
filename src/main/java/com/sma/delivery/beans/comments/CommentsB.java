@@ -8,6 +8,7 @@ import com.sma.delivery.beans.user.UserB;
 
 import org.apache.commons.lang.StringUtils;
 
+import java.text.ParseException;
 import java.util.Map;
 
 public class CommentsB extends BaseBean {
@@ -66,7 +67,7 @@ public class CommentsB extends BaseBean {
 
 
 
-    public CommentsB(Map<String, String> params) {
+    public CommentsB(Map<String, String> params)  {
         super(params);
     }
     @Override

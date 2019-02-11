@@ -1,23 +1,23 @@
 package com.sma.delivery.service.billsDetails;
 
 import com.sma.delivery.beans.billsDetails.BillsDetailsB;
-import com.sma.delivery.dto.billsDetails.BillsDetailsDTO;
-import com.sma.delivery.dto.billsDetails.BillsDetailsResult;
+import com.sma.delivery.dto.bills_details.BillDetailDTO;
+import com.sma.delivery.dto.bills_details.BillDetailResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
-import com.sma.delivery.service.billsDetails.IBillsDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.billsDetails.IBillsDetailsResource;
 import com.sma.delivery.service.bills.IBillsService;
 
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service("billsService")
-public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, BillsDetailsDTO> implements IBillsDetailsService {
+public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, BillDetailDTO> implements IBillsDetailsService {
 
     @Autowired
     private IBillsDetailsResource _billsDetailsResource;
@@ -28,9 +28,9 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
     }
 
     @Override
-    public BillsDetailsB save(BillsDetailsB bean) {
-        final BillsDetailsDTO billsDetails = convertBeanToDto(bean);
-        final BillsDetailsDTO dto = _billsDetailsResource.save(billsDetails);
+    public BillsDetailsB save(BillsDetailsB bean)  {
+        final BillDetailDTO billsDetails = convertBeanToDto(bean);
+        final BillDetailDTO dto = _billsDetailsResource.save(billsDetails);
 
         final BillsDetailsB billsDetailsB = convertDtoToBean(dto);
         return billsDetailsB;
@@ -42,35 +42,35 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
     }
 
     @Override
-    public List<BillsDetailsB> getAll(Integer page) {
-        final BillsDetailsResult result = _billsDetailsResource.getAll(page);
-        final List<BillsDetailsDTO> cList = null == result.getBillsDetails() ? new ArrayList<BillsDetailsDTO>()
+    public List<BillsDetailsB> getAll(Integer page)  {
+        final BillDetailResult result = _billsDetailsResource.getAll(page);
+        final List<BillDetailDTO> cList = null == result.getBillsDetails() ? new ArrayList<BillDetailDTO>()
                 : result.getBillsDetails();
 
         final List<BillsDetailsB> billsDetails = new ArrayList<BillsDetailsB>();
-        for (BillsDetailsDTO dto : cList) {
+        for (BillDetailDTO dto : cList) {
             final BillsDetailsB bean = convertDtoToBean(dto);
             billsDetails.add(bean);
         }
         return billsDetails;
     }
     @Override
-    public BillsDetailsB getById(Integer id) {
-        final BillsDetailsDTO dto = _billsDetailsResource.getById(id);
+    public BillsDetailsB getById(Integer id)  {
+        final BillDetailDTO dto = _billsDetailsResource.getById(id);
         final BillsDetailsB bean = convertDtoToBean(dto);
 
         return bean;
     }
 
     @Override
-    public List<BillsDetailsB> find(String text, Integer page) {
+    public List<BillsDetailsB> find(String text, Integer page)  {
 
-        final BillsDetailsResult result = _billsDetailsResource.find(text, page);
-        final List<BillsDetailsDTO> cList = null == result.getBillsDetails() ? new ArrayList<BillsDetailsDTO>()
+        final BillDetailResult result = _billsDetailsResource.find(text, page);
+        final List<BillDetailDTO> cList = null == result.getBillsDetails() ? new ArrayList<BillDetailDTO>()
                 : result.getBillsDetails();
 
         final List<BillsDetailsB> bills = new ArrayList<BillsDetailsB>();
-        for (BillsDetailsDTO dto : cList) {
+        for (BillDetailDTO dto : cList) {
             final BillsDetailsB bean = convertDtoToBean(dto);
             bills.add(bean);
         }
@@ -78,7 +78,7 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
     }
 
     @Override
-    protected BillsDetailsB convertDtoToBean(BillsDetailsDTO dto) {
+    protected BillsDetailsB convertDtoToBean(BillDetailDTO dto)  {
         final Map<String, String> params = new HashMap<String, String>();
         params.put("id", String.valueOf(dto.getId()));
         params.put("amount", String.valueOf(dto.getAmount()));
@@ -86,27 +86,27 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
 
         final BillsDetailsB billsDetailsB = new BillsDetailsB(params);
 
-        billsDetailsB.setBills(_billsService.getById(dto.get_bills()));
+        billsDetailsB.setBills(_billsService.getById(dto.getBill()));
         return billsDetailsB;
     }
 
     @Override
-    protected BillsDetailsDTO convertBeanToDto(BillsDetailsB bean) {
-        final BillsDetailsDTO dto = new BillsDetailsDTO();
+    protected BillDetailDTO convertBeanToDto(BillsDetailsB bean) {
+        final BillDetailDTO dto = new BillDetailDTO();
         dto.setId(bean.getId());
         dto.setAmount(bean.getAmount());
-        dto.setIva(bean.getIva10());
-        dto.set_bills(bean.getBills().getId());
+        dto.setIva10(bean.getIva10());
+        dto.setBill(bean.getBills().getId());
 
         return dto;
     }
 
     @Override
-    public List<BillsDetailsB> getBillsDetails() {
-        final BillsDetailsResult result = _billsDetailsResource.getBillsDetails();
-        final List<BillsDetailsDTO> cList = null == result.getBillsDetails() ? new ArrayList<BillsDetailsDTO>() : result.getBillsDetails();
+    public List<BillsDetailsB> getBillsDetails() throws ParseException {
+        final BillDetailResult result = _billsDetailsResource.getBillsDetails();
+        final List<BillDetailDTO> cList = null == result.getBillsDetails() ? new ArrayList<BillDetailDTO>() : result.getBillsDetails();
         final List<BillsDetailsB> bills = new ArrayList<BillsDetailsB>();
-        for (BillsDetailsDTO dto : cList) {
+        for (BillDetailDTO dto : cList) {
             bills.add(convertDtoToBean(dto));
         }
         return bills;

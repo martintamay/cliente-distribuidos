@@ -1,31 +1,31 @@
 package com.sma.delivery.rest.promotions;
-import com.sma.delivery.dto.promotions.PromotionsResult;
-import com.sma.delivery.dto.promotions.PromotionsDTO;
+import com.sma.delivery.dto.promotions.PromotionResult;
+import com.sma.delivery.dto.promotions.PromotionDTO;
 import com.sma.delivery.rest.base.BaseResourceImpl;
 import org.springframework.stereotype.Repository;
 @Repository("promotionsResource")
-public class PromotionsResourceImpl extends BaseResourceImpl<PromotionsDTO> implements IPromotionsResource {
+public class PromotionsResourceImpl extends BaseResourceImpl<PromotionDTO> implements IPromotionsResource {
 
     public PromotionsResourceImpl() {
-        super(PromotionsDTO.class, "/promotions");
+        super(PromotionDTO.class, "/promotions");
     }
 
     @Override
-    public PromotionsResult getAll(Integer page) {
+    public PromotionResult getAll(Integer page) {
         setWebResourceBasicAuthFilter();
-        final PromotionsResult result = getWebResource().path("/"+page+"/"+20).get(PromotionsResult.class);
+        final PromotionResult result = getWebResource().path("/"+page+"/"+20).get(PromotionResult.class);
         return result;
     }
 
     @Override
-    public PromotionsResult find(String text, Integer page) {
-        final PromotionsResult result = getWebResource().path("/search/"+page+"/"+3+"/"+text).get(PromotionsResult.class);
+    public PromotionResult find(String text, Integer page) {
+        final PromotionResult result = getWebResource().path("/search/"+page+"/"+3+"/"+text).get(PromotionResult.class);
         return result;
     }
 
     @Override
-    public PromotionsResult getPromotions() {
-        return getWebResource().path("/" + 1 + "/" + 200).get(PromotionsResult.class);
+    public PromotionResult getPromotions() {
+        return getWebResource().path("/" + 1 + "/" + 200).get(PromotionResult.class);
 
     }
 

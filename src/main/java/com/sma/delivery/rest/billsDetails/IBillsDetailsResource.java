@@ -1,14 +1,14 @@
 package com.sma.delivery.rest.billsDetails;
 
-import com.sma.delivery.dto.billsDetails.BillsDetailsDTO;
-import com.sma.delivery.dto.billsDetails.BillsDetailsResult;
+import com.sma.delivery.dto.bills_details.BillDetailDTO;
+import com.sma.delivery.dto.bills_details.BillDetailResult;
 import com.sma.delivery.rest.base.IBaseResource;
 
-public interface IBillsDetailsResource extends IBaseResource<BillsDetailsDTO> {
+public interface IBillsDetailsResource extends IBaseResource<BillDetailDTO> {
 
-    public BillsDetailsResult find(String text, Integer page);
-    public BillsDetailsResult getAll(Integer page);
-    public BillsDetailsResult getBillsDetails();
+    public BillDetailResult find(String text, Integer page);
+    public BillDetailResult getAll(Integer page);
+    public BillDetailResult getBillsDetails();
 
 
 }

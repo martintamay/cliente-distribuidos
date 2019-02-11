@@ -1,11 +1,11 @@
-package delivery.promotions
+package delivery.promotion
 
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(PromotionsController)
-@Mock(Promotions)
-class PromotionsControllerSpec extends Specification {
+@TestFor(PromotionController)
+@Mock(Promotion)
+class PromotionControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class PromotionsControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.promotionsList
-            model.promotionsCount == 0
+            !model.promotionList
+            model.promotionCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,7 +30,7 @@ class PromotionsControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.promotions!= null
+            model.promotion!= null
     }
 
     void "Test the save action correctly persists an instance"() {
@@ -38,25 +38,25 @@ class PromotionsControllerSpec extends Specification {
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
             request.method = 'POST'
-            def promotions = new Promotions()
-            promotions.validate()
-            controller.save(promotions)
+            def promotion = new Promotion()
+            promotion.validate()
+            controller.save(promotion)
 
         then:"The create view is rendered again with the correct model"
-            model.promotions!= null
+            model.promotion!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            promotions = new Promotions(params)
+            promotion = new Promotion(params)
 
-            controller.save(promotions)
+            controller.save(promotion)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/promotions/show/1'
+            response.redirectedUrl == '/promotion/show/1'
             controller.flash.message != null
-            Promotions.count() == 1
+            Promotion.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -68,11 +68,11 @@ class PromotionsControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def promotions = new Promotions(params)
-            controller.show(promotions)
+            def promotion = new Promotion(params)
+            controller.show(promotion)
 
         then:"A model is populated containing the domain instance"
-            model.promotions == promotions
+            model.promotion == promotion
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -84,11 +84,11 @@ class PromotionsControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def promotions = new Promotions(params)
-            controller.edit(promotions)
+            def promotion = new Promotion(params)
+            controller.edit(promotion)
 
         then:"A model is populated containing the domain instance"
-            model.promotions == promotions
+            model.promotion == promotion
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -98,28 +98,28 @@ class PromotionsControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/promotions/index'
+            response.redirectedUrl == '/promotion/index'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def promotions = new Promotions()
-            promotions.validate()
-            controller.update(promotions)
+            def promotion = new Promotion()
+            promotion.validate()
+            controller.update(promotion)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.promotions == promotions
+            model.promotion == promotion
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            promotions = new Promotions(params).save(flush: true)
-            controller.update(promotions)
+            promotion = new Promotion(params).save(flush: true)
+            controller.update(promotion)
 
         then:"A redirect is issued to the show action"
-            promotions != null
-            response.redirectedUrl == "/promotions/show/$promotions.id"
+            promotion != null
+            response.redirectedUrl == "/promotion/show/$promotion.id"
             flash.message != null
     }
 
@@ -130,23 +130,23 @@ class PromotionsControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/promotions/index'
+            response.redirectedUrl == '/promotion/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def promotions = new Promotions(params).save(flush: true)
+            def promotion = new Promotion(params).save(flush: true)
 
         then:"It exists"
-            Promotions.count() == 1
+            Promotion.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(promotions)
+            controller.delete(promotion)
 
         then:"The instance is deleted"
-            Promotions.count() == 0
-            response.redirectedUrl == '/promotions/index'
+            Promotion.count() == 0
+            response.redirectedUrl == '/promotion/index'
             flash.message != null
     }
 }
