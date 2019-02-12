@@ -50,6 +50,10 @@ dependencies {
     compile fileTree(dir: 'lib', include: 'delivery.jar')
     compile fileTree(dir: 'lib', include: 'jersey-bundle-1.14.jar')
     compile fileTree(dir: 'lib', include: 'jersey-spring-1.9.1.jar')
+    compile fileTree(dir: 'lib', include: 'xmemcached-2.0.0.jar')
+    compile fileTree(dir: 'lib', include: 'xmemcached-provider-3.5.0.jar')
+    compile fileTree(dir: 'lib', include: 'simple-spring-memcached-3.5.0.jar')
+    compile fileTree(dir: 'lib', include: 'spring-cache-3.5.0.jar')
 }
 
 bootRun {
