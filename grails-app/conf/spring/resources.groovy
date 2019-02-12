@@ -1,8 +1,11 @@
 // Place your Spring DSL code here
 
+
+import com.sma.delivery.rest.ingredients.IngredientsResourceImpl
 import com.sma.delivery.rest.promotions.PromotionsResourceImpl
 import com.sma.delivery.rest.user.UserResourceImpl
 import com.sma.delivery.service.auth.AuthServiceImpl
+import com.sma.delivery.service.ingredients.IngredientsServiceImpl
 import com.sma.delivery.service.promotions.PromotionsServiceImpl
 import com.sma.delivery.service.user.UserServiceImpl
 import com.sma.delivery.rest.order.OrderResourceImpl
@@ -27,7 +30,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver
 beans = {
     myAuthenticationProvider(MyAuthenticationProvider) {
     }
-
+    ingredientsResource(IngredientsResourceImpl)
+    ingredientsService(IngredientsServiceImpl)
     userResource(UserResourceImpl)
     userService(UserServiceImpl)
     orderResource(OrderResourceImpl)

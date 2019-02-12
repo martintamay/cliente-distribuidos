@@ -10,12 +10,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PackagesResourceImpl extends BaseResourceImpl<PackageDTO> implements IPackagesResource {
 
     public PackagesResourceImpl() {
-        super(PackageDTO.class, "/package");
+        super(PackageDTO.class, "/packages");
     }
 
     @Override
     public PackageResult getAll(Integer page) {
-        final PackageResult result = getWebResource().path("/"+page+"/"+20).get(PackageResult.class);        return result;
+        final PackageResult result = getWebResource().path("/"+page+"/"+3).get(PackageResult.class);        return result;
     }
 
     @Override

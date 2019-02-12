@@ -27,26 +27,16 @@ public class PackagesB extends BaseBean {
         this.cost = cost;
     }
 
-
-
-
-
-
-
-
-
-
     public PackagesB(Map<String, String> params)  {
         super(params);
     }
+
     @Override
     protected void create(Map<String, String> params) {
         if (!StringUtils.isBlank(params.get("id"))) {
             setId(Integer.valueOf(params.get("id")));
         }
-
-
-      System.out.print(  params.get("name"));
+        setName(params.get("name"));
 
         if (!StringUtils.isBlank(params.get("cost"))) {
             setCost(Integer.valueOf(params.get("cost")));

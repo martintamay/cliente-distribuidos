@@ -17,11 +17,7 @@ class ProductsController {
     def list(Integer max){
         def products
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
-        if(params['text']!=null){
-            products = productsService.find(params['text']);
-        }else{
-            products = productsService.getAll(page)
-        }
+        products = productsService.getAll(page)
         def next = productsService.getAll(page+1).size();
         [productsInstanceList: products, productsInstanceTotal: products?.size(),page: page,next:next]
     }

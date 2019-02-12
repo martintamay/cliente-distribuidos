@@ -41,10 +41,10 @@ public class PackagesServiceImpl extends BaseServiceImpl<PackagesB, PackageDTO> 
     @Override
     public List<PackagesB> getAll(Integer page)  {
         final PackageResult result = _packagesResource.getAll(page);
-        final List<PackageDTO> cList = null == result.getPackages() ? new ArrayList<PackageDTO>()
+        final List<PackageDTO> cList = null == result.getPackages() ? new ArrayList<>()
                 : result.getPackages();
 
-        final List<PackagesB> users = new ArrayList<PackagesB>();
+        final List<PackagesB> users = new ArrayList<>();
         for (PackageDTO dto : cList) {
             final PackagesB bean = convertDtoToBean(dto);
             users.add(bean);
@@ -54,7 +54,7 @@ public class PackagesServiceImpl extends BaseServiceImpl<PackagesB, PackageDTO> 
     @Override
     public List<PackagesB> find(String text, Integer page)  {
         final PackageResult result = _packagesResource.find(text, page);
-        final List<PackageDTO> cList = null == result.getPackages() ? new ArrayList<PackageDTO>()
+        final List<PackageDTO> cList = null == result.getPackages() ? new ArrayList<>()
                 : result.getPackages();
 
         final List<PackagesB> users = new ArrayList<PackagesB>();

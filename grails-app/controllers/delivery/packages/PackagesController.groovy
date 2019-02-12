@@ -10,21 +10,15 @@ class PackagesController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
 
     //services
-    def IPackagesService packagesService
+    IPackagesService packagesService
 
     def index(){
         redirect(action: "list", id:1,)
     }
 
     def list(Integer max){
-        getPrincipal().properties.each{ k, v -> println "${k}:${v}" }
-        def packages
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
-        if(params['text']!=null){
-            packages = packagesService.find(params['text']);
-        }else{
-            packages = packagesService.getAll(page)
-        }
+        def packages = packagesService.getAll(page)
         def next = packagesService.getAll(page+1).size();
         [packagesInstanceList: packages, packagesInstanceTotal: packages?.size(),page: page,next:next]
     }
