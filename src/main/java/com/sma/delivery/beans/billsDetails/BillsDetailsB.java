@@ -54,22 +54,16 @@ public class BillsDetailsB extends BaseBean{
 
             }
 
-            if (!StringUtils.isBlank(params.get("iva10"))) {
-                setIva10(Integer.valueOf(params.get("iva10")));
-
-            }
-
             if (!StringUtils.isBlank(params.get("amount"))) {
                 setAmount(Integer.valueOf(params.get("amount")));
 
             }
 
-
-
-
+            if (!StringUtils.isBlank(params.get("iva"))) {
+                setIva10(Integer.valueOf(params.get("iva")));
+            }
 
         }
-
 
     }
 

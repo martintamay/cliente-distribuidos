@@ -6,11 +6,13 @@ import com.sma.delivery.rest.base.BaseResourceImpl;
 import com.sma.delivery.rest.billsDetails.IBillsDetailsResource;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 @Repository("billsDetailsResource")
 public class BillsDetailsResourceImpl extends BaseResourceImpl<BillDetailDTO> implements IBillsDetailsResource {
 
     public BillsDetailsResourceImpl() {
-        super(BillDetailDTO.class, "/billsDetails");
+        super(BillDetailDTO.class, "/bill-details");
     }
 
     @Override
@@ -33,7 +35,11 @@ public class BillsDetailsResourceImpl extends BaseResourceImpl<BillDetailDTO> im
     @Override
     public BillDetailResult getBillsDetails() {
         return getWebResource().path("/" + 1 + "/" + 200).get(BillDetailResult.class);
+    }
 
+    @Override
+    public BillDetailResult getAllBy(Map<String, String> args) {
+        return getWebResource().path("/billId/" +args.get("billId")).get(BillDetailResult.class);
     }
 
 }

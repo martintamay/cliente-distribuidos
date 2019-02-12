@@ -19,20 +19,12 @@
             </g:eachError>
         </ul>
     </g:hasErrors>
-    <div class="card">
-        <div class="card-body">
+    <div class="card container">
+        <div class="card-body ">
             <h3>Crear Cuenta</h3>
-            <hr>
-            <g:form action="save" >
-                <fieldset class="form">
+                <fieldset class="form" enctype='application/json'>
                     <g:render template="form"/>
                 </fieldset>
-                <hr>
-                <fieldset class="btn-group">
-                    <g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" >Crear</g:submitButton>
-                    <g:link class="btn btn-secondary" action="list">Lista de Cuentas</g:link>
-                </fieldset>
-            </g:form>
         </div>
     </div>
 </div>

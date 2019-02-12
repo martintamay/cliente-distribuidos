@@ -6,7 +6,11 @@ import com.sma.delivery.service.base.IBaseService;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface IBillsDetailsService extends IBaseService<BillsDetailsB, BillDetailDTO> {
     public List<BillsDetailsB> getBillsDetails() throws ParseException;
+    public BillDetailDTO convertBeanToDto(BillsDetailsB bean);
+    public Set<BillsDetailsB> getAllBy(Map<String, String> args);
 }

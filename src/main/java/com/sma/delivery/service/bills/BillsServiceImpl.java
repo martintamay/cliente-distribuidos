@@ -1,9 +1,13 @@
 package com.sma.delivery.service.bills;
 
 import com.sma.delivery.beans.bills.BillsB;
+import com.sma.delivery.beans.billsDetails.BillsDetailsB;
 import com.sma.delivery.dto.bills.BillDTO;
 import com.sma.delivery.dto.bills.BillResult;
+import com.sma.delivery.dto.bills_details.BillDetailDTO;
 import com.sma.delivery.service.base.BaseServiceImpl;
+import com.sma.delivery.service.billsDetails.IBillsDetailsService;
+import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.bills.IBillsResource;
@@ -11,10 +15,7 @@ import com.sma.delivery.service.order.IOrderService;
 
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("billsService")
 public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implements IBillsService {
@@ -24,6 +25,9 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
 
     @Autowired
     private IOrderService _orderService;
+
+    @Autowired
+    private IBillsDetailsService _billsDetailsService;
     public BillsServiceImpl() {
     }
 
@@ -78,14 +82,25 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
     }
 
     @Override
-    protected BillsB convertDtoToBean(BillDTO dto)  {
+    protected BillsB convertDtoToBean(BillDTO dto) {
         final Map<String, String> params = new HashMap<String, String>();
-        params.put("id", String.valueOf(dto.getId()));
-        params.put("total", dto.getTotal());
-        params.put("iva10", String.valueOf(dto.getIva()));
-
+        JSONObject bills = new JSONObject();
+        bills.put("id",String.valueOf(dto.getId()));
+        bills.put("total",dto.getTotal());
+        bills.put("iva10", String.valueOf(dto.getIva()));
+        JSONObject billsParams = new JSONObject();
+        billsParams.put("bill",bills);
+        List<JSONObject> details = new ArrayList<>();
+        for (BillDetailDTO detailsB: dto.getBillsDetails()){
+            JSONObject tmp = new JSONObject();
+            tmp.put("id",detailsB.getId());
+            tmp.put("iva10", detailsB.getIva());
+            tmp.put("amount",detailsB.getAmount());
+            details.add(tmp);
+        }
+        billsParams.put("BillsDetails",details.toString());
+        params.put("bill",billsParams.toString());
         final BillsB billsB = new BillsB(params);
-
         billsB.setOrder(_orderService.getById(dto.getOrderId()));
         return billsB;
     }
@@ -93,11 +108,16 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
     @Override
     protected BillDTO convertBeanToDto(BillsB bean) {
         final BillDTO dto = new BillDTO();
+
         dto.setId(bean.getId());
         dto.setTotal(bean.getTotal());
         dto.setIva(bean.getIva10());
         dto.setOrderId(bean.getOrder().getId());
-
+        Set<BillDetailDTO> detailsDTO = new HashSet<>();
+        for(BillsDetailsB detailsB: bean.getDetails()){
+            detailsDTO.add(_billsDetailsService.convertBeanToDto(detailsB));
+        }
+        dto.setBillsDetails(detailsDTO);
         return dto;
     }
 

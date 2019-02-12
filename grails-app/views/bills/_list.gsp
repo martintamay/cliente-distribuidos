@@ -21,8 +21,8 @@
 
 
              <td>
-                            ${fieldValue(bean: billsInstance, field: "iva10")}
-                        </td>
+                 ${fieldValue(bean: billsInstance, field: "iva10")}
+             </td>
 
 
             <td>

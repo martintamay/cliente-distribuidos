@@ -11,10 +11,7 @@ import com.sma.delivery.service.bills.IBillsService;
 
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("billsService")
 public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, BillDetailDTO> implements IBillsDetailsService {
@@ -82,8 +79,7 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
         final Map<String, String> params = new HashMap<String, String>();
         params.put("id", String.valueOf(dto.getId()));
         params.put("amount", String.valueOf(dto.getAmount()));
-        params.put("iva10", String.valueOf(dto.getIva()));
-
+        params.put("iva", String.valueOf(dto.getIva()));
         final BillsDetailsB billsDetailsB = new BillsDetailsB(params);
 
         billsDetailsB.setBills(_billsService.getById(dto.getBill()));
@@ -91,11 +87,12 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
     }
 
     @Override
-    protected BillDetailDTO convertBeanToDto(BillsDetailsB bean) {
+    public BillDetailDTO convertBeanToDto(BillsDetailsB bean) {
         final BillDetailDTO dto = new BillDetailDTO();
         dto.setId(bean.getId());
         dto.setAmount(bean.getAmount());
-        dto.setIva10(bean.getIva10());
+        dto.setIva(bean.getIva10());
+        if(bean.getBills() != null)
         dto.setBill(bean.getBills().getId());
 
         return dto;
@@ -110,6 +107,19 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
             bills.add(convertDtoToBean(dto));
         }
         return bills;
+    }
+
+    @Override
+    public Set<BillsDetailsB> getAllBy(Map<String, String> args) {
+        final BillDetailResult result = _billsDetailsResource.getAllBy(args);
+        final List<BillDetailDTO> cList = null == result.getBillsDetails() ? new ArrayList<>()
+                : result.getBillsDetails();
+        final Set<BillsDetailsB> billsDetails = new HashSet<>();
+        for (BillDetailDTO dto : cList) {
+            final BillsDetailsB billDetail = convertDtoToBean(dto);
+            billsDetails.add(billDetail);
+        }
+        return billsDetails;
     }
 }
 
