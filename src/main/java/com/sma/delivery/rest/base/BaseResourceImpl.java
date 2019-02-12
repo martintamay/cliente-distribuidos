@@ -26,14 +26,18 @@ public abstract class BaseResourceImpl<DTO extends BaseDTO> implements IBaseReso
         _webResource = new ConfiguredWebResource(jerseyClient.resource(_resourcePath));
     }
 
-    protected ConfiguredWebResource getWebResource() {
+    protected ConfiguredWebResource getWebResource(boolean withAuth) {
+        if (withAuth) setWebResourceBasicAuthFilter();
         return _webResource;
+    }
+    protected ConfiguredWebResource getWebResource() {
+        return getWebResource(true);
     }
 
     public void setWebResourceBasicAuthFilter(){
         String u = authService.getUsername();
         String p = authService.getPassword();
-
+        System.out.println(String.format("Conectando con usuario %s", u));
         _webResource.addFilter(new HTTPBasicAuthFilter(u,p));
     }
 
