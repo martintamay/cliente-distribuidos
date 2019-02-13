@@ -1,7 +1,6 @@
 package delivery.packages
 
-import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
+
 
 import com.sma.delivery.beans.packages.PackagesB
 import com.sma.delivery.service.packages.IPackagesService
@@ -15,23 +14,25 @@ class PackagesController {
     def index(){
         redirect(action: "list", id:1,)
     }
-
     def list(Integer max){
+        def packages
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
-        def packages = packagesService.getAll(page)
+        if(params['text']!=null){
+            packages = packagesService.find(params['text']);
+        }else{
+            packages = packagesService.getAll(page)
+        }
         def next = packagesService.getAll(page+1).size();
         [packagesInstanceList: packages, packagesInstanceTotal: packages?.size(),page: page,next:next]
     }
-
     def create() {
         [packagesInstance: new PackagesB(params)]
     }
-
     def save() {
         def packagesInstance = new PackagesB(params)
         def newPackages = packagesService.save(packagesInstance)
         if (!newPackages?.getId()) {
-            render(view: "create", model: [packagesInstance: packagesInstance])
+            render(view: "create", model: [packagesInstance: packagesService])
             return
         }
 
@@ -67,14 +68,13 @@ class PackagesController {
         redirect(action: "list")
     }
 
-    def search(String text,Integer page){
-        def packages = packagesService.find(text,page);
-        def next = packagesService.find(text,page+1).size();
-        render(view: "_list", model: [packagesInstanceList: packages ,next: next,page: page])
+    def search(String text){
+        def packages = packagesService.find(text);
+        render(view: "_list", model: [packagesInstanceList: packages])
     }
     def show(Integer id){
         def packagesInstance = packagesService.getById(id)
-        [packahesInstance: packagesInstance]
+        [packagesInstance: packagesInstance]
     }
-
 }
+

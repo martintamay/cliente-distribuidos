@@ -2,8 +2,8 @@
     <thead class="thead-dark">
     <tr >
 
-        <g:sortableColumn property="Name" title="Name" />
-        <g:sortableColumn property="Cost" title="Cost" />
+        <g:sortableColumn property="name" title="Name" />
+        <g:sortableColumn property="cost" title="Cost" />
 
         <th></th>
 

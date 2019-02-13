@@ -1,11 +1,10 @@
 package com.sma.delivery.rest.packages;
 
 import org.springframework.stereotype.Repository;
-
 import com.sma.delivery.dto.packages.PackageDTO;
 import com.sma.delivery.dto.packages.PackageResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
-import javax.xml.bind.annotation.XmlRootElement;
+
 @Repository("packagesResource")
 public class PackagesResourceImpl extends BaseResourceImpl<PackageDTO> implements IPackagesResource {
 
@@ -15,7 +14,8 @@ public class PackagesResourceImpl extends BaseResourceImpl<PackageDTO> implement
 
     @Override
     public PackageResult getAll(Integer page) {
-        final PackageResult result = getWebResource().path("/"+page+"/"+3).get(PackageResult.class);        return result;
+        final PackageResult result = getWebResource().path("/"+page+"/"+20).get(PackageResult.class);
+        return result;
     }
 
     @Override

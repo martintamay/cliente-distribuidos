@@ -1,14 +1,14 @@
-<%@ page import="delivery.order.Order" %>
+<%@ page import="delivery.ingredients.Ingredients" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="layout" content="main">
-    <g:set var="entityName" value="${message(code: 'order.label', default: 'Order')}" />
-    <title>Agregar Orden</title>
+    <g:set var="entityName" value="${message(code: 'ingredients.label', default: 'Ingredients')}" />
+    <title>Agregar Ingrediente</title>
 </head>
 <body>
-<a href="#create-order" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-<div id="create-order" class="container padding-menu" role="main">
+<a href="#create-ingredients" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+<div id="create-ingredients" class="container padding-menu" role="main">
     <g:if test="${flash.message}">
         <div class="alert alert-info" role="status">${flash.message}</div>
     </g:if>
