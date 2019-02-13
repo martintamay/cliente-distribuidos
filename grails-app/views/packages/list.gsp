@@ -1,10 +1,11 @@
+
 <%@ page import="delivery.packages.Packages" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'packages.label', default: 'Packages')}" />
-    <title>Lista de Usuarios</title>
+    <title>Lista de Ingredientes</title>
 </head>
 <body>
 <a href="#list-packages" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -21,7 +22,7 @@
             <div class="row">
                 <div class="col">
                     <div class="input-group mb-3">
-                        <div id="search_tagsugg">
+                        <div id="search_tag">
                             <input type="text" class="search form-control" id="text" name="text" autocomplete="off" aria-describedby="search">
                         </div>
                     </div>
@@ -30,13 +31,11 @@
             <fieldset class="form">
                 <g:render template="list"/>
             </fieldset>
-            <g:if test="${page>1}"> <g:link class="btn btn-secondary btn-sm pag-list " style="align: center;" action="list" id="${page-1}"><i class="fa fa-step-backward" aria-hidden="true"></i></g:link></g:if>
-            <g:if test="${next>0}"><g:link class="btn btn-secondary btn-sm pag-list" style="align: center;" action="list" id="${page+1}"><i class="fa fa-step-forward" aria-hidden="true"></i></g:link></g:if>
-            <button class="btn btn-secondary btn-sm pag-search fa fa-step-backward" id="search-back"></button>
-            <button class="btn btn-secondary btn-sm pag-search fa fa-step-forward" id="search-next"></button>
             <div class="btn-group">
-                <g:link class="btn btn-primary" action="create">Nuevo Usuario</g:link>
+                <g:link class="btn btn-primary" action="create">Nuevo Ingrediente</g:link>
             </div>
+            <g:if test="${page>1}"> <g:link style="align: center;" action="list" id="${page-1}">Back</g:link></g:if>
+            <g:if test="${next>0}"><g:link style="align: center;" action="list" id="${page+1}">Next</g:link></g:if>
         </div>
     </div>
 </div>

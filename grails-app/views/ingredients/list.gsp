@@ -1,4 +1,4 @@
-<%@ page import="delivery.order.Order" %>
+<%@ page import="delivery.ingredients.Ingredients" %>
 <!DOCTYPE html>
 <html>
 <head>

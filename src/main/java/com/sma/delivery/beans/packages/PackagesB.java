@@ -41,10 +41,6 @@ public class PackagesB extends BaseBean {
         if (!StringUtils.isBlank(params.get("cost"))) {
             setCost(Integer.valueOf(params.get("cost")));
         }
-
-
-
-
     }
 
 }
