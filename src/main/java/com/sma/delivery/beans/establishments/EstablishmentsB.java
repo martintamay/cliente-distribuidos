@@ -78,7 +78,7 @@ public class EstablishmentsB extends BaseBean {
         if (!StringUtils.isBlank(params.get("id"))) {
             setId(Integer.valueOf(params.get("id")));
         }
-        System.out.print(params.get("name"));
+        setName(params.get("name"));
         setDescription(params.get("description"));
         setAddress (params.get("address"));
         setEmail(params.get("email"));
