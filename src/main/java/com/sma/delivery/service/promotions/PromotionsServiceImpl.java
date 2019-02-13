@@ -96,7 +96,7 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
 
         dto.setId(bean.getId());
         dto.setName(bean.getName());
-        dto.setEndDate( bean.getEnd_date());
+        dto.setEndDate( bean.getEnd_date().toString());
         dto.setAvailable(bean.getAvailable());
         return dto;
     }

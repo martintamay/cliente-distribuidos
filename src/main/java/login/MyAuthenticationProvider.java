@@ -82,6 +82,7 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 		List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
 
 		final Set<RoleB> roles = user.getRoles();
+		System.out.println("Revisando roles");
 		if(roles!=null){
 			System.out.print("Roles del usuario " + user.getEmail() + " ");//TODO: Borrar
 			for (RoleB roleB : roles) {
