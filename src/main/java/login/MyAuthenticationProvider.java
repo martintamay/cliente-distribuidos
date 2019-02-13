@@ -33,7 +33,7 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@Autowired
-	private IUserService _userService;
+	private IUserService userService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -74,8 +74,7 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 		}else throw new BadCredentialsException("Log in failed: El usuario especificado no existe");//Nunca salta porque la excepcion ya ocurre en UserB user = getUser(username);
 	}
 	private UserB getUser(String email) throws ParseException {
-		UserB userB = _userService.getByEmail(email);
-
+		UserB userB = userService.getByEmail(email);
 		return userB;
 	}
 
@@ -84,11 +83,11 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 
 		final Set<RoleB> roles = user.getRoles();
 		if(roles!=null){
-			System.out.print("Roles del usuario "+user.getEmail()+" ");//Borrar
+			System.out.print("Roles del usuario " + user.getEmail() + " ");//TODO: Borrar
 			for (RoleB roleB : roles) {
 
 				list.add(new SimpleGrantedAuthority(roleB.getAuthority()));
-				System.out.print(roleB.getAuthority()+" ");//Borrar
+				System.out.print(roleB.getAuthority()+" ");//TODO: Borrar
 			}
 		}
 
