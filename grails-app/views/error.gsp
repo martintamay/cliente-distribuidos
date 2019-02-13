@@ -51,9 +51,13 @@
             </div>
             <asset:image src="explosion.png" alt="Error 500 image" class="center"/>
         </div>
-        <div class="errors-container">
-            <h1>Eres "nosotros" eh? Aca tenés error para que lo arregles</h1>
-            <g:if env="development">
+
+
+
+
+        <g:if env="development">
+            <div class="errors-container">
+                <h1>Eres "nosotros" eh? Aca tenés el error para que lo arregles</h1>
                 <g:if test="${Throwable.isInstance(exception)}">
                     <g:renderException exception="${exception}" />
                 </g:if>
@@ -68,8 +72,8 @@
                         <li>Path: ${path}</li>
                     </ul>
                 </g:else>
-            </g:if>
-            <small>suerte con eso o.o</small>
-        </div>
+                <small>suerte con eso o.o</small>
+            </div>
+        </g:if>
     </body>
 </html>
