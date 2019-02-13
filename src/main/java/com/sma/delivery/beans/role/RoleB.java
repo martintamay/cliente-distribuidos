@@ -10,18 +10,18 @@ public class RoleB extends BaseBean {
 
 	private static final long serialVersionUID = 4680476902664047494L;
 
-	private String _authority;
+	private String name;
 
 	public RoleB(Map<String, String> params)  {
 		super(params);
 	}
 
-	public String getAuthority() {
-		return _authority;
+	public String getName() {
+		return name;
 	}
 
-	public void setAuthority(String _authority) {
-		this._authority = _authority;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class RoleB extends BaseBean {
 		if (!StringUtils.isBlank(params.get("id"))) {
 			setId(Integer.valueOf(params.get("id")));
 		}
-		setAuthority(params.get("authority"));
+		setName(params.get("name"));
 	}
 
 }

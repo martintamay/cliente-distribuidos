@@ -1,6 +1,9 @@
 package com.sma.delivery.service.user;
 
+import com.sma.delivery.beans.role.RoleB;
 import com.sma.delivery.beans.user.UserB;
+import com.sma.delivery.dto.roles.RoleDTO;
+import com.sma.delivery.dto.roles.RoleResult;
 import com.sma.delivery.dto.users.UserDTO;
 import com.sma.delivery.dto.users.UserResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
@@ -83,7 +86,24 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 		return null;
 	}
 
-	
+	@Override
+	public List<RoleB> getRoles(Integer userId) {
+		final RoleResult result = _userResource.getRoles(userId);
+		final List<RoleDTO> cList = null == result.getRoles() ? new ArrayList<>() : result.getRoles();
+		final List<RoleB> roles = new ArrayList<>();
+		for (RoleDTO dto : cList) {
+			roles.add(convertDtoToBean(dto));
+		}
+		return roles;
+	}
+
+	protected RoleB convertDtoToBean(RoleDTO dto)  {
+		final Map<String, String> params = new HashMap<String, String>();
+		params.put("id", String.valueOf(dto.getId()));
+		params.put("name", dto.getName());
+		final RoleB roleB = new RoleB(params);
+		return roleB;
+	}
 
 
 	@Override

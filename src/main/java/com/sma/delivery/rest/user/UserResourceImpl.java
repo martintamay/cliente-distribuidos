@@ -4,7 +4,9 @@ import org.springframework.stereotype.Repository;
 
 import com.sma.delivery.dto.users.UserDTO;
 import com.sma.delivery.dto.users.UserResult;
+import com.sma.delivery.dto.roles.RoleResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
+
 import javax.xml.bind.annotation.XmlRootElement;
 @Repository("userResource")
 @XmlRootElement(name = "userResult")
@@ -40,5 +42,11 @@ public class UserResourceImpl extends BaseResourceImpl<UserDTO> implements IUser
 	@Override
 	public UserResult getUsers() {
 		return getWebResource().path("/" + 1 + "/" + 200).get(UserResult.class);
+	}
+
+	@Override
+	public RoleResult getRoles(Integer userId) {
+		final RoleResult result = getWebResource(false).path("/"+userId+"/roles").get(RoleResult.class);
+		return result;
 	}
 }

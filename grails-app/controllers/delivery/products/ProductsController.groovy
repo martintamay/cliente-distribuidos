@@ -3,6 +3,7 @@ package delivery.products
 import com.sma.delivery.beans.products.ProductsB
 import com.sma.delivery.service.products.IProductsService
 import com.sma.delivery.service.establishments.IEstablishmentsService
+import grails.plugin.springsecurity.annotation.Secured
 
 
 class ProductsController {
@@ -14,6 +15,8 @@ class ProductsController {
     def index(){
         redirect(action: "list", id:1,)
     }
+
+    @Secured(["ROLE_Admin"])
     def list(Integer max){
         def products
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])

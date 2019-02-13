@@ -13,6 +13,7 @@ package login;
 import com.sma.delivery.beans.role.RoleB;
 import com.sma.delivery.beans.user.UserB;
 import com.sma.delivery.service.user.IUserService;
+import delivery.login.Role;
 import grails.plugin.springsecurity.userdetails.GrailsUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -31,7 +32,7 @@ import java.util.Set;
 
 class MyAuthenticationProvider implements AuthenticationProvider {
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	
+
 	@Autowired
 	private IUserService userService;
 
@@ -87,8 +88,22 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 			System.out.print("Roles del usuario " + user.getEmail() + " ");//TODO: Borrar
 			for (RoleB roleB : roles) {
 
-				list.add(new SimpleGrantedAuthority(roleB.getAuthority()));
-				System.out.print(roleB.getAuthority()+" ");//TODO: Borrar
+				list.add(new SimpleGrantedAuthority(roleB.getName()));
+				System.out.print(roleB.getName()+" ");//TODO: Borrar
+			}
+		} else {
+
+			try {
+			    List<RoleB> rolesList = userService.getRoles(user.getId());
+			    if (rolesList.isEmpty()) System.out.println("Roles vacíos por servicio");
+				for (RoleB roleB : rolesList) {
+
+					list.add(new SimpleGrantedAuthority("ROLE_"+roleB.getName()));
+					System.out.println("Rol>> ROLE_"+roleB.getName());//TODO: Borrar
+				}
+			} catch (ParseException e) {
+				//propoursly empy
+				System.out.println("Parsing error");
 			}
 		}
 
