@@ -8,10 +8,7 @@ import com.sma.delivery.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("ingredientsProductsService")
 public class IngredientsProductsServiceImpl extends BaseServiceImpl<IngredientsProductsB, IngredientsProductsDTO> implements IIngredientsProductsService {
@@ -78,6 +75,7 @@ public class IngredientsProductsServiceImpl extends BaseServiceImpl<IngredientsP
         final Map<String, String> params = new HashMap<String, String>();
         params.put("id", String.valueOf(dto.getId()));
         params.put("product", String.valueOf(dto.getProduct()));
+        params.put("amount", String.valueOf(dto.getAmount()));
         params.put("ingredient", String.valueOf(dto.getIngredient()));
 
         final IngredientsProductsB commentsB = new IngredientsProductsB(params);
@@ -86,11 +84,12 @@ public class IngredientsProductsServiceImpl extends BaseServiceImpl<IngredientsP
     }
 
     @Override
-    protected IngredientsProductsDTO convertBeanToDto(IngredientsProductsB bean) {
+    public IngredientsProductsDTO convertBeanToDto(IngredientsProductsB bean) {
         final IngredientsProductsDTO dto = new IngredientsProductsDTO();
         dto.setId(bean.getId());
         dto.setProduct(bean.getProduct());
         dto.setIngredient(bean.getIngredient());
+        dto.setAmount(bean.getAmount());
         return dto;
     }
 
@@ -101,6 +100,18 @@ public class IngredientsProductsServiceImpl extends BaseServiceImpl<IngredientsP
         final List<IngredientsProductsB> ingredientsProducts = new ArrayList<>();
         for (IngredientsProductsDTO dto : cList) {
             ingredientsProducts.add(convertDtoToBean(dto));
+        }
+        return ingredientsProducts;
+    }
+    @Override
+    public Set<IngredientsProductsB> getAllBy(Map<String, String> args) {
+        final IngredientsProductsResult result = _ingredientsProductsResource.getAllBy(args);
+        final List<IngredientsProductsDTO> cList = null == result.getIngredientsProducts() ? new ArrayList<>()
+                : result.getIngredientsProducts();
+        final Set<IngredientsProductsB> ingredientsProducts = new HashSet<>();
+        for (IngredientsProductsDTO dto : cList) {
+            final IngredientsProductsB billDetail = convertDtoToBean(dto);
+            ingredientsProducts.add(billDetail);
         }
         return ingredientsProducts;
     }

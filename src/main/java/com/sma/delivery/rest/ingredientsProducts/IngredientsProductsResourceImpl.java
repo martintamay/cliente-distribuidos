@@ -1,9 +1,12 @@
 package com.sma.delivery.rest.ingredientsProducts;
 
+import com.sma.delivery.dto.bills_details.BillDetailResult;
 import com.sma.delivery.dto.ingredients_products.IngredientsProductsDTO;
 import com.sma.delivery.dto.ingredients_products.IngredientsProductsResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
 import org.springframework.stereotype.Repository;
+
+import java.util.Map;
 
 @Repository("ingredientsProductsResource")
 public class IngredientsProductsResourceImpl extends BaseResourceImpl<IngredientsProductsDTO> implements IIngredientsProductsResource {
@@ -27,7 +30,11 @@ public class IngredientsProductsResourceImpl extends BaseResourceImpl<Ingredient
     @Override
     public IngredientsProductsResult getIngredientsProducts() {
         return getWebResource().path("/" + 1 + "/" + 200).get(IngredientsProductsResult.class);
+    }
 
+    @Override
+    public IngredientsProductsResult getAllBy(Map<String, String> args) {
+        return getWebResource().path("/productId/" +args.get("productId")).get(IngredientsProductsResult.class);
     }
 
 }

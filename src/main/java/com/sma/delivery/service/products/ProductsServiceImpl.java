@@ -1,28 +1,33 @@
 package com.sma.delivery.service.products;
 
+import com.sma.delivery.beans.ingredientsProducts.IngredientsProductsB;
 import com.sma.delivery.beans.products.ProductsB;
+import com.sma.delivery.dto.ingredients_products.IngredientsProductsDTO;
 import com.sma.delivery.dto.products.ProductDTO;
 import com.sma.delivery.dto.products.ProductResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.establishments.IEstablishmentsService;
+import com.sma.delivery.service.ingredientsProducts.IIngredientsProductsService;
+import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.products.IProductsResource;
 
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("productsService")
 public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> implements IProductsService {
 
     @Autowired
     private IProductsResource _productsResource;
+
     @Autowired
     private IEstablishmentsService _establishmentsService;
+
+    @Autowired
+    private IIngredientsProductsService _ingredientsProductsService;
 
     public ProductsServiceImpl() {
     }
@@ -80,13 +85,16 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
     @Override
     protected ProductsB convertDtoToBean(ProductDTO dto)  {
         final Map<String, String> params = new HashMap<String, String>();
-        params.put("id", String.valueOf(dto.getId()));
-        params.put("name", dto.getName());
-        params.put("description", dto.getDescription());
-        params.put("cost", String.valueOf(dto.getCost()));
+        JSONObject products = new JSONObject();
+        products.put("id",String.valueOf(dto.getId()));
+        products.put("name",dto.getName());
+        products.put("description",dto.getName());
+        products.put("cost",String.valueOf(dto.getCost()));
+        products.put("establishmentId", String.valueOf(dto.getEstablishmentId()));
+        JSONObject productParams = new JSONObject();
+        productParams.put("Product",products);
+        params.put("product",productParams.toString());
         final ProductsB productsB = new ProductsB(params);
-
-        productsB.setEstablishments(_establishmentsService.getById(dto.getEstablishmentId()));
         return productsB;
     }
 
@@ -98,8 +106,11 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
         dto.setDescription(bean.getDescription());
         dto.setCost(bean.getCost());
         dto.setEstablishmentId(bean.getEstablishments().getId());
-
-
+        Set<IngredientsProductsDTO> ingredientsProductsDTO = new HashSet<>();
+        for(IngredientsProductsB ingredientsProductsB: bean.getIngredientsProducts()){
+            ingredientsProductsDTO.add(_ingredientsProductsService.convertBeanToDto(ingredientsProductsB));
+        }
+        dto.setIngredientsProducts(ingredientsProductsDTO);
         return dto;
     }
 

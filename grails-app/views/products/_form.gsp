@@ -1,4 +1,4 @@
-<div class="form-group ${hasErrors(bean: productsInstance, field: 'name', 'error')} required">
+<div class="form-group master ${hasErrors(bean: productsInstance, field: 'name', 'error')} required">
     <label for="name">
         Nombre
         <span class="required-indicator">*</span>
@@ -6,14 +6,14 @@
     <g:textField name="name" maxlength="50" required="" value="${productsInstance?.name}" class="form-control"/>
 </div>
 
-<div class="form-group ${hasErrors(bean: productsInstance, field: 'description', 'error')} required">
+<div class="form-group master ${hasErrors(bean: productsInstance, field: 'description', 'error')} required">
     <label for="description">
         Descripcion
         <span class="required-indicator">*</span>
     </label>
     <g:textField name="description" maxlength="50" required="" value="${productsInstance?.description}" class="form-control"/>
 </div>
-<div class="form-group ${hasErrors(bean: productsInstance, field: 'cost', 'error')} required">
+<div class="form-group master ${hasErrors(bean: productsInstance, field: 'cost', 'error')} required">
     <label for="cost">
         Costo
         <span class="required-indicator">*</span>
@@ -21,7 +21,7 @@
     <g:textField name="cost" maxlength="50" required="" value="${productsInstance?.cost}" class="form-control"/>
 </div>
 
-<div class="form-group ${hasErrors(bean: productsInstance, field: 'establishments', 'error')} required">
+<div class="form-group master ${hasErrors(bean: productsInstance, field: 'establishments', 'error')} required">
     <label for="establishments">
         Establecimiento
         <span class="required-indicator">*</span>
@@ -41,31 +41,31 @@
         <tr>
             <th>#</th>
             <th>Amount</th>
-            <th>Product</th>
+            <th>Ingrediente</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <g:each in="${billsInstance.details}" status="i" var="billsDetailsInstance">
+        <g:each in="${productsInstance.ingredientsProducts}" status="i" var="detailsInstance">
             <tr class="data">
                 <th scope="row">${x++}</th>
 
                 <td style="display: none;">
                     <g:textField labelFor="id"    name="id" labelClass="hide"
-                                 inputMaxLength="10" value="${billsDetailsInstance?.id}" />
+                                 inputMaxLength="10" value="${detailsInstance?.id}" />
                 </td>
 
                 <td>
                     <g:textField labelFor="detail[amount]"    name="amount" labelClass="hide"
-                                 inputMaxLength="10" value="${billsDetailsInstance?.amount}" />
+                                 inputMaxLength="10" value="${detailsInstance?.amount}" />
                 </td>
 
                 <td>
-                    <g:textField labelFor="detail[iva]"    name="iva" labelClass="hide"
-                                 inputMaxLength="10" value="${billsDetailsInstance?.iva10}"/>
+                    <g:textField labelFor="detail[ingredient]"    name="ingredient" labelClass="hide"
+                                 inputMaxLength="10" value="${detailsInstance?.ingredient}"/>
                 </td>
                 <td>
-                    <button id="${billsDetailsInstance?.id}"  class="btn btn-danger delete">x</button>
+                    <button id="${detailsInstance?.id}"  class="btn btn-danger delete">x</button>
                 </td>
             </tr>
         </g:each>
@@ -79,7 +79,7 @@
     function setDeletes(){
         $(".delete").click(function() {
             $(this).parent().parent().remove();
-            url = "${createLink(controller: 'BillsDetails', action: 'delete')}"
+            url = "${createLink(controller: 'IngredientsProducts', action: 'delete')}"
             if($(this).attr('id') != "none"){
                 url += "/"+$(this).attr('id');
                 $.ajax({
@@ -98,17 +98,17 @@
         var rowCount = $('#myTable tr').length;
         var campos =  '' +
             '<tr class="data">' +
-'<th scope="row">'+rowCount+'</th>' +
-'<td class="col-md-3"><input type="text" name="amount"></td>' +
-'<td class="col-md-3"><input type="text" name="iva"></td>' +
-'<td><button id="none" class="btn btn-danger delete">x</button></td>' +
-'</tr>'
+            '<th scope="row">'+rowCount+'</th>' +
+            '<td class="col-md-3"><input type="text" name="amount"></td>' +
+            '<td class="col-md-3"><input type="text" name="ingredient"></td>' +
+            '<td><button id="none" class="btn btn-danger delete">x</button></td>' +
+            '</tr>'
         console.log("campo agregado");
         $('tbody').append(campos);
         setDeletes();
     })
     $('#save').click(function () {
-        var master = '{"bill":{';
+        var master = '{"Product":{';
         $('.master').each(function () {
             if($(this).find('input').attr("name") != undefined) {
                 master += '"'+$(this).find('input').attr("name")+'":';
@@ -122,7 +122,7 @@
         master += '}';
         var rowCount = $('#myTable tr').length;
         if(rowCount>1) {
-            var details = ',"BillsDetails":[';
+            var details = ',"IngredientsProducts":[';
             $(".data").each(function () {
                 details += '{';
                 $(this).find('td').each(function () {
@@ -140,9 +140,9 @@
         console.log(master);
         var url;
         if("${action}" == "update"){
-            url= "/bills/"+"${action}"+"/"+"${params.id}"
+            url= "/products/"+"${action}"+"/"+"${params.id}"
         }else {
-            url= "/bills/save"
+            url= "/products/save"
         }
         $.ajax({
             method:'post',

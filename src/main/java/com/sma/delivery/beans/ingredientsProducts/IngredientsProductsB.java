@@ -45,15 +45,15 @@ public class IngredientsProductsB extends BaseBean {
         }
 
         if (!StringUtils.isBlank(params.get("amount"))) {
-            setId(Integer.valueOf(params.get("amount")));
+            setAmount(Integer.valueOf(params.get("amount")));
         }
 
         if (!StringUtils.isBlank(params.get("product"))) {
-            setId(Integer.valueOf(params.get("product")));
+            setProduct(Integer.valueOf(params.get("product")));
         }
 
         if (!StringUtils.isBlank(params.get("ingredient"))) {
-            setId(Integer.valueOf(params.get("ingredient")));
+            setIngredient(Integer.valueOf(params.get("ingredient")));
         }
 
     }
