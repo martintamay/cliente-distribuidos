@@ -1,9 +1,10 @@
 package delivery.products
 
+import com.sma.delivery.beans.ingredientsProducts.IngredientsProductsB
 import com.sma.delivery.beans.products.ProductsB
 import com.sma.delivery.service.products.IProductsService
 import com.sma.delivery.service.establishments.IEstablishmentsService
-import grails.plugin.springsecurity.annotation.Secured
+import delivery.ingredientsProducts.IngredientsProducts
 
 
 class ProductsController {
@@ -24,13 +25,13 @@ class ProductsController {
         def next = productsService.getAll(page+1).size();
         [productsInstanceList: products, productsInstanceTotal: products?.size(),page: page,next:next]
     }
+
     def create() {
-        [productsInstance: new ProductsB(params),establishments: establishmentsService.getEstablishments()]
-
-
+        List<IngredientsProducts> ingredientsProducts = new ArrayList<>()
+        [productsInstance: new ProductsB(params),establishments: establishmentsService.getEstablishments(), ingredientesProducts:ingredientsProducts, action:'save']
     }
-    def save() {
 
+    def save() {
         def establishments = establishmentsService.getById(Integer.valueOf(params['establishments']))
         def newProducts = new ProductsB(params)
         newProducts.setEstablishments(establishments)

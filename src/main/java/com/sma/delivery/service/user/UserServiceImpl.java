@@ -7,10 +7,12 @@ import com.sma.delivery.dto.roles.RoleResult;
 import com.sma.delivery.dto.users.UserDTO;
 import com.sma.delivery.dto.users.UserResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
-
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,12 +29,17 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 	}
 
 	@Override
+	@CachePut(value="delivery-cacheC", key= "'userC_'+#user.id", condition = "#bean.id!=null")
 	public UserB save(UserB bean) throws ParseException {
 		final UserDTO user = convertBeanToDto(bean);
 		final UserDTO dto = _userResource.save(user);
 		final UserB userB = convertDtoToBean(dto);
+		if (bean.getId() == null) {
+			getCacheManager().getCache("delivery-cacheC").put("userC_" + dto.getId(), userB);
+		}
 		return userB;
 	}
+	@CacheEvict(value = "delivery-cache", key = "'userC_' + #id")
 	public void delete(Integer id){
 		_userResource.delete(id);
 	}
@@ -50,6 +57,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 		for (UserDTO dto : cList) {
 			final UserB bean = convertDtoToBean(dto);
 			users.add(bean);
+			if (bean.getId() != null) {
+				getCacheManager().getCache("delivery-cacheC").put("usersC_" + bean.getId(), bean);
+			}
 		}
 		return users;
 	}
@@ -63,6 +73,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 		for (UserDTO dto : cList) {
 			final UserB bean = convertDtoToBean(dto);
 			users.add(bean);
+			if (bean.getId() != null) {
+				getCacheManager().getCache("delivery-cacheC").put("usersC_" + bean.getId(), bean);
+			}
 		}
 		return users;
 	}
@@ -70,7 +83,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 
 
 	@Override
-	@Cacheable(value="client-delivery", key="'user_'+#root.methodName+'_'+#email")
 	public UserB getByEmail(String email)  {
 		final UserResult result = _userResource.getByEmail(email);
 		final List<UserDTO> cList = null == result.getUsers() ? new ArrayList<UserDTO>()
@@ -107,10 +119,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 
 
 	@Override
+	@Cacheable(value= "delivery-cacheC", key= "'usersC_'+#id")
 	public UserB getById(Integer id)  {
 		final UserDTO dto = _userResource.getById(id);
 		final UserB bean = convertDtoToBean(dto);
-
+		System.out.println("No cache");
 		return bean;
 	}
 
