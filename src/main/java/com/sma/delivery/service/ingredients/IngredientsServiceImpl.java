@@ -6,6 +6,9 @@ import com.sma.delivery.dto.ingredients.IngredientResult;
 import com.sma.delivery.rest.ingredients.IIngredientsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,15 +27,20 @@ public class IngredientsServiceImpl extends BaseServiceImpl<IngredientsB, Ingred
     }
 
     @Override
+    @CachePut(value="delivery-cacheC", key= "'commentsClients_'+#ingredients.id", condition = "#bean.id!=null")
     public IngredientsB save(IngredientsB bean)  {
         final IngredientDTO comments = convertBeanToDto(bean);
         final IngredientDTO dto = _ingredientsResource.save(comments);
 
         final IngredientsB commentsB = convertDtoToBean(dto);
+        if (bean.getId() == null) {
+            getCacheManager().getCache("delivery-cacheC").put("ingredientsClients_" + dto.getId(), commentsB);
+        }
         return commentsB;
     }
 
     @Override
+    @CacheEvict(value = "delivery-cacheC", key = "'ingredientsClients_' + #id")
     public void delete(Integer id){
         _ingredientsResource.delete(id);
     }
@@ -47,11 +55,15 @@ public class IngredientsServiceImpl extends BaseServiceImpl<IngredientsB, Ingred
         for (IngredientDTO dto : cList) {
             final IngredientsB bean = convertDtoToBean(dto);
             comments.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("ingredientsClients_" + dto.getId(), bean);
+            }
         }
         return comments;
     }
 
     @Override
+    @Cacheable(value= "delivery-cacheC", key= "'ingredientsClients_'+#id")
     public IngredientsB getById(Integer id)  {
         final IngredientDTO dto = _ingredientsResource.getById(id);
         final IngredientsB bean = convertDtoToBean(dto);
@@ -70,6 +82,9 @@ public class IngredientsServiceImpl extends BaseServiceImpl<IngredientsB, Ingred
         for (IngredientDTO dto : cList) {
             final IngredientsB bean = convertDtoToBean(dto);
             comments.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("ingredientsClients_" + dto.getId(), bean);
+            }
         }
         return comments;
     }

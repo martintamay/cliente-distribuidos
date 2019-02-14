@@ -7,6 +7,7 @@ import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.establishments.IEstablishmentsService;
 import com.sma.delivery.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.order.IOrderResource;
 import org.springframework.cache.annotation.CachePut;
@@ -31,14 +32,19 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 	}
 
 	@Override
+	@CachePut(value="delivery-cacheC", key= "'commentsClients_'+#order.id", condition = "#bean.id!=null")
 	public OrderB save(OrderB bean)  {
 		final OrderDTO order = convertBeanToDto(bean);
 		final OrderDTO dto = ordersResource.save(order);
 		final OrderB orderB = convertDtoToBean(dto);
+		if (bean.getId() == null) {
+			getCacheManager().getCache("delivery-cacheC").put("ordersClients_" + dto.getId(), orderB);
+		}
 		return orderB;
 	}
 
 	@Override
+	@CacheEvict(value = "delivery-cacheC", key = "'ordersClients_' + #id")
 	public void delete(Integer id){
 		ordersResource.delete(id);
 	}
@@ -52,6 +58,9 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 		for (OrderDTO dto : cList) {
 			final OrderB bean = convertDtoToBean(dto);
 			orders.add(bean);
+			if (bean.getId() != null) {
+				getCacheManager().getCache("delivery-cacheC").put("ordersClients_" + dto.getId(), bean);
+			}
 		}
 		return orders;
 	}
@@ -67,11 +76,15 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 		for (OrderDTO dto : cList) {
 			final OrderB bean = convertDtoToBean(dto);
 			orders.add(bean);
+			if (bean.getId() != null) {
+				getCacheManager().getCache("delivery-cacheC").put("ordersClients_" + dto.getId(), bean);
+			}
 		}
 		return orders;
 	}
 
 	@Override
+	@Cacheable(value= "delivery-cacheC", key= "'ordersClients_'+#id")
 	public OrderB getById(Integer id)  {
 		final OrderDTO dto = ordersResource.getById(id);
 		final OrderB bean = convertDtoToBean(dto);

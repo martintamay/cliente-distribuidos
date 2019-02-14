@@ -6,6 +6,9 @@ import com.sma.delivery.dto.comments.CommentResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.establishments.IEstablishmentsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.comments.ICommentsResource;
 import com.sma.delivery.service.user.IUserService;
@@ -30,15 +33,20 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentDTO> 
     }
 
     @Override
+    @CachePut(value="delivery-cacheC", key= "'commentsClients_'+#comment.id", condition = "#bean.id!=null")
     public CommentsB save(CommentsB bean)  {
         final CommentDTO comments = convertBeanToDto(bean);
         final CommentDTO dto = _commentsResource.save(comments);
 
         final CommentsB commentsB = convertDtoToBean(dto);
+        if (bean.getId() == null) {
+            getCacheManager().getCache("delivery-cacheC").put("commentsClients_" + dto.getId(), commentsB);
+        }
         return commentsB;
     }
 
     @Override
+    @CacheEvict(value = "delivery-cacheC", key = "'commentsClients_' + #id")
     public void delete(Integer id){
         _commentsResource.delete(id);
     }
@@ -53,11 +61,15 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentDTO> 
         for (CommentDTO dto : cList) {
             final CommentsB bean = convertDtoToBean(dto);
             comments.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("commentsClients_" + dto.getId(), bean);
+            }
         }
         return comments;
     }
 
     @Override
+    @Cacheable(value= "delivery-cacheC", key= "'commentsClients_'+#id")
     public CommentsB getById(Integer id)  {
         final CommentDTO dto = _commentsResource.getById(id);
         final CommentsB bean = convertDtoToBean(dto);
@@ -76,6 +88,9 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentDTO> 
         for (CommentDTO dto : cList) {
             final CommentsB bean = convertDtoToBean(dto);
             comments.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("commentsClients_" + dto.getId(), bean);
+            }
         }
         return comments;
     }

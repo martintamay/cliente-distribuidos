@@ -10,6 +10,9 @@ import com.sma.delivery.service.billsDetails.IBillsDetailsService;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 import com.sma.delivery.rest.bills.IBillsResource;
 import com.sma.delivery.service.order.IOrderService;
 
@@ -32,15 +35,20 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
     }
 
     @Override
+    @CachePut(value="delivery-cacheC", key= "'billsClients_'+#bills.id", condition = "#bean.id!=null")
     public BillsB save(BillsB bean)  {
         final BillDTO bills = convertBeanToDto(bean);
         final BillDTO dto = _billsResource.save(bills);
 
         final BillsB billsB = convertDtoToBean(dto);
+        if (bean.getId() == null) {
+            getCacheManager().getCache("delivery-cacheC").put("billsClients_" + dto.getId(), billsB);
+        }
         return billsB;
     }
 
     @Override
+    @CacheEvict(value= "delivery-cacheC", key="'billsClients_'+#id")
     public void delete(Integer id){
         _billsResource.delete(id);
     }
@@ -55,10 +63,14 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
         for (BillDTO dto : cList) {
             final BillsB bean = convertDtoToBean(dto);
             bills.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("billsClients_" + dto.getId(), bean);
+            }
         }
         return bills;
     }
     @Override
+    @Cacheable(value="delivery-cacheC", key= "'billsClients_'+#id")
     public BillsB getById(Integer id)  {
         final BillDTO dto = _billsResource.getById(id);
         final BillsB bean = convertDtoToBean(dto);
@@ -77,6 +89,9 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
         for (BillDTO dto : cList) {
             final BillsB bean = convertDtoToBean(dto);
             bills.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("billsClients_" + dto.getId(), bean);
+            }
         }
         return bills;
     }
