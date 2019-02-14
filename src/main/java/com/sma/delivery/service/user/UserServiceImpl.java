@@ -122,7 +122,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 
 
 	@Override
-	@Cacheable(value= "delivery-cache-cli", key= "'usersC_'+#id")
+	@Cacheable(value= "delivery-cacheC", key= "'usersC_'+#id")
 	public UserB getById(Integer id)  {
 		final UserDTO dto = _userResource.getById(id);
 		final UserB bean = convertDtoToBean(dto);
