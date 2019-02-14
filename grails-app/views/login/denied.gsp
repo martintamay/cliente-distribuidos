@@ -1,43 +1,51 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="es" dir="ltr">
 <head>
-	<meta name="layout" content="main"/>
-	<title>Acceso Denegado"</title>
+	<meta charset="utf-8">
+	<title>No tienes permitido acceder aquí</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Staatliches" rel="stylesheet">
+	<style media="screen" type="text/css">
+	html {
+		margin: 0;
+		padding: 7vh 0;
+		font-family: 'Roboto Mono', monospace;
+	}
+	h1 {
+		font-family: 'Staatliches', cursive;
+		text-align: center;
+	}
+	img {
+		max-height: 50vh;
+	}
+	code {
+		background: lightgray;
+		margin: 0px 4px;
+		padding: 2px 9px;
+		border-radius: 4px;
+	}
+	p {
+		text-align: center;
+	}
+	.body {
+		width: 100%;
+		height: 100%;
+	}
+	.center {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	</style>
 </head>
 <body>
-	<div class="container-fluid">
-		<div class="row">
-
-			<%-- SIDEBAR  --%>
-			<div class="col-sm-3 col-md-2 sidebar">
-
-				<%--
-				<ul class="nav nav-sidebar">
-					<li><a href="${createLink(uri: '/alumno')}">Secretaria</a></li>
-					<li><a href="">Docente</a></li>
-					<li><a href="">Estudiante</a></li>
-					<li><a href="">Administrador</a></li>
-				</ul>
-				--%>
-			</div>
-
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
-
-				<%-- CONTENT  --%>
-	      <div id="contenido">
-	        <div class="jumbotron">
-	          <h1>Lo sentimos</h1>
-	          <p class="lead">No estas autorizado para ver esta página</p>
-	          <p><g:link controller='secure' action='logout' class="btn btn-lg btn-success">Cerrar Sesion</g:link></p>
-	        </div>
-	      </div>
-				<%-- FOOTER
-				<g:render template="/layouts/footer"></g:render>  	--%>
-
-			</div>
-		</div>
+<div class="body">
+	<div class="center">
+		<h1>No tienes acceso a este recurso</h1>
+		<p>¿Qué haces en <code id="enlace">${request.forwardURI}</code>?<br>¿Quién te dió permiso de venir aca?</p>
 	</div>
+	<div class="hidden" hidden>Hola de Martín</div>
+	<asset:image src="nopass.jpg" class="center" alt="Image for 404"/>
+</div>
 </body>
 </html>
-
