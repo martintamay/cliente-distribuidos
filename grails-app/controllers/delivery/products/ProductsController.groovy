@@ -16,6 +16,8 @@ class ProductsController {
     def index(){
         redirect(action: "list", id:1,)
     }
+
+    //@Secured(["ROLE_NO_ACCESS"])
     def list(Integer max){
         def products
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
