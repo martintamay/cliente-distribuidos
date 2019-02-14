@@ -29,17 +29,6 @@
                    de cache en los servicios, solo van a estar de adorno, la aplicacion,
                    se comunicará con el con memcached pero no lo va a usar -->
 		<cache:annotation-driven />
-		<context:component-scan base-package="com.sma.delivery.service">
-			<context:include-filter type="annotation" expression="org.springframework.cache.annotation.Cacheable"/>
-			<context:include-filter type="annotation" expression="org.springframework.cache.annotation.CachePut"/>
-			<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-
-		</context:component-scan>
-		<context:component-scan base-package="com.sma.delivery.rest">
-			<context:include-filter type="annotation" expression="org.springframework.cache.annotation.Cacheable"/>
-			<context:include-filter type="annotation" expression="org.springframework.cache.annotation.CachePut"/>
-			<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-		</context:component-scan>
 
 		<bean name="cacheManager" class="com.google.code.ssm.spring.SSMCacheManager">
 			<property name="caches">

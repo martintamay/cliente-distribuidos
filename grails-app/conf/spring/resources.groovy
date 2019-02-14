@@ -56,4 +56,6 @@ beans = {
     localeResolver(SessionLocaleResolver) {
         defaultLocale= new java.util.Locale('es');
     }
+
+    importBeans('file:grails-app/conf/cache/cacheConfig.xml')
 }

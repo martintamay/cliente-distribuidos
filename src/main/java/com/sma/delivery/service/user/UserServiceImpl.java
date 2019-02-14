@@ -39,7 +39,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 		}
 		return userB;
 	}
-	@CacheEvict(value = "delivery-cache", key = "'userC_' + #id")
+	@CacheEvict(value = "delivery-cacheC", key = "'userC_' + #id")
 	public void delete(Integer id){
 		_userResource.delete(id);
 	}
@@ -119,7 +119,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 
 
 	@Override
-	@Cacheable(value= "delivery-cacheC", key= "'usersC_'+#id")
+	@Cacheable(value= "delivery-cache-cli", key= "'usersC_'+#id")
 	public UserB getById(Integer id)  {
 		final UserDTO dto = _userResource.getById(id);
 		final UserB bean = convertDtoToBean(dto);

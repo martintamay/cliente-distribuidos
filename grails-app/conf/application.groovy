@@ -60,3 +60,5 @@ grails.plugin.springsecurity.providerNames = [
         'rememberMeAuthenticationProvider'
 ]
 println("Configuring security end\n\n")
+
+
