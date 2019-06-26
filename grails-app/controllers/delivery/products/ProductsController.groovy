@@ -66,7 +66,7 @@ class ProductsController {
         }
 
 
-        [productsInstance: productsInstance,ingredients: ingredientsService.getAll(1), establishments: establishmentsService.getEstablishments(), action:'update']
+        [productsInstance: productsInstance,ingredients: ingredientsService.getIngredients(), establishments: establishmentsService.getEstablishments(), action:'update']
 
     }
 
