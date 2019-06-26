@@ -29,8 +29,9 @@
     <g:select id="establishments" name="establishments" maxlength="50" from="${establishments}" optionKey="id" optionValue="name" required="" value="${productsInstance?.establishments?.id}" class="form-control"/>
 </div>
 
-
-
+    <div id="ingredients" style="display: none">
+        <g:select style="width: 200px" id="ingredient" name="ingredient" maxlength="50" from="${ingredients}" optionKey="id" optionValue="description" required=""  class="form-control"/>
+    </div>
 <fieldset class="form">
     <br>
     <h4>Detalles</h4>
@@ -40,8 +41,8 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>Amount</th>
             <th>Ingrediente</th>
+            <th>Cantidad</th>
             <th></th>
         </tr>
         </thead>
@@ -55,15 +56,15 @@
                                  inputMaxLength="10" value="${detailsInstance?.id}" />
                 </td>
 
-                <td>
+                <td class="col-2">
+                    <g:select style="width: 200px" id="ingredient" name="ingredient" maxlength="50" from="${ingredients}" optionKey="id" optionValue="description" value="${detailsInstance?.ingredient}" required=""  class="form-control"/>
+
+                </td>
+                <td class="col-2">
                     <g:textField labelFor="detail[amount]"    name="amount" labelClass="hide"
                                  inputMaxLength="10" value="${detailsInstance?.amount}" />
                 </td>
 
-                <td>
-                    <g:textField labelFor="detail[ingredient]"    name="ingredient" labelClass="hide"
-                                 inputMaxLength="10" value="${detailsInstance?.ingredient}"/>
-                </td>
                 <td>
                     <button id="${detailsInstance?.id}"  class="btn btn-danger delete">x</button>
                 </td>
@@ -99,11 +100,10 @@
         var campos =  '' +
             '<tr class="data">' +
             '<th scope="row">'+rowCount+'</th>' +
-            '<td class="col-md-3"><input type="text" name="amount"></td>' +
-            '<td class="col-md-3"><input type="text" name="ingredient"></td>' +
+            '<td class="col-2">'+$("#ingredients").html()+'</td>'+
+            '<td class="col-2"><input type="text" name="amount"></td>' +
             '<td><button id="none" class="btn btn-danger delete">x</button></td>' +
             '</tr>'
-        console.log("campo agregado");
         $('tbody').append(campos);
         setDeletes();
     })
@@ -126,8 +126,13 @@
             $(".data").each(function () {
                 details += '{';
                 $(this).find('td').each(function () {
+                    if($(this).find('input').attr("name") != undefined) {
                     details += '"' + $(this).find('input').attr("name") + '":';
                     details += '"' + $(this).find('input').val() + '",';
+                    }else{
+                    details += '"' + $(this).find('select').attr("name") + '":';
+                    details += '"' + $(this).find('select').val() + '",';
+                    }
                 });
                 details = details.substring(0, details.length - 1) + '},';
             });

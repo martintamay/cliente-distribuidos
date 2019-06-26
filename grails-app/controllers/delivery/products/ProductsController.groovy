@@ -1,6 +1,7 @@
 package delivery.products
 
 import com.sma.delivery.beans.products.ProductsB
+import com.sma.delivery.service.ingredients.IIngredientsService
 import com.sma.delivery.service.ingredientsProducts.IIngredientsProductsService
 import com.sma.delivery.service.products.IProductsService
 import com.sma.delivery.service.establishments.IEstablishmentsService
@@ -12,6 +13,7 @@ class ProductsController {
 
     //services
     IProductsService productsService
+    IIngredientsService ingredientsService
     IIngredientsProductsService ingredientsProductsService
     IEstablishmentsService establishmentsService
     def index(){
@@ -27,7 +29,7 @@ class ProductsController {
 
     def create() {
         List<IngredientsProducts> ingredientsProducts = new ArrayList<>()
-        [productsInstance: new ProductsB(params),establishments: establishmentsService.getEstablishments(), ingredientesProducts:ingredientsProducts, action:'save']
+        [productsInstance: new ProductsB(params),establishments: establishmentsService.getEstablishments(),ingredients: ingredientsService.getAll(1), ingredientesProducts:ingredientsProducts, action:'save']
     }
 
     def save() {
@@ -64,7 +66,7 @@ class ProductsController {
         }
 
 
-        [productsInstance: productsInstance, establishments: establishmentsService.getEstablishments(), action:'update']
+        [productsInstance: productsInstance,ingredients: ingredientsService.getAll(1), establishments: establishmentsService.getEstablishments(), action:'update']
 
     }
 

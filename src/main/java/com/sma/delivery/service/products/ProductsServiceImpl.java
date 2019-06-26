@@ -95,6 +95,7 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
         productParams.put("Product",products);
         params.put("product",productParams.toString());
         final ProductsB productsB = new ProductsB(params);
+        productsB.setEstablishments(_establishmentsService.getById(dto.getEstablishmentId()));
         return productsB;
     }
 

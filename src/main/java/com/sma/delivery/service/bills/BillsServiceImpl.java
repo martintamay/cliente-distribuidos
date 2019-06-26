@@ -102,14 +102,15 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
         JSONObject bills = new JSONObject();
         bills.put("id",String.valueOf(dto.getId()));
         bills.put("total",dto.getTotal());
-        bills.put("iva10", String.valueOf(dto.getIva()));
+        System.out.println("iva10....."+dto.getIva10());
+        bills.put("iva10", String.valueOf(dto.getIva10()));
         JSONObject billsParams = new JSONObject();
         billsParams.put("bill",bills);
         List<JSONObject> details = new ArrayList<>();
         for (BillDetailDTO detailsB: dto.getBillsDetails()){
             JSONObject tmp = new JSONObject();
             tmp.put("id",detailsB.getId());
-            tmp.put("iva10", detailsB.getIva());
+            tmp.put("iva10", detailsB.getIva10());
             tmp.put("amount",detailsB.getAmount());
             details.add(tmp);
         }
@@ -126,7 +127,7 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
 
         dto.setId(bean.getId());
         dto.setTotal(bean.getTotal());
-        dto.setIva(bean.getIva10());
+        dto.setIva10(bean.getIva10());
         dto.setOrderId(bean.getOrder().getId());
         Set<BillDetailDTO> detailsDTO = new HashSet<>();
         for(BillsDetailsB detailsB: bean.getDetails()){

@@ -79,7 +79,7 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
         final Map<String, String> params = new HashMap<String, String>();
         params.put("id", String.valueOf(dto.getId()));
         params.put("amount", String.valueOf(dto.getAmount()));
-        params.put("iva", String.valueOf(dto.getIva()));
+        params.put("iva10", String.valueOf(dto.getIva10()));
         final BillsDetailsB billsDetailsB = new BillsDetailsB(params);
 
         billsDetailsB.setBills(_billsService.getById(dto.getBill()));
@@ -91,7 +91,7 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
         final BillDetailDTO dto = new BillDetailDTO();
         dto.setId(bean.getId());
         dto.setAmount(bean.getAmount());
-        dto.setIva(bean.getIva10());
+        dto.setIva10(bean.getIva10());
         if(bean.getBills() != null)
         dto.setBill(bean.getBills().getId());
 

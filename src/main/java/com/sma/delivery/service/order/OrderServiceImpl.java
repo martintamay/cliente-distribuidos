@@ -66,7 +66,6 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 	}
 
 	@Override
-	@Cacheable(value = "delivery-cache")
 	public List<OrderB> getAll(Integer page)  {
 		final OrderResult result = ordersResource.getAll(page);
 		final List<OrderDTO> cList = null == result.getOrders() ? new ArrayList<OrderDTO>()

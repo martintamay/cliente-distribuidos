@@ -73,7 +73,7 @@ public class BillsB extends BaseBean{
                     Map<String, String> p = new HashMap<>();
                     if(a.containsKey("id"))
                         p.put("id", a.getString("id"));
-                    p.put("iva", a.getString("iva"));
+                    p.put("iva10", a.getString("iva"));
                     p.put("amount", a.getString("amount"));
                     BillsDetailsB detailsB = new BillsDetailsB(p);
                     b.add(detailsB);
