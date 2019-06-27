@@ -13,7 +13,6 @@ package login;
 import com.sma.delivery.beans.role.RoleB;
 import com.sma.delivery.beans.user.UserB;
 import com.sma.delivery.service.user.IUserService;
-import delivery.login.Role;
 import grails.plugin.springsecurity.userdetails.GrailsUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;

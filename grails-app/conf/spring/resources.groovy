@@ -59,7 +59,6 @@ beans = {
     contactsService(ContactsServiceImpl)
     localeResolver(SessionLocaleResolver) {
         defaultLocale= new java.util.Locale('es');
+        importBeans('classpath:/cache/cacheConfig.xml')
     }
-
-    importBeans('file:grails-app/conf/cache/cacheConfig.xml')
 }
