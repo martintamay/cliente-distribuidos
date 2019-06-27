@@ -4,6 +4,7 @@ package delivery.promotion
 import com.sma.delivery.beans.promotions.PromotionsB
 import com.sma.delivery.service.products.IProductsService
 import com.sma.delivery.service.promotions.IPromotionsService
+import delivery.productHasPromotions.ProductHasPromotions
 import delivery.products.Products
 
 class PromotionController {
@@ -31,14 +32,14 @@ class PromotionController {
     }
 
     def create() {
-        List<Products> products = new ArrayList<>()
-        [promotionInstance: new PromotionsB(params), products: products, action: 'save']
+        List<ProductHasPromotions> productHasPromotions = new ArrayList<>()
+        [promotionInstance: new PromotionsB(params), productHasPromotions: productHasPromotions, action: 'save']
     }
 
     def save() {
         def parametros = new HashMap<String, String>()
         parametros.put("promotion", request.JSON.toString())
-        def newPromotion = new PromotionsB(parametros)
+        def newPromotion = new PromotionsB(params)
         def promotionInstance = promotionsService.save(newPromotion)
         if (!newPromotion?.getId()) {
             render(view: "create", model: [promotionInstance: promotionInstance])
@@ -55,8 +56,6 @@ class PromotionController {
     def edit(Integer id) {
         def promotionInstance = promotionsService.getById(id)
         Map<String, String> p = new HashMap<>()
-        p.put("promotionId", id.toString())
-        promotionInstance.setProducts(productsService.getAllBy(p))
         if (!promotionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [
                     message(code: 'promotion.label', default: 'Promotion'),
