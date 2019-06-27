@@ -41,7 +41,7 @@
              </td>
 
              <td>
-                     ${fieldValue(bean: commentsInstance, field: "establishments.name")}
+                     ${fieldValue(bean: orderInstance, field: "establishments.name")}
              </td>
             <td>
                 <g:link class="btn btn-outline-secondary" action="show" id="${orderInstance?.id}"><i class="fa fa-eye"></i> </g:link>
