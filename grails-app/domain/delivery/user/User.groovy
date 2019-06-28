@@ -1,4 +1,6 @@
 package delivery.user
+
+import delivery.bills.Bills
 import delivery.comments.Comments
 import delivery.order.Order
 
@@ -9,7 +11,7 @@ class User {
     String phoneNumber;
     String password;
     String address;
-    static hasMany = [comments:Comments,order: Order];
+    static hasMany = [comments:Comments,order: Order,bills: Bills];
 
     static constraints = {
     }

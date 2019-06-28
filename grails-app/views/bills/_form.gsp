@@ -1,4 +1,74 @@
 
+
+<div class="form-group master ${hasErrors(bean: billsInstance, field: 'ruc', 'error')} required">
+    <label for="ruc">
+        Ruc
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="ruc" maxlength="50" required="" value="${billsInstance?.ruc}" class="form-control"/>
+</div>
+
+
+<div class="form-group master ${hasErrors(bean: billsInstance, field: 'iva10', 'error')} required">
+    <label for="ruc">
+        Iva10
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="iva10" maxlength="50" required="" value="${billsInstance?.iva10}" class="form-control"/>
+</div>
+
+<div class="form-group master ${hasErrors(bean: billsInstance, field: 'total', 'error')} required">
+    <label for="ruc">
+        Total
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="total" maxlength="50" required="" value="${billsInstance?.total}" class="form-control"/>
+</div>
+
+<div class="form-group master ${hasErrors(bean: billsInstance, field: 'nombre', 'error')} required">
+    <label for="nombre">
+        Nombre
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="nombre" maxlength="50" required="" value="${billsInstance?.nombre}" class="form-control"/>
+</div>
+<div class="form-group master ${hasErrors(bean: billsInstance, field: 'fecha', 'error')} required">
+    <label for="fecha">
+        Fecha
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="fecha" maxlength="50" required="" value="${billsInstance?.fecha}" class="form-control"/>
+</div>
+
+<div class="form-group master ${hasErrors(bean: billsInstance, field: 'timbrado', 'error')} required">
+    <label for="timbrado">
+        Timbrado
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="timbrado" maxlength="50" required="" value="${billsInstance?.timbrado}" class="form-control"/>
+</div>
+<div class="form-group master ${hasErrors(bean: billsInstance, field: 'num1', 'error')} required">
+    <label for="num1">
+        Num1
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="num1" maxlength="50" required="" value="${billsInstance?.num1}" class="form-control"/>
+</div>
+<div class="form-group master ${hasErrors(bean: billsInstance, field: 'num2', 'error')} required">
+    <label for="num2">
+        Num2
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="num2" maxlength="50" required="" value="${billsInstance?.num2}" class="form-control"/>
+</div>
+<div class="form-group master ${hasErrors(bean: billsInstance, field: 'num3', 'error')} required">
+    <label for="num3">
+        Num3
+        <span class="required-indicator">*</span>
+    </label>
+    <g:textField name="num3" maxlength="50" required="" value="${billsInstance?.num3}" class="form-control"/>
+</div>
+
 <div class="form-row">
     <div class="col">
         <div class="form-group">
@@ -29,6 +99,7 @@
             <input id="nombre" class="form-control" type="text" value="Fulano Mengano" required="">
         </div>
     </div>
+
     <div class="col">
         <div class="form-group">
             <label for="ruc">RUC</label>

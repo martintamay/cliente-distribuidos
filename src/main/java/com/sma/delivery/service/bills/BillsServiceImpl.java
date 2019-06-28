@@ -101,9 +101,17 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
         final Map<String, String> params = new HashMap<String, String>();
         JSONObject bills = new JSONObject();
         bills.put("id",String.valueOf(dto.getId()));
-        bills.put("total",dto.getTotal());
+        bills.put("total",String.valueOf(dto.getTotal()));
         System.out.println("iva10....."+dto.getIva10());
         bills.put("iva10", String.valueOf(dto.getIva10()));
+        bills.put("ruc",String.valueOf(dto.getRuc()));
+        bills.put("timbrado",String.valueOf(dto.getTimbrado()));
+        bills.put("nombre", String.valueOf(dto.getNombre()));
+        bills.put("fecha", String.valueOf(dto.getFecha()));
+        bills.put("num1", String.valueOf(dto.getNum1()));
+        bills.put("num2", String.valueOf(dto.getNum2()));
+        bills.put("num3", String.valueOf(dto.getNum3()));
+
         JSONObject billsParams = new JSONObject();
         billsParams.put("bill",bills);
         List<JSONObject> details = new ArrayList<>();
@@ -112,6 +120,7 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
             tmp.put("id",detailsB.getId());
             tmp.put("iva10", detailsB.getIva10());
             tmp.put("amount",detailsB.getAmount());
+
             details.add(tmp);
         }
         billsParams.put("BillsDetails",details.toString());
@@ -129,6 +138,13 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
         dto.setTotal(bean.getTotal());
         dto.setIva10(bean.getIva10());
         dto.setOrderId(bean.getOrder().getId());
+        dto.setRuc(bean.getRuc());
+        dto.setTimbrado(bean.getTimbrado());
+        dto.setNum1(bean.getNum1());
+        dto.setNum2(bean.getNum2());
+        dto.setNum3(bean.getNum3());
+        dto.setNombre(bean.getNombre());
+        dto.setFecha(bean.getFecha());
         Set<BillDetailDTO> detailsDTO = new HashSet<>();
         for(BillsDetailsB detailsB: bean.getDetails()){
             detailsDTO.add(_billsDetailsService.convertBeanToDto(detailsB));

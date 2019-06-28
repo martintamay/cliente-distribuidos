@@ -88,7 +88,7 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
         JSONObject products = new JSONObject();
         products.put("id",String.valueOf(dto.getId()));
         products.put("name",dto.getName());
-        products.put("description",dto.getName());
+        products.put("description",dto.getDescription());
         products.put("cost",String.valueOf(dto.getCost()));
         products.put("establishmentId", String.valueOf(dto.getEstablishmentId()));
         JSONObject productParams = new JSONObject();
