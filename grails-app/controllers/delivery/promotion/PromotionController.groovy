@@ -2,6 +2,7 @@ package delivery.promotion
 
 
 import com.sma.delivery.beans.promotions.PromotionsB
+import com.sma.delivery.service.productHasPromotions.IProductHasPromotionsService
 import com.sma.delivery.service.products.IProductsService
 import com.sma.delivery.service.promotions.IPromotionsService
 import delivery.productHasPromotions.ProductHasPromotions
@@ -11,8 +12,9 @@ class PromotionController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
 
     //services
-    def IPromotionsService promotionsService
-    def IProductsService productsService
+    IPromotionsService promotionsService
+    IProductHasPromotionsService productHasPromotionsService
+    IProductsService productsService
 
 
     def index() {
@@ -33,13 +35,13 @@ class PromotionController {
 
     def create() {
         List<ProductHasPromotions> productHasPromotions = new ArrayList<>()
-        [promotionInstance: new PromotionsB(params), productHasPromotions: productHasPromotions, action: 'save']
+        [promotionInstance: new PromotionsB(params), products: productsService.getProducts(), productHasPromotions: productHasPromotions, action: 'save']
     }
 
     def save() {
         def parametros = new HashMap<String, String>()
         parametros.put("promotion", request.JSON.toString())
-        def newPromotion = new PromotionsB(params)
+        def newPromotion = new PromotionsB(parametros)
         def promotionInstance = promotionsService.save(newPromotion)
         if (!newPromotion?.getId()) {
             render(view: "create", model: [promotionInstance: promotionInstance])
@@ -55,7 +57,9 @@ class PromotionController {
 
     def edit(Integer id) {
         def promotionInstance = promotionsService.getById(id)
-        Map<String, String> p = new HashMap<>()
+        Map <String,String> p = new HashMap<>();
+        p.put("promotionId", id.toString())
+        promotionInstance.setProductHasPromotions(productHasPromotionsService.getAllBy(p))
         if (!promotionInstance) {
             flash.message = message(code: 'default.not.found.message', args: [
                     message(code: 'promotion.label', default: 'Promotion'),
@@ -65,16 +69,16 @@ class PromotionController {
             return
         }
         def action = "update"
-        [promotionInstance: promotionInstance, action: action]
+        [promotionInstance: promotionInstance, products: productsService.getProducts(), action: action]
 
     }
 
     def update(Long id, Long version) {
-
-        def newPromotion = new PromotionsB(params)
-
-        promotionsService.save(newPromotion)
-
+        def parametros = new HashMap<String,String>();
+        parametros.put("promotion", request.JSON.toString());
+        def newPromotion = new PromotionsB(parametros);
+        newPromotion.setId(Integer.valueOf(params['id']));
+        promotionsService.save(newPromotion);
         redirect(action: "list")
     }
 

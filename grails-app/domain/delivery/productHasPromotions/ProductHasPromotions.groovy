@@ -7,7 +7,8 @@ class ProductHasPromotions {
     Integer quantity
     Integer cost
     String comment
-    static belongsTo = [product: ProductsB, promotion: PromotionsB]
+    Integer product
+    Integer promotion
     static constraints = {
     }
 }

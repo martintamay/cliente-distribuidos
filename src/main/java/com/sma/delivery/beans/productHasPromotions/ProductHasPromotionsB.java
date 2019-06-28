@@ -6,16 +6,31 @@ import com.sma.delivery.beans.promotions.PromotionsB;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
-import java.util.Set;
-
 public class ProductHasPromotionsB extends BaseBean {
     private static final long serialVersionUID = 1L;
 
     Integer cost;
     Integer quantity;
     String  comment;
-    ProductsB product;
-    PromotionsB promotion;
+    Integer product;
+    Integer promotion;
+
+    public Integer getProduct() {
+        return product;
+    }
+
+    public void setProduct(Integer product) {
+        this.product = product;
+    }
+
+    public Integer getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(Integer promotion) {
+        this.promotion = promotion;
+    }
+
     public Integer getCost() {
         return cost;
     }
@@ -40,22 +55,6 @@ public class ProductHasPromotionsB extends BaseBean {
         this.comment = comment;
     }
 
-    public ProductsB getProduct() {
-        return product;
-    }
-
-    public void setProduct(ProductsB product) {
-        this.product = product;
-    }
-
-    public PromotionsB getPromotion() {
-        return promotion;
-    }
-
-    public void setPromotion(PromotionsB promotion) {
-        this.promotion = promotion;
-    }
-
     public ProductHasPromotionsB(Map<String, String> params)  {
         super(params);
     }
@@ -69,6 +68,10 @@ public class ProductHasPromotionsB extends BaseBean {
             setCost(Integer.valueOf(params.get("cost")));
         if(!StringUtils.isBlank(params.get("quantity")))
             setQuantity(Integer.valueOf(params.get("quantity")));
-        setComment(params.get("comments"));
+        if(!StringUtils.isBlank(params.get("product")))
+            setProduct(Integer.valueOf(params.get("product")));
+        if(!StringUtils.isBlank(params.get("promotion")))
+            setPromotion(Integer.valueOf(params.get("promotion")));
+        setComment(params.get("comment"));
     }
 }
