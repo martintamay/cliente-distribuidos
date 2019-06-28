@@ -6,7 +6,6 @@ import com.sma.delivery.rest.contacts.IContactsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -54,17 +53,17 @@ public class ContactsServiceImpl extends BaseServiceImpl<ContactB, ContactDTO> i
 
     @Override
     public void delete(Integer id) {
-        throw new NotImplementedException();
+
     }
 
     @Override
     public List<ContactB> getAll(Integer page) {
-        throw new NotImplementedException();
+        return null;
     }
 
     @Override
     public ContactB getById(Integer id) {
-        throw new NotImplementedException();
+        return null;
     }
 
     @Override

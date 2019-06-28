@@ -126,14 +126,18 @@
 '    <th scope="row">'+rowCount+'</th>'+
 '    <td class="p-1 m-1"><input value="" placeholder="Producto" name="producto" class="form-control m-0 p-0"/></td>'+
 '    <td></td>'+
-'    <td class="p-1 m-1"><input type="number" max="100" min="1" value="" placeholder="Cantidad"
-                                class="form-control m-0 p-0"></td>'+
+'    <td class="p-1 m-1">' +
+'       <input type="number" max="100" min="1" value="" placeholder="Cantidad" class="form-control m-0 p-0">' +
+'    </td>'+
 '    <td></td>'+
 '    <td></td>'+
 '    <td></td>'+
 '    <td></td>'+
-'    <td class="p-1 m-1"><button id="none" class="btn btn-outline-warning delete" type="button"><i
-        class="fa fa-remove"></i></button></td>'+
+'    <td class="p-1 m-1">' +
+'       <button id="none" class="btn btn-outline-warning delete" type="button">' +
+'           <i class="fa fa-remove"></i>' +
+'       </button>' +
+'    </td>'+
 '</tr>';
         console.log("campo agregado");
         $('tbody').append(campos);
