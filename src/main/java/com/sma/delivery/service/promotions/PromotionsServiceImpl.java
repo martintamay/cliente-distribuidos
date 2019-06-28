@@ -1,30 +1,26 @@
 package com.sma.delivery.service.promotions;
 
 
+import com.sma.delivery.beans.productHasPromotions.ProductHasPromotionsB;
 import com.sma.delivery.beans.promotions.PromotionsB;
+import com.sma.delivery.dto.product_has_promotions.ProductHasPromotionDTO;
 import com.sma.delivery.dto.promotions.PromotionDTO;
 import com.sma.delivery.dto.promotions.PromotionResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
-import org.apache.commons.lang.time.DateUtils;
+import com.sma.delivery.service.productHasPromotions.IProductHasPromotionsService;
+import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.promotions.IPromotionsResource;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("promotionsService")
 public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, PromotionDTO> implements IPromotionsService {
 
     @Autowired
-    private  IPromotionsResource promotionsResource;
-
+    private IPromotionsResource promotionsResource;
+    @Autowired
+    private IProductHasPromotionsService _productHasPromotionsService;
     public PromotionsServiceImpl() {
     }
 
@@ -79,25 +75,30 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
     @Override
     protected PromotionsB convertDtoToBean(PromotionDTO dto)  {
         final Map<String, String> params = new HashMap<String, String>();
-        params.put("id", String.valueOf(dto.getId()));
-        params.put("name", String.valueOf(dto.getName()));
-        params.put("available", String.valueOf(dto.getAvailable()));
-        params.put("end_date", String.valueOf(dto.getEndDate()));
-
-
-        final PromotionsB promotionsB = new PromotionsB(params);
-
-        return promotionsB;
+        JSONObject promotion = new JSONObject();
+        promotion.put("id", String.valueOf(dto.getId()));
+        promotion.put("name", String.valueOf(dto.getName()));
+        promotion.put("available", String.valueOf(dto.getAvailable()));
+        promotion.put("end_date", String.valueOf(dto.getEndDate()));
+        JSONObject promotionParams = new JSONObject();
+        promotionParams.put("promotion",promotion);
+        params.put("promotion",promotionParams.toString());
+        final PromotionsB promotionB = new PromotionsB(params);
+        return promotionB;
     }
 
     @Override
     protected PromotionDTO convertBeanToDto(PromotionsB bean)  {
         final PromotionDTO dto = new PromotionDTO();
-
         dto.setId(bean.getId());
         dto.setName(bean.getName());
         dto.setEndDate( bean.getEnd_date().toString());
         dto.setAvailable(bean.getAvailable());
+        List<ProductHasPromotionDTO> productHasPromotionsDTO = new ArrayList<>();
+        for(ProductHasPromotionsB productsHasPromotionB: bean.getProductHasPromotions()){
+            productHasPromotionsDTO.add(_productHasPromotionsService.convertBeanToDto(productsHasPromotionB));
+        }
+        dto.setProductHasPromotionsDTO(productHasPromotionsDTO);
         return dto;
     }
 

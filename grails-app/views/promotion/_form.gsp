@@ -28,8 +28,10 @@
         </span>
     </div>
 </div>
-
-<fieldset class="form">
+<div id="products" style="display: none">
+    <g:select style="width: 150px" name="product" maxlength="50" from="${products}" optionKey="id" optionValue="name" required=""  class="form-control"/>
+</div>
+<fieldset class="form-group">
     <br>
     <h4>Detalles</h4>
     <g:set var="x" value="${1}"/>
@@ -41,6 +43,7 @@
             <th>Producto</th>
             <th>Cantidad</th>
             <th>Precio</th>
+            <th>Comentario</th>
             <th></th>
         </tr>
         </thead>
@@ -55,7 +58,7 @@
                 </td>
 
                 <td class="col-2">
-                    <g:select style="width: 200px" name="product" maxlength="50" from="${products}" optionKey="id" optionValue="description" value="${detailsInstance?.product?.id}" required=""  class="form-control"/>
+                    <g:select style="width: 150px" name="product" maxlength="50" from="${products}" optionKey="id" optionValue="description" value="${detailsInstance?.product}" required=""  class="form-control"/>
 
                 </td>
                 <td class="col-2">
@@ -93,7 +96,7 @@
     function setDeletes(){
         $(".delete").click(function() {
             $(this).parent().parent().remove();
-            url = "${createLink(controller: 'promotion', action: 'delete')}"
+            url = "${createLink(controller: 'ProductHasPromotions', action: 'delete')}"
             if($(this).attr('id') != "none"){
                 url += "/"+$(this).attr('id');
                 $.ajax({
@@ -113,15 +116,17 @@
         var campos =  '' +
         '<tr class="data">' +
         '<th scope="row">'+rowCount+'</th>' +
-        '<td class="col-2">'+$("#ingredients").html()+'</td>'+
-        '<td class="col-2"><input type="text" name="amount"></td>' +
+        '<td class="col-2">'+$("#products").html()+'</td>'+
+        '<td class="col-2"><input type="text" name="quantity"></td>' +
+        '<td class="col-2"><input type="text" name="cost"></td>' +
+        '<td class="col-2"><input type="text" name="comment"></td>' +
         '<td><button id="none" class="btn btn-danger delete">x</button></td>' +
         '</tr>'
         $('tbody').append(campos);
         setDeletes();
     })
     $('#save').click(function () {
-        var master = '{"Promotion":{';
+        var master = '{"promotion":{';
         $('.master').each(function () {
             if($(this).find('input').attr("name") != undefined) {
                 master += '"'+$(this).find('input').attr("name")+'":';

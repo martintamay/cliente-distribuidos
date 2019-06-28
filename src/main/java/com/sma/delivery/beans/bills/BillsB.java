@@ -81,7 +81,7 @@ public class BillsB extends BaseBean{
             }
             setDetails(b);
             JSONObject bill = new JSONObject(json.getString("bill"));
-        if(bill.containsKey("id"))
+            if(bill.containsKey("id"))
             setId(Integer.valueOf(bill.getString("id")));
             setIva10(Integer.valueOf(bill.getString("iva10")));
             setTotal(bill.getString("total"));

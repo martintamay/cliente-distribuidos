@@ -10,6 +10,7 @@ import com.sma.delivery.rest.ingredients.IngredientsResourceImpl
 import com.sma.delivery.rest.ingredientsProducts.IngredientsProductsResourceImpl
 import com.sma.delivery.rest.order.OrderResourceImpl
 import com.sma.delivery.rest.packages.PackagesResourceImpl
+import com.sma.delivery.rest.productHasPromotions.ProductHasPromotionsResourceImpl
 import com.sma.delivery.rest.products.ProductsResourceImpl
 import com.sma.delivery.rest.promotions.PromotionsResourceImpl
 import com.sma.delivery.rest.user.UserResourceImpl
@@ -23,6 +24,7 @@ import com.sma.delivery.service.ingredients.IngredientsServiceImpl
 import com.sma.delivery.service.ingredientsProducts.IngredientsProductsServiceImpl
 import com.sma.delivery.service.order.OrderServiceImpl
 import com.sma.delivery.service.packages.PackagesServiceImpl
+import com.sma.delivery.service.productHasPromotions.ProductHasPromotionsServiceImpl
 import com.sma.delivery.service.products.ProductsServiceImpl
 import com.sma.delivery.service.promotions.PromotionsServiceImpl
 import com.sma.delivery.service.user.UserServiceImpl
@@ -55,6 +57,8 @@ beans = {
     packagesService(PackagesServiceImpl)
     promotionsResource(PromotionsResourceImpl)
     promotionsService(PromotionsServiceImpl)
+    productHasPromotiosResource(ProductHasPromotionsResourceImpl)
+    productHasPromotionsService(ProductHasPromotionsServiceImpl)
     contactsResource(ContactsResourceImpl)
     contactsService(ContactsServiceImpl)
     localeResolver(SessionLocaleResolver) {

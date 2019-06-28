@@ -5,8 +5,6 @@ import com.sma.delivery.dto.product_has_promotions.ProductHasPromotionDTO;
 import com.sma.delivery.dto.product_has_promotions.ProductHasPromotionResult;
 import com.sma.delivery.rest.productHasPromotions.IProductHasPromotionsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
-import com.sma.delivery.service.products.IProductsService;
-import com.sma.delivery.service.promotions.IPromotionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
@@ -15,11 +13,7 @@ import java.util.*;
 public class ProductHasPromotionsServiceImpl extends BaseServiceImpl<ProductHasPromotionsB, ProductHasPromotionDTO> implements IProductHasPromotionsService {
     @Autowired
     private IProductHasPromotionsResource _productHasPromotionsResource;
-    @Autowired
-    private IProductsService _productService;
 
-    @Autowired
-    private IPromotionsService _promotionService;
     @Override
     public Set<ProductHasPromotionsB> getAllBy(Map<String, String> args) {
         final ProductHasPromotionResult result = _productHasPromotionsResource.getAllBy(args);
@@ -40,25 +34,22 @@ public class ProductHasPromotionsServiceImpl extends BaseServiceImpl<ProductHasP
         params.put("quantity", String.valueOf(dto.getCuantity()));
         params.put("cost", String.valueOf(dto.getCost()));
         params.put("comment", String.valueOf(dto.getComment()));
+        params.put("product", String.valueOf(dto.getProductId()));
+        params.put("promotion", String.valueOf(dto.getPromotionId()));
         ProductHasPromotionsB productHasPromotions = new ProductHasPromotionsB(params);
 
-        productHasPromotions.setProduct(_productService.getById(dto.getProductId()));
-        productHasPromotions.setPromotion(_promotionService.getById(dto.getPromotionId()));
         return productHasPromotions;
     }
 
     @Override
-    protected ProductHasPromotionDTO convertBeanToDto(ProductHasPromotionsB bean) {
+    public ProductHasPromotionDTO convertBeanToDto(ProductHasPromotionsB bean) {
         final ProductHasPromotionDTO dto = new ProductHasPromotionDTO();
         dto.setId(bean.getId());
         dto.setCost(bean.getCost());
         dto.setCuantity(bean.getQuantity());
         dto.setComment(bean.getComment());
-        if(bean.getProduct() != null)
-            dto.setProductId(bean.getProduct().getId());
-        if(bean.getPromotion() != null)
-            dto.setPromotionId(bean.getPromotion().getId());
-
+        dto.setPromotionId(bean.getPromotion());
+        dto.setProductId(bean.getProduct());
         return dto;
     }
 
@@ -68,8 +59,8 @@ public class ProductHasPromotionsServiceImpl extends BaseServiceImpl<ProductHasP
     }
 
     @Override
-    public void delete(Integer id) {
-
+    public void delete(Integer id){
+        _productHasPromotionsResource.delete(id);
     }
 
     @Override

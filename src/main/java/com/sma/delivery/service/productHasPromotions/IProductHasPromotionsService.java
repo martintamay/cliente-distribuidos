@@ -9,4 +9,5 @@ import java.util.Set;
 
 public interface IProductHasPromotionsService extends IBaseService<ProductHasPromotionsB, ProductHasPromotionDTO> {
     Set<ProductHasPromotionsB> getAllBy(Map<String, String> args);
+    public ProductHasPromotionDTO convertBeanToDto(ProductHasPromotionsB bean);
 }
