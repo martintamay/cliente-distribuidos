@@ -21,7 +21,7 @@
     </g:hasErrors>
     <div class="card container">
         <div class="card-body ">
-            <h3>Crear Cuenta</h3>
+            <h3>Nueva Factura</h3>
                 <fieldset class="form" enctype='application/json'>
                     <g:render template="form"/>
                 </fieldset>
