@@ -7,7 +7,17 @@ Author: Surjith S M
    GLOBAL STYLES
    ============================================================== */
 body {
-  font-family: 'Roboto', sans-serif; }
+  font-family: 'Roboto', sans-serif;
+  background:  linear-gradient(
+                  rgba(0, 0, 0, 0.3),
+                  rgba(0, 0, 0, 0.3)
+                ), url(../image/slider.jpg) fixed;
+  background-size: cover;
+}
+
+.skip {
+  color: rgba(0, 0, 0, 0);
+}
 
 .index-page h1 {
   font-size: 72px;
