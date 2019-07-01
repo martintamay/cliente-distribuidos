@@ -87,9 +87,10 @@ class PromotionController {
         redirect(action: "list")
     }
 
-    def search(String text) {
-        def promotion = promotionsService.find(text);
-        render(view: "_list", model: [promotionInstanceList: promotion])
+    def search(String text,Integer page){
+        def promotions = promotionsService.find(text,page);
+        def next = promotionsService.find(text,page+1).size();
+        render(view: "_list", model: [promotionInstanceList: promotions ,next: next,page: page])
     }
 
     def show(Integer id) {

@@ -36,19 +36,7 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
     public void delete(Integer id){
         promotionsResource.delete(id);
     }
-    @Override
-    public List<PromotionsB> find(String text, Integer page)  {
-        final PromotionResult result = promotionsResource.find(text, page);
-        final List<PromotionDTO> cList = null == result.getPromotions() ? new ArrayList<PromotionDTO>()
-                : result.getPromotions();
 
-        final List<PromotionsB> promotions = new ArrayList<PromotionsB>();
-        for (PromotionDTO dto : cList) {
-            final PromotionsB bean = convertDtoToBean(dto);
-            promotions.add(bean);
-        }
-        return promotions;
-    }
 
     @Override
     public List<PromotionsB> getAll(Integer page)  {
@@ -63,7 +51,21 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
         }
         return promotions;
     }
+    public List<PromotionsB> find(String text, Integer page)  {
+        final PromotionResult result = promotionsResource.find(text, page);
+        final List<PromotionDTO> cList = null == result.getPromotions() ? new ArrayList<PromotionDTO>()
+                : result.getPromotions();
 
+        final List<PromotionsB> promotion = new ArrayList<PromotionsB>();
+        for (PromotionDTO dto : cList) {
+            final PromotionsB bean = convertDtoToBean(dto);
+            promotion.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("promotionsC_" + bean.getId(), bean);
+            }
+        }
+        return promotion;
+    }
     @Override
     public PromotionsB getById(Integer id)  {
         final PromotionDTO dto = promotionsResource.getById(id);

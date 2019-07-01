@@ -86,9 +86,10 @@ class ProductsController {
         redirect(action: "list")
     }
 
-    def search(String text){
-        def products = productsService.find(text);
-        render(view: "_list", model: [productsInstanceList: products])
+    def search(String text,Integer page){
+        def products = productsService.find(text,page);
+        def next = productsService.find(text,page+1).size();
+        render(view: "_list", model: [productsInstanceList: products ,next: next,page: page])
     }
     def show(Integer id){
         def productsInstance = productsService.getById(id)

@@ -78,6 +78,9 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
         for (ProductDTO dto : cList) {
             final ProductsB bean = convertDtoToBean(dto);
             products.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("productsC_" + bean.getId(), bean);
+            }
         }
         return products;
     }

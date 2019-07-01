@@ -56,7 +56,6 @@
                                             <g:link class="dropdown-item" controller="comments" action="list">Comentarios</g:link>
                                             <g:link class="dropdown-item" controller="establishments" action="list">Restaurantes</g:link>
                                             <g:link class="dropdown-item" controller="bills" action="list">Factura</g:link>
-                                            <g:link class="dropdown-item" controller="billsDetails" action="list">Factura Detalle</g:link>
                                             <g:link class="dropdown-item" controller="promotion" action="list">Promociones</g:link>
                                             <g:link class="dropdown-item" controller="products" action="list">Productos</g:link>
                                         </div>
