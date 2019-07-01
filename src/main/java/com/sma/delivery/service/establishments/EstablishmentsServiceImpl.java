@@ -64,12 +64,15 @@ public class EstablishmentsServiceImpl extends BaseServiceImpl<EstablishmentsB, 
         final List<EstablishmentDTO> cList = null == result.getEstablishments() ? new ArrayList<EstablishmentDTO>()
                 : result.getEstablishments();
 
-        final List<EstablishmentsB> establishments = new ArrayList<EstablishmentsB>();
+        final List<EstablishmentsB> users = new ArrayList<EstablishmentsB>();
         for (EstablishmentDTO dto : cList) {
             final EstablishmentsB bean = convertDtoToBean(dto);
-            establishments.add(bean);
+            users.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("establishmentsC_" + bean.getId(), bean);
+            }
         }
-        return establishments;
+        return users;
     }
 
     @Override

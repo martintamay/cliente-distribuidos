@@ -80,7 +80,6 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
 
     @Override
     public List<BillsB> find(String text, Integer page)  {
-
         final BillResult result = _billsResource.find(text, page);
         final List<BillDTO> cList = null == result.getBills() ? new ArrayList<BillDTO>()
                 : result.getBills();
@@ -90,7 +89,7 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
             final BillsB bean = convertDtoToBean(dto);
             bills.add(bean);
             if (bean.getId() != null) {
-                getCacheManager().getCache("delivery-cacheC").put("billsClients_" + dto.getId(), bean);
+                getCacheManager().getCache("delivery-cacheC").put("billsC_" + bean.getId(), bean);
             }
         }
         return bills;

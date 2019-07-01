@@ -54,15 +54,15 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 		final List<OrderDTO> cList = null == result.getOrders() ? new ArrayList<OrderDTO>()
 				: result.getOrders();
 
-		final List<OrderB> orders = new ArrayList<OrderB>();
+		final List<OrderB> order = new ArrayList<OrderB>();
 		for (OrderDTO dto : cList) {
 			final OrderB bean = convertDtoToBean(dto);
-			orders.add(bean);
+			order.add(bean);
 			if (bean.getId() != null) {
-				getCacheManager().getCache("delivery-cacheC").put("ordersClients_" + dto.getId(), bean);
+				getCacheManager().getCache("delivery-cacheC").put("ordersC_" + bean.getId(), bean);
 			}
 		}
-		return orders;
+		return order;
 	}
 
 	@Override

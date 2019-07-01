@@ -79,7 +79,6 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentDTO> 
 
     @Override
     public List<CommentsB> find(String text, Integer page)  {
-
         final CommentResult result = _commentsResource.find(text, page);
         final List<CommentDTO> cList = null == result.getComments() ? new ArrayList<CommentDTO>()
                 : result.getComments();
@@ -89,12 +88,11 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentDTO> 
             final CommentsB bean = convertDtoToBean(dto);
             comments.add(bean);
             if (bean.getId() != null) {
-                getCacheManager().getCache("delivery-cacheC").put("commentsClients_" + dto.getId(), bean);
+                getCacheManager().getCache("delivery-cacheC").put("commentsC_" + bean.getId(), bean);
             }
         }
         return comments;
     }
-
     @Override
     protected CommentsB convertDtoToBean(CommentDTO dto)  {
         final Map<String, String> params = new HashMap<String, String>();

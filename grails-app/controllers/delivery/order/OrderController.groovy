@@ -84,9 +84,10 @@ class OrderController {
         redirect(action: "list")
     }
 
-    def search(String text){
-        def orders = orderService.find(text);
-        render(view: "_list", model: [orderInstanceList: orders])
+    def search(String text,Integer page){
+        def orders = orderService.find(text,page);
+        def next = orderService.find(text,page+1).size();
+        render(view: "_list", model: [orderInstanceList: orders ,next: next,page: page])
     }
     def show(Integer id){
         def orderInstance = orderService.getById(id)

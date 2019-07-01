@@ -74,6 +74,7 @@ class BillsController {
         def newBills = new BillsB(parametros);
         newBills.setId(Integer.valueOf(params['id']));
         newBills.setOrder(order);
+        System.out.println(".................................... "+ params['id']);
         billsService.save(newBills);
 
         redirect(action: "list")
@@ -84,9 +85,10 @@ class BillsController {
         redirect(action: "list")
     }
 
-    def search(String text){
-        def bills = billsService.find(text);
-        render(view: "_list", model: [billsInstanceList: bills])
+    def search(String text,Integer page){
+        def bills = billsService.find(text,page);
+        def next = billsService.find(text,page+1).size();
+        render(view: "_list", model: [billsInstanceList: bills ,next: next,page: page])
     }
     def show(Integer id){
         def billsInstance = billsService.getById(id)
