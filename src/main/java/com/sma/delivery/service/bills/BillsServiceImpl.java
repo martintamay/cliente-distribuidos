@@ -11,13 +11,11 @@ import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.CacheEvict;
 import com.sma.delivery.rest.bills.IBillsResource;
 import com.sma.delivery.service.order.IOrderService;
 
 
-import java.text.ParseException;
 import java.util.*;
 
 @Service("billsService")
@@ -35,14 +33,11 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
     }
 
     @Override
-    @CachePut(value="delivery-cacheC", key= "'billsClients_'+#bills.id", condition = "#bean.id!=null")
     public BillsB save(BillsB bean)  {
         final BillDTO bills = convertBeanToDto(bean);
         final BillDTO dto = _billsResource.save(bills);
-
         final BillsB billsB = convertDtoToBean(dto);
         if (bean.getId() == null) {
-            getCacheManager().getCache("delivery-cacheC").put("billsClients_" + dto.getId(), billsB);
         }
         return billsB;
     }
@@ -102,7 +97,6 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
         JSONObject bills = new JSONObject();
         bills.put("id",String.valueOf(dto.getId()));
         bills.put("total",String.valueOf(dto.getTotal()));
-        System.out.println("iva10....."+dto.getIva10());
         bills.put("iva10", String.valueOf(dto.getIva10()));
         bills.put("ruc",String.valueOf(dto.getRuc()));
         bills.put("timbrado",String.valueOf(dto.getTimbrado()));
@@ -111,6 +105,7 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
         bills.put("num1", String.valueOf(dto.getNum1()));
         bills.put("num2", String.valueOf(dto.getNum2()));
         bills.put("num3", String.valueOf(dto.getNum3()));
+        bills.put("direccion", String.valueOf(dto.getDireccion()));
 
         JSONObject billsParams = new JSONObject();
         billsParams.put("bill",bills);
@@ -145,8 +140,9 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
         dto.setNum3(bean.getNum3());
         dto.setNombre(bean.getNombre());
         dto.setFecha(bean.getFecha());
+        dto.setDireccion(bean.getDireccion());
         Set<BillDetailDTO> detailsDTO = new HashSet<>();
-        for(BillsDetailsB detailsB: bean.getDetails()){
+        for(BillsDetailsB detailsB: bean.getBillsDetails()){
             detailsDTO.add(_billsDetailsService.convertBeanToDto(detailsB));
         }
         dto.setBillsDetails(detailsDTO);

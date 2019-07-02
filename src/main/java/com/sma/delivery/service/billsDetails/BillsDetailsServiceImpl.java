@@ -4,6 +4,7 @@ import com.sma.delivery.beans.billsDetails.BillsDetailsB;
 import com.sma.delivery.dto.bills_details.BillDetailDTO;
 import com.sma.delivery.dto.bills_details.BillDetailResult;
 import com.sma.delivery.service.base.BaseServiceImpl;
+import com.sma.delivery.service.products.IProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sma.delivery.rest.billsDetails.IBillsDetailsResource;
@@ -21,6 +22,10 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
 
     @Autowired
     private IBillsService _billsService;
+
+    @Autowired
+    private IProductsService _productsService;
+
     public BillsDetailsServiceImpl() {
     }
 
@@ -79,9 +84,13 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
         final Map<String, String> params = new HashMap<String, String>();
         params.put("id", String.valueOf(dto.getId()));
         params.put("amount", String.valueOf(dto.getAmount()));
+        params.put("iva5", String.valueOf(dto.getIva5()));
         params.put("iva10", String.valueOf(dto.getIva10()));
+        params.put("exenta", String.valueOf(dto.getExenta()));
+        params.put("unitary", String.valueOf(dto.getUnitary()));
+        params.put("quantity", String.valueOf(dto.getQuantity()));
         final BillsDetailsB billsDetailsB = new BillsDetailsB(params);
-
+        billsDetailsB.setProduct(_productsService.getById(dto.getProductId()));
         billsDetailsB.setBills(_billsService.getById(dto.getBill()));
         return billsDetailsB;
     }
@@ -92,9 +101,13 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
         dto.setId(bean.getId());
         dto.setAmount(bean.getAmount());
         dto.setIva10(bean.getIva10());
+        dto.setIva5(bean.getIva5());
+        dto.setExenta(bean.getExenta());
+        dto.setProductId(bean.getProduct().getId());
+        dto.setQuantity(bean.getQuantity());
+        dto.setUnitary(bean.getUnitary());
         if(bean.getBills() != null)
         dto.setBill(bean.getBills().getId());
-
         return dto;
     }
 

@@ -3,21 +3,13 @@ package com.sma.delivery.beans.bills;
 import com.sma.delivery.beans.base.BaseBean;
 import com.sma.delivery.beans.billsDetails.BillsDetailsB;
 import com.sma.delivery.beans.order.OrderB;
-import org.apache.commons.lang.StringUtils;
 import org.grails.web.json.JSONArray;
 import org.grails.web.json.JSONObject;
-import java.util.*;
 
+import java.util.*;
 
 public class BillsB extends BaseBean{
     private static final long serialVersionUID = 1L;
-    public String getAlgo() {
-        return algo;
-    }
-
-    public void setAlgo(String total) {
-        this.algo = total;
-    }
     public String getTotal() {
         return total;
     }
@@ -42,12 +34,12 @@ public class BillsB extends BaseBean{
         this.order = order;
     }
 
-    public void setDetails(Set<BillsDetailsB> billsDetails) {
-        this.details = billsDetails;
+    public void setBillsDetails(Set<BillsDetailsB> billsDetails) {
+        this.billsDetails = billsDetails;
     }
 
-    public Set<BillsDetailsB> getDetails() {
-        return this.details;
+    public Set<BillsDetailsB> getBillsDetails() {
+        return this.billsDetails;
     }
 
     public String getRuc() {
@@ -106,11 +98,18 @@ public class BillsB extends BaseBean{
         this.nombre = nombre;
     }
 
-    private String algo;
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
     private String total;
     private Integer iva10;
     private OrderB order;
-    private Set<BillsDetailsB> details;
+    private Set<BillsDetailsB> billsDetails;
     private String ruc;
     private String timbrado;
     private Integer num1;
@@ -118,6 +117,7 @@ public class BillsB extends BaseBean{
     private Integer num3;
     private String fecha;
     private String nombre;
+    private String direccion;
 
 
     public BillsB(Map<String, String> params) {
@@ -128,21 +128,6 @@ public class BillsB extends BaseBean{
     protected void create(Map<String, String> params) {
         if(params.get("bill")!=null) {
             JSONObject json = new JSONObject(params.get("bill"));
-            Set<BillsDetailsB> b = new HashSet<>();
-            if(json.containsKey("BillsDetails")) {
-                JSONArray jsonArray = new JSONArray(json.getString("BillsDetails"));
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject a = (JSONObject) jsonArray.get(i);
-                    Map<String, String> p = new HashMap<>();
-                    if(a.containsKey("id"))
-                        p.put("id", a.getString("id"));
-                    p.put("iva10", a.getString("iva"));
-                    p.put("amount", a.getString("amount"));
-                    BillsDetailsB detailsB = new BillsDetailsB(p);
-                    b.add(detailsB);
-                }
-            }
-            setDetails(b);
             JSONObject bill = new JSONObject(json.getString("bill"));
             if(bill.containsKey("id"))
             setId(Integer.valueOf(bill.getString("id")));
@@ -155,6 +140,7 @@ public class BillsB extends BaseBean{
             setRuc(bill.getString("ruc"));
             setNombre(bill.getString("nombre"));
             setFecha(bill.getString("fecha"));
+            setDireccion(bill.getString("direccion"));
         }
     }
 }

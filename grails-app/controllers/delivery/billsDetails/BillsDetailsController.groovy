@@ -9,8 +9,8 @@ class BillsDetailsController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
 
     //services
-    def IBillsDetailsService billsDetailsService
-    def IBillsService billsService
+    IBillsDetailsService billsDetailsService
+    IBillsService billsService
 
     def index(){
         redirect(action: "list", id:1,)

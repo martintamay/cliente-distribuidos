@@ -15,6 +15,7 @@ class Bills {
     Integer iva5;
     String fecha;
     String nombre;
+    String direccion;
     static belongsTo = [order: Order]
     static hasMany = [billsDetails: BillsDetails]
     static constraints = {
