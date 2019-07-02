@@ -60,15 +60,15 @@ public class OrderDetailServiceImpl extends BaseServiceImpl<OrdersDetailsB, Orde
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put("id", String.valueOf(dto.getId()));
 		params.put("cost", String.valueOf(dto.getCost()));
-		params.put("quantity", String.valueOf(dto.getQuantity()));
+		params.put("quantity", String.valueOf(dto.getCuantity()));
 		params.put("comment", String.valueOf(dto.getComment()));
 		final OrdersDetailsB ordersDetailsB = new OrdersDetailsB(params);
 		if(dto.getProductId() != 0)
 			ordersDetailsB.setProduct(_productService.getById(dto.getProductId()));
 		if(dto.getPromotionId() != 0)
 			ordersDetailsB.setPromotion(_promotionsService.getById(dto.getPromotionId()));
-		if(dto.getPackageId() != 0)
-			ordersDetailsB.setPackageB(_packageService.getById(dto.getPackageId()));
+		if(dto.getPackage() != 0)
+			ordersDetailsB.setPackageB(_packageService.getById(dto.getPackage()));
 		ordersDetailsB.setOrder(_orderService.getById(dto.getOrderId()));
 		return ordersDetailsB;
 	}
@@ -79,7 +79,7 @@ public class OrderDetailServiceImpl extends BaseServiceImpl<OrdersDetailsB, Orde
 		dto.setId(bean.getId());
 		dto.setComment(bean.getComment());
 		dto.setCost(bean.getCost());
-		dto.setQuantity(bean.getQuantity());
+		dto.setCuantity(bean.getQuantity());
 		dto.setOrderId(bean.getOrder().getId());
 		ProductsB product = bean.getProduct();
 		dto.setProductId(product != null ? product.getId() : 0);

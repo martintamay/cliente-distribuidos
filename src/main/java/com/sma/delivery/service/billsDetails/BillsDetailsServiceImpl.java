@@ -5,6 +5,7 @@ import com.sma.delivery.dto.bills_details.BillDetailDTO;
 import com.sma.delivery.dto.bills_details.BillDetailResult;
 import com.sma.delivery.rest.billsDetails.IBillsDetailsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
+import com.sma.delivery.service.bills.IBillsService;
 import com.sma.delivery.service.products.IProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
