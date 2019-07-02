@@ -1,7 +1,6 @@
 package com.sma.delivery.beans.base;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.Map;
 import java.util.Random;
 

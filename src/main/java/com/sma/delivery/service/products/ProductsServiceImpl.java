@@ -5,16 +5,14 @@ import com.sma.delivery.beans.products.ProductsB;
 import com.sma.delivery.dto.ingredients_products.IngredientsProductsDTO;
 import com.sma.delivery.dto.products.ProductDTO;
 import com.sma.delivery.dto.products.ProductResult;
+import com.sma.delivery.rest.products.IProductsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.establishments.IEstablishmentsService;
 import com.sma.delivery.service.ingredientsProducts.IIngredientsProductsService;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.sma.delivery.rest.products.IProductsResource;
 
-
-import java.text.ParseException;
 import java.util.*;
 
 @Service("productsService")
@@ -78,6 +76,9 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
         for (ProductDTO dto : cList) {
             final ProductsB bean = convertDtoToBean(dto);
             products.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("productsC_" + bean.getId(), bean);
+            }
         }
         return products;
     }

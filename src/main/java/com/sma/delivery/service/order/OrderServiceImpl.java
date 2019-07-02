@@ -3,16 +3,16 @@ package com.sma.delivery.service.order;
 import com.sma.delivery.beans.order.OrderB;
 import com.sma.delivery.dto.orders.OrderDTO;
 import com.sma.delivery.dto.orders.OrderResult;
+import com.sma.delivery.rest.order.IOrderResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.establishments.IEstablishmentsService;
 import com.sma.delivery.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.stereotype.Service;
-import com.sma.delivery.rest.order.IOrderResource;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import java.text.ParseException;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,15 +54,15 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 		final List<OrderDTO> cList = null == result.getOrders() ? new ArrayList<OrderDTO>()
 				: result.getOrders();
 
-		final List<OrderB> orders = new ArrayList<OrderB>();
+		final List<OrderB> order = new ArrayList<OrderB>();
 		for (OrderDTO dto : cList) {
 			final OrderB bean = convertDtoToBean(dto);
-			orders.add(bean);
+			order.add(bean);
 			if (bean.getId() != null) {
-				getCacheManager().getCache("delivery-cacheC").put("ordersClients_" + dto.getId(), bean);
+				getCacheManager().getCache("delivery-cacheC").put("ordersC_" + bean.getId(), bean);
 			}
 		}
-		return orders;
+		return order;
 	}
 
 	@Override

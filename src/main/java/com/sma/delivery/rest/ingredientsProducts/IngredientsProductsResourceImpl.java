@@ -1,6 +1,5 @@
 package com.sma.delivery.rest.ingredientsProducts;
 
-import com.sma.delivery.dto.bills_details.BillDetailResult;
 import com.sma.delivery.dto.ingredients_products.IngredientsProductsDTO;
 import com.sma.delivery.dto.ingredients_products.IngredientsProductsResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;

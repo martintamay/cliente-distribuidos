@@ -9,11 +9,15 @@
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
     <asset:stylesheet src="application.css"/>
     <!-- Font Awesome -->
     <asset:stylesheet src="font-awesome.min.css"/>
     <!-- Bootstrap CSS -->
-    <asset:stylesheet src="bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- ion icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700,900" rel="stylesheet">
     <!-- Simple line Icon -->
@@ -29,12 +33,12 @@
 </head>
 <body>
 
-    <div class="nav-menu bg-dark mb-5">
+    <div class="nav-menu mb-5">
         <div class="bg transition">
             <div class="container-fluid fixed">
                 <div class="row">
                     <div class="col-md-12">
-                        <nav class="navbar navbar-expand-lg navbar-light">
+                        <nav class="navbar navbar-expand-lg navbar-dark">
                             <a class="navbar-brand" href="/">Delivery</a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="icon-menu"></span>
@@ -49,6 +53,12 @@
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                             <g:link class="dropdown-item" controller="user" action="list">Usuarios</g:link>
                                             <g:link class="dropdown-item" controller="order" action="list">Ordenes</g:link>
+                                            <g:link class="dropdown-item" controller="comments" action="list">Comentarios</g:link>
+                                            <g:link class="dropdown-item" controller="establishments" action="list">Restaurantes</g:link>
+                                            <g:link class="dropdown-item" controller="bills" action="list">Factura</g:link>
+                                            <g:link class="dropdown-item" controller="billsDetails" action="list">Factura Detalle</g:link>
+                                            <g:link class="dropdown-item" controller="promotion" action="list">Promociones</g:link>
+                                            <g:link class="dropdown-item" controller="products" action="list">Productos</g:link>
                                         </div>
                                     </li>
                                     <g:if test="${org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication().name.trim().equals("__grails.anonymous.user__")}">
@@ -84,9 +94,10 @@
 
     <g:layoutBody/>
 
-    <asset:javascript src="jquery-3.2.1.min.js"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <asset:javascript src="popper.min.js"/>
-    <asset:javascript src="bootstrap.min.js"/>
+
 
     <script>
         $(window).scroll(function() {
@@ -100,7 +111,7 @@
 
                     $('.fixed').removeClass('is-sticky');
 
-                };
+                }
             }
         });
     </script>

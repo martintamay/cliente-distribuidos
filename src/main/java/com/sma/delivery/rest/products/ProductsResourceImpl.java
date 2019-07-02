@@ -1,10 +1,10 @@
 package com.sma.delivery.rest.products;
 
+import com.sma.delivery.dto.products.ProductDTO;
 import com.sma.delivery.dto.products.ProductResult;
+import com.sma.delivery.rest.base.BaseResourceImpl;
 import org.springframework.stereotype.Repository;
 
-import com.sma.delivery.dto.products.ProductDTO;
-import com.sma.delivery.rest.base.BaseResourceImpl;
 import javax.xml.bind.annotation.XmlRootElement;
 @Repository("productsResource")
 @XmlRootElement(name = "productsResult")

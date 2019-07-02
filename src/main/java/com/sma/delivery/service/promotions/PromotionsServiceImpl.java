@@ -6,13 +6,17 @@ import com.sma.delivery.beans.promotions.PromotionsB;
 import com.sma.delivery.dto.product_has_promotions.ProductHasPromotionDTO;
 import com.sma.delivery.dto.promotions.PromotionDTO;
 import com.sma.delivery.dto.promotions.PromotionResult;
+import com.sma.delivery.rest.promotions.IPromotionsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.productHasPromotions.IProductHasPromotionsService;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.sma.delivery.rest.promotions.IPromotionsResource;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service("promotionsService")
 public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, PromotionDTO> implements IPromotionsService {
@@ -36,19 +40,7 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
     public void delete(Integer id){
         promotionsResource.delete(id);
     }
-    @Override
-    public List<PromotionsB> find(String text, Integer page)  {
-        final PromotionResult result = promotionsResource.find(text, page);
-        final List<PromotionDTO> cList = null == result.getPromotions() ? new ArrayList<PromotionDTO>()
-                : result.getPromotions();
 
-        final List<PromotionsB> promotions = new ArrayList<PromotionsB>();
-        for (PromotionDTO dto : cList) {
-            final PromotionsB bean = convertDtoToBean(dto);
-            promotions.add(bean);
-        }
-        return promotions;
-    }
 
     @Override
     public List<PromotionsB> getAll(Integer page)  {
@@ -63,7 +55,21 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
         }
         return promotions;
     }
+    public List<PromotionsB> find(String text, Integer page)  {
+        final PromotionResult result = promotionsResource.find(text, page);
+        final List<PromotionDTO> cList = null == result.getPromotions() ? new ArrayList<PromotionDTO>()
+                : result.getPromotions();
 
+        final List<PromotionsB> promotion = new ArrayList<PromotionsB>();
+        for (PromotionDTO dto : cList) {
+            final PromotionsB bean = convertDtoToBean(dto);
+            promotion.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("promotionsC_" + bean.getId(), bean);
+            }
+        }
+        return promotion;
+    }
     @Override
     public PromotionsB getById(Integer id)  {
         final PromotionDTO dto = promotionsResource.getById(id);

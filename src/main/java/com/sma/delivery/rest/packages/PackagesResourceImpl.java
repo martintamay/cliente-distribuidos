@@ -1,9 +1,9 @@
 package com.sma.delivery.rest.packages;
 
-import org.springframework.stereotype.Repository;
 import com.sma.delivery.dto.packages.PackageDTO;
 import com.sma.delivery.dto.packages.PackageResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
+import org.springframework.stereotype.Repository;
 
 @Repository("packagesResource")
 public class PackagesResourceImpl extends BaseResourceImpl<PackageDTO> implements IPackagesResource {

@@ -1,5 +1,5 @@
 <table class="table table-striped">
-    <thead>
+     <thead class="thead-dark">
     <tr >
 
 
@@ -44,6 +44,7 @@
                             ${fieldValue(bean: establishmentsInstance, field: "schedule")}
                         </td>
             <td>
+                <g:link class="btn btn-outline-secondary" action="show" id="${establishmentsInstance?.id}"><i class="fa fa-eye"></i> </g:link>
                 <g:link class="btn btn-outline-secondary" action="edit" id="${establishmentsInstance?.id}"><i class="fa fa-pencil"></i> </g:link>
                 <g:link class="btn btn-outline-danger" action="delete" id="${establishmentsInstance?.id}"><i class="fa fa-trash-o"></i> </g:link>
             </td>

@@ -5,15 +5,18 @@ import com.sma.delivery.beans.billsDetails.BillsDetailsB;
 import com.sma.delivery.dto.bills.BillDTO;
 import com.sma.delivery.dto.bills.BillResult;
 import com.sma.delivery.dto.bills_details.BillDetailDTO;
+import com.sma.delivery.rest.bills.IBillsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.billsDetails.IBillsDetailsService;
+import com.sma.delivery.service.order.IOrderService;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CacheEvict;
-import com.sma.delivery.rest.bills.IBillsResource;
-import com.sma.delivery.service.order.IOrderService;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
 
 
 import java.util.*;
@@ -75,7 +78,6 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
 
     @Override
     public List<BillsB> find(String text, Integer page)  {
-
         final BillResult result = _billsResource.find(text, page);
         final List<BillDTO> cList = null == result.getBills() ? new ArrayList<BillDTO>()
                 : result.getBills();
@@ -85,7 +87,7 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
             final BillsB bean = convertDtoToBean(dto);
             bills.add(bean);
             if (bean.getId() != null) {
-                getCacheManager().getCache("delivery-cacheC").put("billsClients_" + dto.getId(), bean);
+                getCacheManager().getCache("delivery-cacheC").put("billsC_" + bean.getId(), bean);
             }
         }
         return bills;

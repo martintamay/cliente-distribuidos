@@ -3,53 +3,57 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <g:set var="entityName" value="${message(code: 'order.label', default: 'User')}" />
-    <title><g:message code="default.list.label" args="[entityName]" /></title>
+    <g:set var="entityName" value="${message(code: 'order.label', default: 'Order')}" />
+    <title>Lista de Ordenes</title>
 </head>
 <body>
 <a href="#list-order" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-    </ul>
-</div>
-<div id="list-order" class="content scaffold-list" role="main">
-    <h1><g:message code="default.list.label" args="[entityName]" /></h1>
-    <g:if test="${flash.message}">
-        <div class="message" role="status">${flash.message}</div>
-    </g:if>
-    <table>
-        <thead>
-        <tr>
 
-            <g:sortableColumn property="orderNumber" title="Order Number" />
-            <g:sortableColumn property="address" title="Address" />
-            <g:sortableColumn property="state" title="State" />
-            <g:sortableColumn property="contactNumber" title="Contac Number" />
-            <g:sortableColumn property="totalCost" title="Total Cost" />
-
-        </tr>
-        </thead>
-        <tbody>
-        <g:each in="${orderInstanceList}" status="i" var="orderInstance">
-            <tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-
-                <td>
-                    <g:link class="edit" action="edit" id="${orderInstance?.id}">${fieldValue(bean: orderInstance, field: "id")}</g:link>
-                </td>
-                <td>${fieldValue(bean: orderInstance, field: "orderNumber")}</td>
-                <td>${fieldValue(bean: orderInstance, field: "address")}</td>
-                <td>${fieldValue(bean: orderInstance, field: "state")}</td>
-                <td>${fieldValue(bean: orderInstance, field: "contactNumber")}</td>
-                <td>${fieldValue(bean: orderInstance, field: "totalCost")}</td>
-            </tr>
-        </g:each>
-        </tbody>
-    </table>
-    <div class="pagination">
-        <g:paginate total="${orderInstanceTotal}" />
+<div id="list-order" class="container padding-menu" role="main">
+    <div class="card">
+        <div class="card-title p-3 mb-2 bg-primary text-white">
+            <h3><g:message code="default.list.label" args="[entityName]" /></h3>
+        </div>
+        <div class="card-body">
+            <g:if test="${flash.message}">
+                <div class="alert alert-info" role="status">${flash.message}</div>
+            </g:if>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <div id="search_tagsugg">
+                            <input type="text" class="search form-control" id="text" name="text" autocomplete="off" aria-describedby="search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <fieldset class="form">
+                <g:render template="list"/>
+            </fieldset>
+            <div class="btn-group">
+                <g:link class="btn btn-primary" action="create">Nueva Orden</g:link>
+            </div>
+            <g:if test="${page>1}"> <g:link style="align: center;" action="list" id="${page-1}">Back</g:link></g:if>
+            <g:if test="${next>0}"><g:link style="align: center;" action="list" id="${page+1}">Next</g:link></g:if>
+        </div>
     </div>
 </div>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#text').keyup(function(){
+            $.ajax({
+                url:"${createLink(controller: 'order', action: 'search')}",
+                data:{
+                    text:$('#text').val()
+                },
+                success: function(resp){
+                    $('.form').html(resp)
+                }
+
+            });
+        });
+    });
+</script>
 </body>
 </html>

@@ -1,14 +1,11 @@
 package com.sma.delivery.beans.user;
 
-import java.text.ParseException;
-import java.util.Map;
-import java.util.Set;
-
+import com.sma.delivery.beans.base.BaseBean;
 import com.sma.delivery.beans.role.RoleB;
 import org.apache.commons.lang.StringUtils;
-import com.sma.delivery.beans.base.BaseBean;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import java.util.Map;
+import java.util.Set;
 
 public class UserB extends BaseBean {
 

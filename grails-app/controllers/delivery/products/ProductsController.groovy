@@ -1,12 +1,11 @@
 package delivery.products
 
 import com.sma.delivery.beans.products.ProductsB
+import com.sma.delivery.service.establishments.IEstablishmentsService
 import com.sma.delivery.service.ingredients.IIngredientsService
 import com.sma.delivery.service.ingredientsProducts.IIngredientsProductsService
 import com.sma.delivery.service.products.IProductsService
-import com.sma.delivery.service.establishments.IEstablishmentsService
 import delivery.ingredientsProducts.IngredientsProducts
-
 
 class ProductsController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
@@ -23,7 +22,7 @@ class ProductsController {
         def products
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
         products = productsService.getAll(page)
-        def next = productsService.getAll(page+1).size();
+        def next = productsService.getAll(page+1).size()
         [productsInstanceList: products, productsInstanceTotal: products?.size(),page: page,next:next]
     }
 
@@ -33,10 +32,10 @@ class ProductsController {
     }
 
     def save() {
-        def parametros = new HashMap<String,String>();
-        parametros.put("product", request.JSON.toString());
+        def parametros = new HashMap<String,String>()
+        parametros.put("product", request.JSON.toString())
         def establishments=establishmentsService.getById(Integer.valueOf(request.JSON.Product.establishments))
-        def newProducts = new ProductsB(parametros);
+        def newProducts = new ProductsB(parametros)
         newProducts.setEstablishments(establishments)
         def productsInstance = productsService.save(newProducts)
         if (!newProducts?.getId()) {
@@ -53,7 +52,7 @@ class ProductsController {
 
     def edit(Integer id) {
         def productsInstance = productsService.getById(id)
-        Map <String,String> p = new HashMap<>();
+        Map <String,String> p = new HashMap<>()
         p.put("productId", id.toString())
         productsInstance.setIngredientsProducts(ingredientsProductsService.getAllBy(p))
         if (!productsInstance) {
@@ -71,13 +70,13 @@ class ProductsController {
     }
 
     def update(Long id, Long version) {
-        def parametros = new HashMap<String,String>();
-        parametros.put("product", request.JSON.toString());
+        def parametros = new HashMap<String,String>()
+        parametros.put("product", request.JSON.toString())
         def establishments=establishmentsService.getById(Integer.valueOf(request.JSON.Product.establishments))
-        def newProduct = new ProductsB(parametros);
-        newProduct.setId(Integer.valueOf(params['id']));
+        def newProduct = new ProductsB(parametros)
+        newProduct.setId(Integer.valueOf(params['id']))
         newProduct.setEstablishments(establishments)
-        productsService.save(newProduct);
+        productsService.save(newProduct)
         redirect(action: "list")
     }
 
@@ -86,9 +85,10 @@ class ProductsController {
         redirect(action: "list")
     }
 
-    def search(String text){
-        def products = productsService.find(text);
-        render(view: "_list", model: [productsInstanceList: products])
+    def search(String text,Integer page){
+        def products = productsService.find(text,page)
+        def next = productsService.find(text,page+1).size()
+        render(view: "_list", model: [productsInstanceList: products ,next: next,page: page])
     }
     def show(Integer id){
         def productsInstance = productsService.getById(id)

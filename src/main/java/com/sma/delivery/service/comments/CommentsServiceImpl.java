@@ -3,18 +3,16 @@ package com.sma.delivery.service.comments;
 import com.sma.delivery.beans.comments.CommentsB;
 import com.sma.delivery.dto.comments.CommentDTO;
 import com.sma.delivery.dto.comments.CommentResult;
+import com.sma.delivery.rest.comments.ICommentsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.establishments.IEstablishmentsService;
+import com.sma.delivery.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import com.sma.delivery.rest.comments.ICommentsResource;
-import com.sma.delivery.service.user.IUserService;
 
-
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,7 +77,6 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentDTO> 
 
     @Override
     public List<CommentsB> find(String text, Integer page)  {
-
         final CommentResult result = _commentsResource.find(text, page);
         final List<CommentDTO> cList = null == result.getComments() ? new ArrayList<CommentDTO>()
                 : result.getComments();
@@ -89,12 +86,11 @@ public class CommentsServiceImpl extends BaseServiceImpl<CommentsB, CommentDTO> 
             final CommentsB bean = convertDtoToBean(dto);
             comments.add(bean);
             if (bean.getId() != null) {
-                getCacheManager().getCache("delivery-cacheC").put("commentsClients_" + dto.getId(), bean);
+                getCacheManager().getCache("delivery-cacheC").put("commentsC_" + bean.getId(), bean);
             }
         }
         return comments;
     }
-
     @Override
     protected CommentsB convertDtoToBean(CommentDTO dto)  {
         final Map<String, String> params = new HashMap<String, String>();

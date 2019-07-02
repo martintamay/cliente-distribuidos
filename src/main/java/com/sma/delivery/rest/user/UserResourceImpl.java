@@ -1,12 +1,10 @@
 package com.sma.delivery.rest.user;
 
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Repository;
-
+import com.sma.delivery.dto.roles.RoleResult;
 import com.sma.delivery.dto.users.UserDTO;
 import com.sma.delivery.dto.users.UserResult;
-import com.sma.delivery.dto.roles.RoleResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
+import org.springframework.stereotype.Repository;
 
 import javax.xml.bind.annotation.XmlRootElement;
 @Repository("userResource")

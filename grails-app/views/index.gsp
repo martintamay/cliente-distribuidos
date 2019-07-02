@@ -52,7 +52,6 @@
                                         <g:link class="dropdown-item" controller="comments" action="list">Comentarios</g:link>
                                         <g:link class="dropdown-item" controller="establishments" action="list">Restaurantes</g:link>
                                         <g:link class="dropdown-item" controller="bills" action="list">Factura</g:link>
-                                        <g:link class="dropdown-item" controller="billsDetails" action="list">Factura Detalle</g:link>
                                         <g:link class="dropdown-item" controller="products" action="list">Productos</g:link>
                                         <g:link class="dropdown-item" controller="promotion" action="list">Promociones</g:link>
                                     </div>
@@ -252,7 +251,7 @@
             <div class="col-md-3 category-responsive">
                 <a href="#" class="category-wrap">
                     <div class="category-block">
-                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 496 496" style="enable-background:new 0 0 496 496;" xml:space="preserve" width="512px" height="512px"><g><g>
+                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 496 496" style="enable-background:new 0 0 496 496;" xml:space="preserve" width="512px" height="512px"><g><g>
                             <g>
                                 <g>
                                     <path d="M472,0h-24H288H171.528c-10.344,0-19.496,6.592-22.776,16.408L146.232,24H120c-13.232,0-24,10.768-24,24v10.36     C72.904,65.264,56,86.688,56,112c0,16.712,7.4,31.696,19.048,41.968c-17.896,13.608-30.144,33.72-33.752,56.064     C17.544,216.504,0,238.216,0,264c0,30.872,25.128,56,56,56v48h36.04c2.976,11.56,7.568,22.616,13.712,32.984l-25.512,25.52     l45.256,45.256l25.52-25.512c10.368,6.144,21.424,10.736,32.984,13.712V496h64v-36.04c11.56-2.976,22.616-7.568,32.984-13.712     l25.52,25.512l45.256-45.256l-25.512-25.52c6.144-10.368,10.736-21.424,13.712-32.984H376v-64h-36.04     c-2.976-11.56-7.568-22.616-13.712-32.984L349.256,248H448V144v-16h24c13.232,0,24-10.768,24-24V24C496,10.768,485.232,0,472,0z      M360,16c13.232,0,24,10.768,24,24s-10.768,24-24,24s-24-10.768-24-24S346.768,16,360,16z M304,16h24.208     C323.128,22.704,320,30.96,320,40c0,22.056,17.944,40,40,40c9.04,0,17.296-3.128,24-8.208V128h-80V16z M238.528,16     c-3.312,9.288-12.112,16-22.528,16s-19.216-6.712-22.528-16H238.528z M72,112c0-22.056,17.944-40,40-40c22.056,0,40,17.944,40,40     c0,22.056-17.944,40-40,40c-8.2,0-15.832-2.496-22.184-6.752l-0.216-0.44c-0.08,0.04-0.144,0.088-0.224,0.128     C78.904,137.712,72,125.656,72,112z M89.488,163.24c2.104,0.928,4.28,1.736,6.512,2.408v59.248     c-10.008-10.2-23.68-16.296-38.2-16.768C62,189.68,73.48,173.432,89.488,163.24z M56,304c-22.056,0-40-17.944-40-40     c0-22.056,17.944-40,40-40c12.072,0,23.424,5.56,30.96,14.768l-6.728,6.728l25.512,25.52C99.6,281.384,95.008,292.44,92.032,304     H64H56z M328,246.632l-22.192,22.192l3.608,5.448c8,12.088,13.504,25.312,16.336,39.32l1.304,6.408H360v32h-32.944l-1.304,6.408     c-2.832,14.008-8.336,27.232-16.336,39.32l-3.608,5.448l23.336,23.336l-22.632,22.632l-23.336-23.336l-5.448,3.608     c-12.088,8-25.312,13.504-39.32,16.336L232,447.056V480h-32v-32.944l-6.408-1.304c-14.008-2.832-27.232-8.336-39.32-16.336     l-5.448-3.608l-23.336,23.336l-22.632-22.632l23.336-23.336l-3.608-5.448c-8-12.088-13.504-25.312-16.336-39.32L104.944,352H72     v-32h32.944l1.304-6.408c2.832-14.008,8.336-27.232,16.336-39.32l3.608-5.448l-23.336-23.336l22.632-22.632l23.336,23.336     l5.448-3.608c12.088-8,25.312-13.504,39.32-16.336l6.408-1.304V192h32v32.944l6.408,1.304     c14.008,2.832,27.232,8.336,39.32,16.336l5.448,3.608l23.336-23.336L328,244.352V246.632z M432,232h-93.728l-31.768-31.768     l-25.52,25.512C270.616,219.6,259.56,215.008,248,212.032V176h-64v36.04c-11.56,2.976-22.616,7.568-32.984,13.712l-25.52-25.512     L112,213.728V168c30.872,0,56-25.128,56-56s-25.128-56-56-56v-8c0-4.416,3.584-8,8-8h37.768l6.168-18.528     c1.096-3.28,4.152-5.472,7.592-5.472h5.28c3.72,18.232,19.88,32,39.192,32s35.472-13.768,39.192-32H288v88.208     C281.296,99.128,273.04,96,264,96c-22.056,0-40,17.944-40,40c0,22.056,17.944,40,40,40c19.312,0,35.472-13.768,39.192-32H432V232     z M288,136c0,13.232-10.768,24-24,24s-24-10.768-24-24s10.768-24,24-24S288,122.768,288,136z M480,104c0,4.416-3.584,8-8,8h-24     V96h-16v16v16h-32V40c0-9.04-3.128-17.296-8.208-24H432v64h16V16h24c4.416,0,8,3.584,8,8V104z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
@@ -270,7 +269,7 @@
             <div class="col-md-3 category-responsive">
                 <a href="#" class="category-wrap">
                     <div class="category-block">
-                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 469.824 469.824" style="enable-background:new 0 0 469.824 469.824;" xml:space="preserve" width="512px"
+                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 469.824 469.824" style="enable-background:new 0 0 469.824 469.824;" xml:space="preserve" width="512px"
                              height="512px"><g><g>
                             <g>
                                 <path d="M188.885,67.36C147.84,26.336,67.52,21.579,10.667,21.579C4.779,21.579,0,26.357,0,32.245    c0,56.853,4.736,137.173,45.781,178.219c17.323,17.323,43.883,25.067,70.208,25.067c28.608,0,56.96-9.152,72.896-25.088    C219.456,179.872,225.067,103.52,188.885,67.36z M173.803,195.381c-22.827,22.805-86.208,26.709-112.917,0    C27.755,162.251,22.016,94.944,21.397,42.976c51.968,0.619,119.275,6.357,152.405,39.488    C200.512,109.173,196.608,172.576,173.803,195.381z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
@@ -291,7 +290,7 @@
             <div class="col-md-3 category-responsive">
                 <a href="#" class="category-wrap">
                     <div class="category-block">
-                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_2" x="0px" y="0px" viewBox="0 0 503.607 503.607" style="enable-background:new 0 0 503.607 503.607;" xml:space="preserve" width="512px"
+                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_2" x="0px" y="0px" viewBox="0 0 503.607 503.607" style="enable-background:new 0 0 503.607 503.607;" xml:space="preserve" width="512px"
                              height="512px"><g><g transform="translate(1 1)">
                             <g>
                                 <g>
@@ -316,7 +315,7 @@
             <div class="col-md-3 category-responsive">
                 <a href="#" class="category-wrap">
                     <div class="category-block">
-                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_3" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="512px" height="512px"><g><g>
+                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_3" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve" width="512px" height="512px"><g><g>
                             <g>
                                 <path d="M454.976,43.056c-3.591-3.588-9.411-3.591-13.003,0l-95.329,95.326c-3.592,3.591-3.592,9.411-0.001,13.003    c1.796,1.795,4.148,2.692,6.502,2.692c2.352,0,4.706-0.897,6.502-2.692l95.329-95.326    C458.566,52.467,458.566,46.646,454.976,43.056z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
                             </g>
@@ -343,7 +342,7 @@
             <div class="col-md-3 category-responsive">
                 <a href="#" class="category-wrap">
                     <div class="category-block">
-                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_2" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve" width="512px" height="512px"><g><g>
+                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_2" x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve" width="512px" height="512px"><g><g>
                             <path d="M59,16V2H1v14H0v37.259C0,55.873,2.127,58,4.742,58h50.517C57.873,58,60,55.873,60,53.259V16H59z M56.5,16l-5.18-6.906   L56.414,4H57v12H56.5z M11,16V9c0-0.024-0.012-0.046-0.014-0.07c-0.005-0.064-0.02-0.124-0.036-0.187   c-0.011-0.042-0.01-0.085-0.027-0.125c-0.009-0.022-0.027-0.039-0.037-0.061c-0.027-0.055-0.065-0.102-0.103-0.152   c-0.028-0.036-0.044-0.081-0.077-0.113L6.414,4h47.172l-4.292,4.292c-0.032,0.032-0.049,0.077-0.077,0.113   c-0.038,0.05-0.075,0.097-0.102,0.152c-0.011,0.022-0.028,0.038-0.038,0.061c-0.017,0.04-0.016,0.084-0.027,0.125   c-0.017,0.063-0.032,0.122-0.036,0.187C49.012,8.954,49,8.976,49,9v7H11z M6,16l3-4.001V16H6z M51,11.999L54,16h-3V11.999z M3,4   h0.586L8.68,9.094L3.5,16H3V4z M58,53.259C58,54.771,56.77,56,55.258,56H4.742C3.23,56,2,54.771,2,53.259V18h56V53.259z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
                             <path d="M42,24c-0.552,0-1,0.447-1,1v6c0,6.065-4.935,11-11,11s-11-4.935-11-11v-6c0-0.553-0.448-1-1-1s-1,0.447-1,1v6   c0,7.168,5.832,13,13,13s13-5.832,13-13v-6C43,24.447,42.552,24,42,24z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
                             <path d="M20,25c0,0.553,0.448,1,1,1s1-0.447,1-1c0-2.206-1.794-4-4-4s-4,1.794-4,4c0,0.553,0.448,1,1,1s1-0.447,1-1   c0-1.103,0.897-2,2-2S20,23.897,20,25z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
@@ -356,7 +355,7 @@
             <div class="col-md-3 category-responsive">
                 <a href="#" class="category-wrap">
                     <div class="category-block">
-                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_3" x="0px" y="0px" viewBox="0 0 511.988 511.988" style="enable-background:new 0 0 511.988 511.988;" xml:space="preserve" width="512px"
+                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_3" x="0px" y="0px" viewBox="0 0 511.988 511.988" style="enable-background:new 0 0 511.988 511.988;" xml:space="preserve" width="512px"
                              height="512px"><g><g>
                             <g>
                                 <path d="M489.865,433.23c-1.643-3.989-5.547-6.592-9.856-6.592H10.676c-4.309,0-8.213,2.603-9.856,6.592    c-1.664,3.989-0.747,8.576,2.304,11.627l23.915,23.915c11.371,11.349,25.003,21.867,47.616,21.867h341.333    c22.613,0,36.245-10.517,47.659-21.867l23.915-23.915C490.612,441.806,491.529,437.22,489.865,433.23z M448.521,453.689    c-11.541,11.541-20.053,15.616-32.533,15.616H74.655c-12.48,0-20.992-4.075-32.533-15.616l-5.717-5.717h417.835L448.521,453.689z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
@@ -389,7 +388,7 @@
             <div class="col-md-3 category-responsive">
                 <a href="#" class="category-wrap">
                     <div class="category-block">
-                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_4" x="0px" y="0px" viewBox="0 0 33 33" style="enable-background:new 0 0 33 33;" xml:space="preserve" width="512px" height="512px"><g><g>
+                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_4" x="0px" y="0px" viewBox="0 0 33 33" style="enable-background:new 0 0 33 33;" xml:space="preserve" width="512px" height="512px"><g><g>
                             <g>
                                 <path d="M20.136,33h-9.212c-2.397,0-4.349-1.951-4.349-4.349V11.265c0-0.276,0.224-0.5,0.5-0.5h16.828    c0.276,0,0.581,0.224,0.581,0.5v17.387C24.484,31.049,22.533,33,20.136,33z M7.575,11.765v16.887c0,1.847,1.502,3.349,3.349,3.349    h9.212c1.847,0,3.349-1.502,3.349-3.349V11.765H7.575z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
                                 <path d="M26.096,25.574h-2.111c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h2.111c1.005,0,1.823-0.818,1.823-1.823v-4.693    c0-1.006-0.818-1.824-1.823-1.824h-2.111c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h2.111c1.557,0,2.823,1.267,2.823,2.824    v4.693C28.919,24.308,27.652,25.574,26.096,25.574z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
@@ -408,7 +407,7 @@
             <div class="col-md-3 category-responsive">
                 <a href="#" class="category-wrap">
                     <div class="category-block">
-                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_5" x="0px" y="0px" viewBox="0 0 61.168 61.168" style="enable-background:new 0 0 61.168 61.168;" xml:space="preserve" width="512px"
+                        <svg class="category-img" xmlns="http://www.w3.org/2000/svg" version="1.1" id="Capa_5" x="0px" y="0px" viewBox="0 0 61.168 61.168" style="enable-background:new 0 0 61.168 61.168;" xml:space="preserve" width="512px"
                              height="512px"><g><g>
                             <path d="M30.938,26.584c3.859,0,7-3.141,7-7s-3.141-7-7-7s-7,3.141-7,7S27.078,26.584,30.938,26.584z M30.938,14.584   c2.757,0,5,2.243,5,5s-2.243,5-5,5s-5-2.243-5-5S28.181,14.584,30.938,14.584z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
                             <path d="M50.216,37.584h-7.161l3.047-4.4c5.755-7.671,4.922-20.28-1.781-26.982c-3.621-3.622-8.437-5.617-13.56-5.617   c-5.122,0-9.938,1.995-13.56,5.617c-6.703,6.702-7.536,19.312-1.804,26.952l3.068,4.431h-7.513L0,60.584h61.168L50.216,37.584z    M17.02,31.984c-5.199-6.933-4.454-18.32,1.596-24.369c3.244-3.244,7.558-5.031,12.146-5.031s8.901,1.787,12.146,5.031   c6.05,6.049,6.795,17.437,1.573,24.399L30.761,51.827l-9.863-14.243h0L17.02,31.984z M12.216,39.584h7.634l10.911,15.757   l10.91-15.757h7.281l9.048,19H3.168L12.216,39.584z" data-original="#000000" class="active-path" data-old_color="#ff3a6d" fill="#ff3a6d"/>
@@ -463,7 +462,7 @@
 
                 $('.fixed').removeClass('is-sticky');
 
-            };
+            }
         }
     });
 </script>

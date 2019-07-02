@@ -1,7 +1,5 @@
 package delivery.bills
 
-
-import com.sma.delivery.beans.billsDetails.BillsDetailsB
 import com.sma.delivery.beans.bills.BillsB
 import com.sma.delivery.service.bills.IBillsService
 import com.sma.delivery.service.billsDetails.IBillsDetailsService
@@ -29,7 +27,7 @@ class BillsController {
         def bills
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
         bills= billsService.getAll(page)
-        def next = billsService.getAll(page+1).size();
+        def next = billsService.getAll(page+1).size()
         [billsInstanceList: bills, billsInstanceTotal: bills?.size(),page: page,next:next]
     }
     def create() {
@@ -42,7 +40,7 @@ class BillsController {
         def parametros = new HashMap<String,String>();
         parametros.put("bill", request.JSON.toString());
         def order=orderService.getById(Integer.valueOf(request.JSON.bill.order))
-        def newBills = new BillsB(parametros);
+        def newBills = new BillsB(parametros)
         newBills.setOrder(order)
         def billsInstance = billsService.save(newBills)
         if (!newBills?.getId()) {
@@ -75,8 +73,8 @@ class BillsController {
     }
 
     def update(Long id, Long version) {
-        def parametros = new HashMap<String,String>();
-        parametros.put("bill", request.JSON.toString());
+        def parametros = new HashMap<String,String>()
+        parametros.put("bill", request.JSON.toString())
         def order=orderService.getById(Integer.valueOf(request.JSON.bill.order))
         def newBills = new BillsB(parametros);
         newBills.setBillsDetails(billsDetails(parametros))
@@ -91,9 +89,10 @@ class BillsController {
         redirect(action: "list")
     }
 
-    def search(String text){
-        def bills = billsService.find(text);
-        render(view: "_list", model: [billsInstanceList: bills])
+    def search(String text,Integer page){
+        def bills = billsService.find(text,page)
+        def next = billsService.find(text,page+1).size()
+        render(view: "_list", model: [billsInstanceList: bills ,next: next,page: page])
     }
     def show(Integer id){
         def billsInstance = billsService.getById(id)
@@ -111,7 +110,6 @@ class BillsController {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject a = (JSONObject) jsonArray.get(i);
                     Map<String, String> p = new HashMap<>();
-                    System.out.println("hola---------" + a.toString());
                     if (a.containsKey("id"))
                         p.put("id", a.getString("id"));
                     p.put("iva10", a.getString("iva10"));

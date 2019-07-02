@@ -1,7 +1,8 @@
 package com.sma.delivery.beans.ingredients;
 
-import org.apache.commons.lang.StringUtils;
 import com.sma.delivery.beans.base.BaseBean;
+import org.apache.commons.lang.StringUtils;
+
 import java.util.Map;
 
 public class IngredientsB extends BaseBean {

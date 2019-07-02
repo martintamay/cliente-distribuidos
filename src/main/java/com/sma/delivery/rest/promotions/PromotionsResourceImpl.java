@@ -1,6 +1,7 @@
 package com.sma.delivery.rest.promotions;
-import com.sma.delivery.dto.promotions.PromotionResult;
+
 import com.sma.delivery.dto.promotions.PromotionDTO;
+import com.sma.delivery.dto.promotions.PromotionResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
 import org.springframework.stereotype.Repository;
 @Repository("promotionsResource")

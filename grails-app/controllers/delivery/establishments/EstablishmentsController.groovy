@@ -66,9 +66,10 @@ class EstablishmentsController {
         redirect(action: "list")
     }
 
-    def search(String text){
-        def establishments = establishmentsService.find(text);
-        render(view: "_list", model: [establishmentsInstanceList: establishments])
+    def search(String text,Integer page){
+        def establishments = establishmentsService.find(text,page);
+        def next = establishmentsService.find(text,page+1).size();
+        render(view: "_list", model: [establishmentsInstanceList: establishments ,next: next,page: page])
     }
     def show(Integer id){
         def establishmentsInstance = establishmentsService.getById(id)

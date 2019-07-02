@@ -2,7 +2,6 @@ package delivery.bills
 
 import delivery.billsDetails.BillsDetails
 import delivery.order.Order
-import delivery.user.User
 
 class Bills {
     String total;

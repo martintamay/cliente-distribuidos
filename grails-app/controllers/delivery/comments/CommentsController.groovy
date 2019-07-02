@@ -88,9 +88,10 @@ class CommentsController {
         redirect(action: "list")
     }
 
-    def search(String text) {
-        def comments = commentsService.find(text);
-        render(view: "_list", model: [commetsInstanceList: comments])
+    def search(String text,Integer page){
+        def comments = commentsService.find(text,page);
+        def next = commentsService.find(text,page+1).size();
+        render(view: "_list", model: [commentsInstanceList: comments ,next: next,page: page])
     }
 
     def show(Integer id) {

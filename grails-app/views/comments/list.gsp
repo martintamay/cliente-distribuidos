@@ -30,29 +30,60 @@
             <fieldset class="form">
                 <g:render template="list"/>
             </fieldset>
+            <g:if test="${page>1}"> <g:link class="btn btn-secondary btn-sm pag-list " style="align: center;" action="list" id="${page-1}"><i class="fa fa-step-backward" aria-hidden="true"></i></g:link></g:if>
+            <g:if test="${next>0}"><g:link class="btn btn-secondary btn-sm pag-list" style="align: center;" action="list" id="${page+1}"><i class="fa fa-step-forward" aria-hidden="true"></i></g:link></g:if>
+            <button class="btn btn-secondary btn-sm pag-search fa fa-step-backward" id="search-back"></button>
+            <button class="btn btn-secondary btn-sm pag-search fa fa-step-forward" id="search-next"></button>
             <div class="btn-group">
                 <g:link class="btn btn-primary" action="create">Nuevo Comentario</g:link>
             </div>
-            <g:if test="${page>1}"> <g:link style="align: center;" action="list" id="${page-1}">Back</g:link></g:if>
-            <g:if test="${next>0}"><g:link style="align: center;" action="list" id="${page+1}">Next</g:link></g:if>
         </div>
     </div>
 </div>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script>
     $(document).ready(function(){
+        var list = $('.form').html()
+        var pag = 1
+        $('.pag-search').hide()
+        $('#search-next').click(function(){
+            $('#search-back').show()
+            pag += 1
+            buscadorAjax(pag);
+        });
+        $('#search-back').click(function(){
+            pag -= 1
+            $('#search-next').show()
+            if(pag == 1)
+                $('#search-back').hide()
+            buscadorAjax(pag);
+        });
         $('#text').keyup(function(){
+            pag = 1
+            $('#search-back').hide()
+            if ($('#text').val() == ''){
+                $('.form').html(list)
+                $('.pag-list').show()
+                $('#search-next').hide()
+            }else{
+                $('.pag-list').hide()
+                $('#search-next').show()
+                buscadorAjax(pag);
+
+            }
+        });
+        function buscadorAjax(pag) {
             $.ajax({
                 url:"${createLink(controller: 'comments', action: 'search')}",
                 data:{
-                    text:$('#text').val()
+                    text:$('#text').val(),
+                    page:pag
                 },
                 success: function(resp){
                     $('.form').html(resp)
                 }
-
             });
-        });
+        }
     });
 </script>
 </body>
