@@ -3,8 +3,8 @@
 <html>
 <head>
     <meta name="layout" content="main">
-    <g:set var="entityName" value="${message(code: 'packages.label', default: 'Packages')}" />
-    <title>Editar Producto</title>
+    <g:set var="entityName" value="${message(code: 'packages.label', default: 'Promotion')}" />
+    <title>Editar Promocion</title>
 </head>
 <body>
 <a href="#edit-packages" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -30,15 +30,10 @@
         <div class="card-body">
             <h3><g:message code="default.edit.label" args="[entityName]" /></h3>
             <hr>
-            <g:form method="post" >
-                <g:hiddenField name="id" value="${packagesInstance?.id}" />
-                <fieldset class="form">
-                    <g:render template="form"/>
-                </fieldset>
-                <fieldset class="btn-group">
-                    <g:actionSubmit class="btn btn-primary" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                </fieldset>
-            </g:form>
+            <g:hiddenField name="id" value="${packagesInstance?.id}" />
+            <fieldset class="form">
+                <g:render template="form"/>
+            </fieldset>
         </div>
     </div>
 </div>

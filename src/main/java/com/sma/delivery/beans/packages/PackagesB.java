@@ -6,13 +6,10 @@ import org.apache.commons.lang.StringUtils;
 import org.grails.web.json.JSONArray;
 import org.grails.web.json.JSONObject;
 
-<<<<<<< HEAD
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.HashSet;
-=======
->>>>>>> 5bcfe2fb7a28ca57266ac0b3ba4f59f20b97d046
 import java.util.Map;
 import java.util.Set;
 
@@ -83,5 +80,6 @@ public class PackagesB extends BaseBean {
     }
 
 }
+
 
 
