@@ -4,7 +4,7 @@
 <head>
     <meta name="layout" content="main">
     <g:set var="entityName" value="${message(code: 'establishments.label', default: 'Establishments')}" />
-    <title>Lista de Establecimientos</title>
+    <title>Lista de Restaurantes</title>
 </head>
 <body>
 <a href="#list-establishments" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
@@ -18,15 +18,20 @@
             <g:if test="${flash.message}">
                 <div class="alert alert-info" role="status">${flash.message}</div>
             </g:if>
-            <span id="search_tagsugg" style="float:left">
-                <input type="text" class="search" id="text" name="text" autocomplete="off">
-            </span>
-            <button id="search" class="search_button" >buscar</button>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <div id="search_tagsugg">
+                            <input type="text" class="search form-control" id="text" name="text" autocomplete="off" aria-describedby="search">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <fieldset class="form">
                 <g:render template="list"/>
             </fieldset>
             <div class="btn-group">
-                <g:link class="btn btn-primary" action="create">Nuevo Establecimiento</g:link>
+                <g:link class="btn btn-primary" action="create">Nuevo Restaurante</g:link>
             </div>
             <g:if test="${page>1}"> <g:link style="align: center;" action="list" id="${page-1}">Back</g:link></g:if>
             <g:if test="${next>0}"><g:link style="align: center;" action="list" id="${page+1}">Next</g:link></g:if>
@@ -36,7 +41,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#search').click(function(){
+        $('#text').keyup(function(){
             $.ajax({
                 url:"${createLink(controller: 'establishments', action: 'search')}",
                 data:{

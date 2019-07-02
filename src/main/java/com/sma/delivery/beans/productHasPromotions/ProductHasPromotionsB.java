@@ -1,8 +1,6 @@
 package com.sma.delivery.beans.productHasPromotions;
 
 import com.sma.delivery.beans.base.BaseBean;
-import com.sma.delivery.beans.products.ProductsB;
-import com.sma.delivery.beans.promotions.PromotionsB;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;

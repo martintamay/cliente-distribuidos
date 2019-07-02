@@ -1,12 +1,14 @@
 package com.sma.delivery.beans.order;
 
 import com.sma.delivery.beans.base.BaseBean;
+import com.sma.delivery.beans.billsDetails.BillsDetailsB;
 import com.sma.delivery.beans.establishments.EstablishmentsB;
 import com.sma.delivery.beans.user.UserB;
 import org.apache.commons.lang.StringUtils;
 
-import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class OrderB extends BaseBean {
 
@@ -18,6 +20,15 @@ public class OrderB extends BaseBean {
 	private int totalCost;
 	private UserB user;
 	private EstablishmentsB establishments;
+	private List<BillsDetailsB> details;
+
+	public List<BillsDetailsB> getDetails(){
+		return details;
+	}
+
+	public void setDetails(List<BillsDetailsB> billsDetails){
+		details = billsDetails;
+	}
 
 	public EstablishmentsB getEstablishments() {
 		return establishments;

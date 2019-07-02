@@ -1,11 +1,9 @@
 package com.sma.delivery.beans.establishments;
 
 
-
 import com.sma.delivery.beans.base.BaseBean;
 import org.apache.commons.lang.StringUtils;
 
-import java.text.ParseException;
 import java.util.Map;
 
 public class EstablishmentsB extends BaseBean {

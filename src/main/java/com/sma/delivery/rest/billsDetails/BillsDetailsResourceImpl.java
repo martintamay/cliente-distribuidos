@@ -3,7 +3,6 @@ package com.sma.delivery.rest.billsDetails;
 import com.sma.delivery.dto.bills_details.BillDetailDTO;
 import com.sma.delivery.dto.bills_details.BillDetailResult;
 import com.sma.delivery.rest.base.BaseResourceImpl;
-import com.sma.delivery.rest.billsDetails.IBillsDetailsResource;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;

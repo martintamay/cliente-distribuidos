@@ -3,12 +3,11 @@ package com.sma.delivery.service.billsDetails;
 import com.sma.delivery.beans.billsDetails.BillsDetailsB;
 import com.sma.delivery.dto.bills_details.BillDetailDTO;
 import com.sma.delivery.dto.bills_details.BillDetailResult;
+import com.sma.delivery.rest.billsDetails.IBillsDetailsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
+import com.sma.delivery.service.bills.IBillsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.sma.delivery.rest.billsDetails.IBillsDetailsResource;
-import com.sma.delivery.service.bills.IBillsService;
-
 
 import java.text.ParseException;
 import java.util.*;

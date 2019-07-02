@@ -1,4 +1,3 @@
-
 <div class="form-group ${hasErrors(bean: userInstance, field: 'firstName', 'error')} required">
     <label for="firstName">
         Nombres
@@ -42,4 +41,3 @@
     </label>
     <g:textField name="password" maxlength="50" required="" value="${userInstance?.password}" class="form-control"/>
 </div>
-

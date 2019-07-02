@@ -124,7 +124,7 @@
 
 <fieldset class="form">
     <br>
-<h4>Detalles</h4>
+<h4>Detalle</h4>
     <g:set var="x" value="${1}"/>
     <button id="add" class="btn btn-sm btn-info float-right">+</button>
 

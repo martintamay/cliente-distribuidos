@@ -9,6 +9,7 @@ import com.sma.delivery.rest.establishments.EstablishmentsResourceImpl
 import com.sma.delivery.rest.ingredients.IngredientsResourceImpl
 import com.sma.delivery.rest.ingredientsProducts.IngredientsProductsResourceImpl
 import com.sma.delivery.rest.order.OrderResourceImpl
+import com.sma.delivery.rest.orderDetails.OrderDetailsResourceImpl
 import com.sma.delivery.rest.packages.PackagesResourceImpl
 import com.sma.delivery.rest.productHasPromotions.ProductHasPromotionsResourceImpl
 import com.sma.delivery.rest.products.ProductsResourceImpl
@@ -23,6 +24,7 @@ import com.sma.delivery.service.establishments.EstablishmentsServiceImpl
 import com.sma.delivery.service.ingredients.IngredientsServiceImpl
 import com.sma.delivery.service.ingredientsProducts.IngredientsProductsServiceImpl
 import com.sma.delivery.service.order.OrderServiceImpl
+import com.sma.delivery.service.orderDetails.OrderDetailServiceImpl
 import com.sma.delivery.service.packages.PackagesServiceImpl
 import com.sma.delivery.service.productHasPromotions.ProductHasPromotionsServiceImpl
 import com.sma.delivery.service.products.ProductsServiceImpl
@@ -42,6 +44,8 @@ beans = {
     userService(UserServiceImpl)
     orderResource(OrderResourceImpl)
     orderService(OrderServiceImpl)
+    orderDetailsResource(OrderDetailsResourceImpl)
+    orderDetailsService(OrderDetailServiceImpl)
     authService(AuthServiceImpl)
     commentsResource(CommentsResourceImpl)
     commentsService(CommentsServiceImpl)
@@ -62,7 +66,7 @@ beans = {
     contactsResource(ContactsResourceImpl)
     contactsService(ContactsServiceImpl)
     localeResolver(SessionLocaleResolver) {
-        defaultLocale= new java.util.Locale('es');
+        defaultLocale= new java.util.Locale('es')
         importBeans('classpath:/cache/cacheConfig.xml')
     }
 }

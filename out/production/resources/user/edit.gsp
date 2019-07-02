@@ -8,7 +8,7 @@
 </head>
 <body>
 <a href="#edit-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-<div class="nav" role="navigation">
+<div class="nav" role="navigation" hidden>
     <ul>
         <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
         <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
@@ -26,19 +26,21 @@
             </g:eachError>
         </ul>
     </g:hasErrors>
-    <div class="card">
-        <div class="card-body">
-            <h3><g:message code="default.edit.label" args="[entityName]" /></h3>
-            <hr>
-            <g:form method="post" >
-                <g:hiddenField name="id" value="${userInstance?.id}" />
-                <fieldset class="form">
-                    <g:render template="form"/>
-                </fieldset>
-                <fieldset class="btn-group">
-                    <g:actionSubmit class="btn btn-primary" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
-                </fieldset>
-            </g:form>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h3><g:message code="default.edit.label" args="[entityName]" /></h3>
+                <hr>
+                <g:form method="post" >
+                    <g:hiddenField name="id" value="${userInstance?.id}" />
+                    <fieldset class="form">
+                        <g:render template="form"/>
+                    </fieldset>
+                    <fieldset class="btn-group">
+                        <g:actionSubmit class="btn btn-primary" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                    </fieldset>
+                </g:form>
+            </div>
         </div>
     </div>
 </div>

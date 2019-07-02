@@ -1,12 +1,10 @@
 package delivery.promotion
 
-
 import com.sma.delivery.beans.promotions.PromotionsB
 import com.sma.delivery.service.productHasPromotions.IProductHasPromotionsService
 import com.sma.delivery.service.products.IProductsService
 import com.sma.delivery.service.promotions.IPromotionsService
 import delivery.productHasPromotions.ProductHasPromotions
-import delivery.products.Products
 
 class PromotionController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
@@ -25,11 +23,11 @@ class PromotionController {
         def promotion
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
         if (params['text'] != null) {
-            promotion = promotionsService.find(params['text']);
+            promotion = promotionsService.find(params['text'])
         } else {
             promotion = promotionsService.getAll(page)
         }
-        def next = promotionsService.getAll(page + 1).size();
+        def next = promotionsService.getAll(page + 1).size()
         [promotionInstanceList: promotion, promotionInstanceTotal: promotion?.size(), page: page, next: next]
     }
 
@@ -57,7 +55,7 @@ class PromotionController {
 
     def edit(Integer id) {
         def promotionInstance = promotionsService.getById(id)
-        Map <String,String> p = new HashMap<>();
+        Map <String,String> p = new HashMap<>()
         p.put("promotionId", id.toString())
         promotionInstance.setProductHasPromotions(productHasPromotionsService.getAllBy(p))
         if (!promotionInstance) {
@@ -74,11 +72,11 @@ class PromotionController {
     }
 
     def update(Long id, Long version) {
-        def parametros = new HashMap<String,String>();
-        parametros.put("promotion", request.JSON.toString());
-        def newPromotion = new PromotionsB(parametros);
-        newPromotion.setId(Integer.valueOf(params['id']));
-        promotionsService.save(newPromotion);
+        def parametros = new HashMap<String,String>()
+        parametros.put("promotion", request.JSON.toString())
+        def newPromotion = new PromotionsB(parametros)
+        newPromotion.setId(Integer.valueOf(params['id']))
+        promotionsService.save(newPromotion)
         redirect(action: "list")
     }
 
@@ -88,8 +86,8 @@ class PromotionController {
     }
 
     def search(String text,Integer page){
-        def promotions = promotionsService.find(text,page);
-        def next = promotionsService.find(text,page+1).size();
+        def promotions = promotionsService.find(text,page)
+        def next = promotionsService.find(text,page+1).size()
         render(view: "_list", model: [promotionInstanceList: promotions ,next: next,page: page])
     }
 

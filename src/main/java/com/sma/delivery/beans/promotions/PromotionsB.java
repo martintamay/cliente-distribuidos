@@ -3,7 +3,6 @@ package com.sma.delivery.beans.promotions;
 
 import com.sma.delivery.beans.base.BaseBean;
 import com.sma.delivery.beans.productHasPromotions.ProductHasPromotionsB;
-import org.apache.commons.lang.StringUtils;
 import org.grails.web.json.JSONArray;
 import org.grails.web.json.JSONObject;
 

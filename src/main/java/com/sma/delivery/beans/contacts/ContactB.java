@@ -1,7 +1,6 @@
 package com.sma.delivery.beans.contacts;
 
 import com.sma.delivery.beans.base.BaseBean;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.Map;
 

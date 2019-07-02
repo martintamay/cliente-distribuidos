@@ -7,6 +7,7 @@ import com.sma.delivery.rest.productHasPromotions.IProductHasPromotionsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 @Service("productHasPromotionsService")

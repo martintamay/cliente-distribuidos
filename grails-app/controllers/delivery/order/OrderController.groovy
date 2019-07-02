@@ -1,18 +1,19 @@
 package delivery.order
 
 import com.sma.delivery.beans.order.OrderB
-import com.sma.delivery.service.order.IOrderService
 import com.sma.delivery.service.establishments.IEstablishmentsService
+import com.sma.delivery.service.order.IOrderService
+import com.sma.delivery.service.orderDetails.IOrderDetailService
 import com.sma.delivery.service.user.IUserService
-
 
 class OrderController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
 
     //services
-    def IOrderService orderService
-    def IEstablishmentsService establishmentsService
-    def IUserService userService
+    IOrderService orderService
+    IOrderDetailService orderDetailsService
+    IEstablishmentsService establishmentsService
+    IUserService userService
 
     def index(){
         redirect(action: "list", id:1,)
@@ -23,11 +24,11 @@ class OrderController {
         def orders
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
         if(params['text']!=null){
-            orders = orderService.find(params['text']);
+            orders = orderService.find(params['text'])
         }else{
             orders = orderService.getAll(page)
         }
-        def next = orderService.getAll(page+1).size();
+        def next = orderService.getAll(page+1).size()
         [orderInstanceList: orders, orderInstanceTotal: orders?.size(),page: page,next:next]
     }
 
@@ -56,6 +57,7 @@ class OrderController {
 
     def edit(Integer id) {
         def orderInstance = orderService.getById(id)
+        orderInstance.setDetails(orderDetailsService.getOrderDetailsByOrderId(id))
         if (!orderInstance) {
             flash.message = message(code: 'default.not.found.message', args: [
                     message(code: 'order.label', default: 'Order'),
@@ -85,8 +87,8 @@ class OrderController {
     }
 
     def search(String text,Integer page){
-        def orders = orderService.find(text,page);
-        def next = orderService.find(text,page+1).size();
+        def orders = orderService.find(text,page)
+        def next = orderService.find(text,page+1).size()
         render(view: "_list", model: [orderInstanceList: orders ,next: next,page: page])
     }
     def show(Integer id){

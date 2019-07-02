@@ -6,13 +6,17 @@ import com.sma.delivery.beans.promotions.PromotionsB;
 import com.sma.delivery.dto.product_has_promotions.ProductHasPromotionDTO;
 import com.sma.delivery.dto.promotions.PromotionDTO;
 import com.sma.delivery.dto.promotions.PromotionResult;
+import com.sma.delivery.rest.promotions.IPromotionsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.productHasPromotions.IProductHasPromotionsService;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.sma.delivery.rest.promotions.IPromotionsResource;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service("promotionsService")
 public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, PromotionDTO> implements IPromotionsService {
