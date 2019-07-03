@@ -95,6 +95,7 @@ public class OrdersDetailsB extends BaseBean{
             setQuantity(Integer.valueOf(params.get("quantity")));
         }
 
+
     }
 
 }

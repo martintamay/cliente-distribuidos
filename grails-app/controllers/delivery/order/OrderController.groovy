@@ -33,14 +33,15 @@ class OrderController {
     }
 
     def create() {
-        [orderInstance: new OrderB(params),user: userService.getUsers(),establishments: establishmentsService.getEstablishments()]
+        def action = "create"
+        [orderInstance: new OrderB(params),user: userService.getUsers(),establishments: establishmentsService.getEstablishments(), action: action]
     }
 
     def save() {
-        def establishments = establishmentsService.getById(Integer.valueOf(params['establishments']))
+        def establishment = establishmentsService.getById(Integer.valueOf(params['establishments']))
         def user=userService.getById(Integer.valueOf(params['user']))
         def newOrder = new OrderB(params)
-        newOrder.setEstablishments(establishments)
+        newOrder.setEstablishments(establishment)
         newOrder.setUser(user)
         def orderInstance = orderService.save(newOrder)
         if (!newOrder?.getId()) {
@@ -67,13 +68,23 @@ class OrderController {
             return
         }
 
-        [orderInstance: orderInstance,user:userService.getUsers(), establishments: establishmentsService.getEstablishments()]
+        def action = "update"
+        [orderInstance: orderInstance,user:userService.getUsers(), establishments: establishmentsService.getEstablishments(), action: action]
     }
 
     def update(Long id, Long version) {
-        def establishments = establishmentsService.getById(Integer.valueOf(params['establishments']))
-        def user=userService.getById(Integer.valueOf(params['user']))
-        def newOrder = new OrderB(params)
+        System.out.println("\nid: ${id}")
+
+        def data = request.JSON
+        System.out.println("params: "+ data.toString())
+
+
+        def parametros = new HashMap<String,String>()
+        parametros.put("order", data.toString())
+
+        def establishments = establishmentsService.getById(Integer.valueOf(data.order.establishments))
+        def user=userService.getById(Integer.valueOf(data.order.user))
+        def newOrder = new OrderB(parametros)
         newOrder.setEstablishments(establishments)
         newOrder.setUser(user)
         orderService.save(newOrder)

@@ -1,22 +1,28 @@
 package com.sma.delivery.service.order;
 
+import com.google.gson.JsonObject;
 import com.sma.delivery.beans.order.OrderB;
+import com.sma.delivery.beans.orderDetails.OrdersDetailsB;
+import com.sma.delivery.dto.order_details.OrderDetailDTO;
 import com.sma.delivery.dto.orders.OrderDTO;
 import com.sma.delivery.dto.orders.OrderResult;
 import com.sma.delivery.rest.order.IOrderResource;
+import com.sma.delivery.rest.promotions.IPromotionsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.establishments.IEstablishmentsService;
+import com.sma.delivery.service.orderDetails.IOrderDetailService;
+import com.sma.delivery.service.packages.IPackagesService;
+import com.sma.delivery.service.products.IProductsService;
+import com.sma.delivery.service.promotions.IPromotionsService;
 import com.sma.delivery.service.user.IUserService;
+import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("orderService")
 public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implements IOrderService {
@@ -26,13 +32,15 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 	@Autowired
 	private IEstablishmentsService _establishmentsService;
 	@Autowired
+	private IOrderDetailService _orderDetailsService;
+	@Autowired
 	private IUserService _userService;
 
 	public OrderServiceImpl() {
 	}
 
 	@Override
-	@CachePut(value="delivery-cacheC", key= "'commentsClients_'+#order.id", condition = "#bean.id!=null")
+	@CachePut(value="delivery-cacheC", key= "'commentsClients_'+#bean.id", condition = "#bean.id!=null")
 	public OrderB save(OrderB bean)  {
 		final OrderDTO order = convertBeanToDto(bean);
 		final OrderDTO dto = ordersResource.save(order);
@@ -94,12 +102,40 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 	@Override
 	protected OrderB convertDtoToBean(OrderDTO dto)  {
 		final Map<String, String> params = new HashMap<String, String>();
-		params.put("id", String.valueOf(dto.getId()));
-		params.put("orderNumber", String.valueOf(dto.getOrderNumber()));
-		params.put("address", dto.getAddress());
-		params.put("contactNumber", dto.getContactNumber());
-		params.put("state", dto.getState());
-		params.put("totalCost", String.valueOf(dto.getTotalCost()));
+		JSONObject order = new JSONObject();
+		order.put("id", String.valueOf(dto.getId()));
+		order.put("orderNumber", String.valueOf(dto.getOrderNumber()));
+		order.put("address", dto.getAddress());
+		order.put("contactNumber", dto.getContactNumber());
+		order.put("state", dto.getState());
+		order.put("totalCost", String.valueOf(dto.getTotalCost()));
+
+		List<JSONObject> details = new ArrayList<>();
+		for (OrderDetailDTO detail : dto.getOrderDetails()){
+			JSONObject jDetail = new JSONObject();
+			if (detail.getId() != null)
+				jDetail.put("id", detail.getId());
+
+			if (detail.getProductId() != null)
+				jDetail.put("productId", detail.getProductId());
+			if (detail.getPackageId() != null)
+				jDetail.put("packageId", detail.getPackageId());
+			if (detail.getPromotionId() != null)
+				jDetail.put("promotionId", detail.getPromotionId());
+
+			jDetail.put("cost", detail.getCost());
+			jDetail.put("quantity", detail.getQuantity());
+			jDetail.put("comment", detail.getComment());
+
+			details.add(jDetail);
+		}
+
+		JSONObject orderParams = new JSONObject();
+		orderParams.put("order", order.toString());
+		orderParams.put("details", details.toString());
+
+		params.put("order", orderParams.toString());
+
 		final OrderB orderB = new OrderB(params);
 		orderB.setUser(_userService.getById(dto.getUserId()));
 		orderB.setEstablishments(_establishmentsService.getById(dto.getEstablishmentId()));
@@ -117,6 +153,12 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 		dto.setTotalCost(bean.getTotalCost());
 		dto.setEstablishmentId(bean.getEstablishments().getId());
 		dto.setUserId(bean.getUser().getId());
+
+		Set<OrderDetailDTO> detailDTO = new HashSet<>();
+		for (OrdersDetailsB detailsB : bean.getDetails()){
+			detailDTO.add(_orderDetailsService.convertBeanToDto(detailsB));
+		}
+		dto.setOrderDetails(detailDTO);
 		return dto;
 	}
 

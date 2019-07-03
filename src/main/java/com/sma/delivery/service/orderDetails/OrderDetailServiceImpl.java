@@ -56,7 +56,7 @@ public class OrderDetailServiceImpl extends BaseServiceImpl<OrdersDetailsB, Orde
 	}
 
 	@Override
-	protected OrdersDetailsB convertDtoToBean(OrderDetailDTO dto)  {
+	public OrdersDetailsB convertDtoToBean(OrderDetailDTO dto)  {
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put("id", String.valueOf(dto.getId()));
 		params.put("cost", String.valueOf(dto.getCost()));
@@ -74,13 +74,14 @@ public class OrderDetailServiceImpl extends BaseServiceImpl<OrdersDetailsB, Orde
 	}
 
 	@Override
-	protected OrderDetailDTO convertBeanToDto(OrdersDetailsB bean) {
+	public OrderDetailDTO convertBeanToDto(OrdersDetailsB bean) {
 		final OrderDetailDTO dto = new OrderDetailDTO();
 		dto.setId(bean.getId());
 		dto.setComment(bean.getComment());
 		dto.setCost(bean.getCost());
 		dto.setQuantity(bean.getQuantity());
-		dto.setOrderId(bean.getOrder().getId());
+		if (bean.getOrder() != null)
+			dto.setOrderId(bean.getOrder().getId());
 		ProductsB product = bean.getProduct();
 		dto.setProductId(product != null ? product.getId() : 0);
 		PromotionsB promotion = bean.getPromotion();

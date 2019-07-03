@@ -1,16 +1,25 @@
 package com.sma.delivery.beans.order;
 
 import com.sma.delivery.beans.base.BaseBean;
-import com.sma.delivery.beans.billsDetails.BillsDetailsB;
 import com.sma.delivery.beans.establishments.EstablishmentsB;
+import com.sma.delivery.beans.orderDetails.OrdersDetailsB;
 import com.sma.delivery.beans.user.UserB;
-import org.apache.commons.lang.StringUtils;
+import com.sma.delivery.service.packages.IPackagesService;
+import com.sma.delivery.service.products.IProductsService;
+import com.sma.delivery.service.promotions.IPromotionsService;
+import org.grails.web.json.JSONArray;
+import org.grails.web.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class OrderB extends BaseBean {
+	@Autowired
+	private IProductsService _productsService;
+	@Autowired
+	private IPromotionsService _promotionsService;
+	@Autowired
+	private IPackagesService _packagesService;
 
 	private static final long serialVersionUID = 1L;
 	private int orderNumber;
@@ -20,14 +29,14 @@ public class OrderB extends BaseBean {
 	private int totalCost;
 	private UserB user;
 	private EstablishmentsB establishments;
-	private List<BillsDetailsB> details;
+	private List<OrdersDetailsB> details;
 
-	public List<BillsDetailsB> getDetails(){
+	public List<OrdersDetailsB> getDetails(){
 		return details;
 	}
 
-	public void setDetails(List<BillsDetailsB> billsDetails){
-		details = billsDetails;
+	public void setDetails(List<OrdersDetailsB> orderDetails){
+		details = orderDetails;
 	}
 
 	public EstablishmentsB getEstablishments() {
@@ -92,20 +101,48 @@ public class OrderB extends BaseBean {
 	}
 	@Override
 	protected void create(Map<String, String> params) {
-		if (!StringUtils.isBlank(params.get("id"))) {
-			setId(Integer.valueOf(params.get("id")));
-		}
-		if (!StringUtils.isBlank(params.get("orderNumber"))) {
-			setOrderNumber(Integer.valueOf(params.get("orderNumber")));
-		}
-		if (!StringUtils.isBlank(params.get("totalCost"))) {
-			setTotalCost(Integer.valueOf(params.get("totalCost")));
-		}
-		setAddress (params.get("address"));
-		setState(params.get("state"));
-		setContactNumber(params.get("contactNumber"));
+		if(params.get("order")!=null) {
+			JSONObject json = new JSONObject(params.get("order"));
+			List<OrdersDetailsB> details = new ArrayList<>();
+
+			if (json.containsKey("details")) {
+				JSONArray jsonArray = new JSONArray(json.getString("details"));
+				for (Object o : jsonArray) {
+					Map<String, String> detailData = new HashMap<>();
+					JSONObject detail = (JSONObject) o;
+					if (detail.containsKey("id"))
+						detailData.put("id", detail.getString("id"));
 
 
+					detailData.put("cost", detail.getString("cost"));
+					detailData.put("quantity", detail.getString("quantity"));
+					detailData.put("comment", detail.getString("comment"));
+
+					OrdersDetailsB detailsB = new OrdersDetailsB(detailData);
+
+					if (detail.containsKey("productId"))
+						detailsB.setProduct(_productsService.getById(detail.getInt("productId")));
+					if (detail.containsKey("packageId"))
+						detailsB.setPackageB(_packagesService.getById(detail.getInt("packageId")));
+					if (detail.containsKey("promotionId"))
+						detailsB.setPromotion(_promotionsService.getById(detail.getInt("promotionId")));
+
+					details.add(detailsB);
+				}
+
+			}
+
+			setDetails(details);
+			JSONObject jOrder = new JSONObject(json.getString("order"));
+			if (jOrder.containsKey("id"))
+				setId(jOrder.getInt("id"));
+
+			setAddress(jOrder.getString("address"));
+			setContactNumber(jOrder.getString("contactNumber"));
+			setOrderNumber(jOrder.getInt("orderNumber"));
+			setState(jOrder.getString("state"));
+			setTotalCost(jOrder.getInt("totalCost"));
+		}
 	}
 
 }
