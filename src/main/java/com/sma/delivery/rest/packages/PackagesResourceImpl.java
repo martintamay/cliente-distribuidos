@@ -14,14 +14,11 @@ public class PackagesResourceImpl extends BaseResourceImpl<PackageDTO> implement
 
     @Override
     public PackageResult getAll(Integer page) {
+        setWebResourceBasicAuthFilter();
         final PackageResult result = getWebResource().path("/"+page+"/"+20).get(PackageResult.class);
         return result;
     }
 
-    @Override
-    public PackageDTO getById(Integer id) {
-        return getWebResource().path("/" + id).get(getDtoClass());
-    }
 
     @Override
     public PackageResult find(String text, Integer page) {
@@ -33,5 +30,6 @@ public class PackagesResourceImpl extends BaseResourceImpl<PackageDTO> implement
     @Override
     public PackageResult getPackages() {
         return getWebResource().path("/" + 1 + "/" + 200).get(PackageResult.class);
+
     }
 }

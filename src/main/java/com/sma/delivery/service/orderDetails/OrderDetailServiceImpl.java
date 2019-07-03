@@ -56,31 +56,32 @@ public class OrderDetailServiceImpl extends BaseServiceImpl<OrdersDetailsB, Orde
 	}
 
 	@Override
-	protected OrdersDetailsB convertDtoToBean(OrderDetailDTO dto)  {
+	public OrdersDetailsB convertDtoToBean(OrderDetailDTO dto)  {
 		final Map<String, String> params = new HashMap<String, String>();
 		params.put("id", String.valueOf(dto.getId()));
 		params.put("cost", String.valueOf(dto.getCost()));
-		params.put("quantity", String.valueOf(dto.getCuantity()));
+		params.put("quantity", String.valueOf(dto.getQuantity()));
 		params.put("comment", String.valueOf(dto.getComment()));
 		final OrdersDetailsB ordersDetailsB = new OrdersDetailsB(params);
 		if(dto.getProductId() != 0)
 			ordersDetailsB.setProduct(_productService.getById(dto.getProductId()));
 		if(dto.getPromotionId() != 0)
 			ordersDetailsB.setPromotion(_promotionsService.getById(dto.getPromotionId()));
-		if(dto.getPackage() != 0)
-			ordersDetailsB.setPackageB(_packageService.getById(dto.getPackage()));
+		if(dto.getPackageId() != 0)
+			ordersDetailsB.setPackageB(_packageService.getById(dto.getPackageId()));
 		ordersDetailsB.setOrder(_orderService.getById(dto.getOrderId()));
 		return ordersDetailsB;
 	}
 
 	@Override
-	protected OrderDetailDTO convertBeanToDto(OrdersDetailsB bean) {
+	public OrderDetailDTO convertBeanToDto(OrdersDetailsB bean) {
 		final OrderDetailDTO dto = new OrderDetailDTO();
 		dto.setId(bean.getId());
 		dto.setComment(bean.getComment());
 		dto.setCost(bean.getCost());
-		dto.setCuantity(bean.getQuantity());
-		dto.setOrderId(bean.getOrder().getId());
+		dto.setQuantity(bean.getQuantity());
+		if (bean.getOrder() != null)
+			dto.setOrderId(bean.getOrder().getId());
 		ProductsB product = bean.getProduct();
 		dto.setProductId(product != null ? product.getId() : 0);
 		PromotionsB promotion = bean.getPromotion();

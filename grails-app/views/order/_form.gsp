@@ -1,6 +1,6 @@
 <div class="form-row">
     <div class="col">
-        <div class="form-group ${hasErrors(bean: orderInstance, field: 'orderNumber', 'error')} required">
+        <div class="form-group master ${hasErrors(bean: orderInstance, field: 'orderNumber', 'error')} required">
             <label for="orderNumber">
                 Numero de Orden
                 <span class="required-indicator">*</span>
@@ -10,7 +10,7 @@
     </div>
 
     <div class="col">
-        <div class="form-group ${hasErrors(bean: orderInstance, field: 'address', 'error')} required">
+        <div class="form-group master ${hasErrors(bean: orderInstance, field: 'address', 'error')} required">
             <label for="address">
                Direccion
                 <span class="required-indicator">*</span>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="col">
-        <div class="form-group ${hasErrors(bean: orderInstance, field: 'state', 'error')} required">
+        <div class="form-group master ${hasErrors(bean: orderInstance, field: 'state', 'error')} required">
             <label for="state">
                 Estado
                 <span class="required-indicator">*</span>
@@ -34,16 +34,16 @@
 
 <div class="form-row">
     <div class="col">
-        <div class="form-group ${hasErrors(bean: orderInstance, field: 'establishments', 'error')} required">
-            <label for="establishments">
+        <div class="form-group master ${hasErrors(bean: orderInstance, field: 'establishments', 'error')} required">
+            <label for="establishment">
                 Establecimiento
                 <span class="required-indicator">*</span>
             </label>
-            <g:select id="establishments" name="establishments" maxlength="50" from="${establishments}" optionKey="id" optionValue="name" required="" value="${orderInstance?.establishments?.id}" class="form-control"/>
+            <g:select id="establishment" name="establishments" maxlength="50" from="${establishments}" optionKey="id" optionValue="name" required="" value="${orderInstance?.establishments?.id}" class="form-control"/>
         </div>
     </div>
     <div class="col">
-        <div class="fieldcontain ${hasErrors(bean: orderInstance, field: 'user', 'error')} required">
+        <div class="form-group master ${hasErrors(bean: orderInstance, field: 'user', 'error')} required">
             <label for="user">
                 Usuario
                 <span class="required-indicator">*</span>
@@ -53,7 +53,7 @@
     </div>
 
     <div class="col">
-        <div class="form-group ${hasErrors(bean: orderInstance, field: 'contactNumber', 'error')} required">
+        <div class="form-group master ${hasErrors(bean: orderInstance, field: 'contactNumber', 'error')} required">
             <label for="contactNumber">
                Numero de Contacto
                 <span class="required-indicator">*</span>
@@ -63,7 +63,7 @@
     </div>
 </div>
 
-<div class="form-group ${hasErrors(bean: orderInstance, field: 'totalCost', 'error')} required">
+<div class="form-group master ${hasErrors(bean: orderInstance, field: 'totalCost', 'error')} required">
     <label for="totalCost">
         Costo total
         <span class="required-indicator">*</span>
@@ -101,29 +101,33 @@
                     <th scope="row">${x}</th>
                     <td class="p-1 m-1">
                         <g:if test="${ billsDetailsInstance.product != null }">
-                            <input value="${billsDetailsInstance.product.name}" type="product" autocomplete="off" name="producto" placeholder="Producto" class="form-control m-0 p-0"/>
+                            <input value="${billsDetailsInstance.product.name}" type="text" autocomplete="off" name="producto" placeholder="Producto" class="form-control m-0 p-0"/>
                             <g:set var="cost" value="${ billsDetailsInstance.product.cost }" />
+                            <g:hiddenField name="productId" value="${billsDetailsInstance.product.id}" />
                         </g:if>
                         <g:elseif test="${ billsDetailsInstance.promotion != null }">
-                            <input value="${billsDetailsInstance.promotion.name}" type="promotion" autocomplete="off" name="producto" placeholder="Producto" class="form-control m-0 p-0"/>
+                            <input value="${billsDetailsInstance.promotion.name}" type="text" autocomplete="off" name="promotion" placeholder="Promotion" class="form-control m-0 p-0"/>
                             <g:set var="cost" value="0" />
+                            <g:hiddenField name="promotionId" value="${billsDetailsInstance.promotion.id}" />
                         </g:elseif>
                         <g:elseif test="${ billsDetailsInstance.packageB != null }">
-                            <input value="${billsDetailsInstance.packageB.name}" type="package" autocomplete="off" name="producto" placeholder="Producto" class="form-control m-0 p-0"/>
+                            <input value="${billsDetailsInstance.packageB.name}" type="text" autocomplete="off" name="package" placeholder="Package" class="form-control m-0 p-0"/>
                             <g:set var="cost" value="${ billsDetailsInstance.packageB.cost }" />
+                            <g:hiddenField name="packageId" value="${billsDetailsInstance.packageB.id}" />
                         </g:elseif>
                     </td>
                     <td class="cost-col">
                         <g:formatNumber number="${cost}" type="number" maxFractionDigits="0" />Gs
+                        <g:hiddenField name="cost" value="${cost}" />
                     </td>
                     <td class="p-1 m-1">
-                        <input type="number" autocomplete="off" rowId="${x}" max="100" min="1" value="${billsDetailsInstance.quantity}" placeholder="Cantidad" class="form-control cant-input m-0 p-0">
+                        <input type="number" autocomplete="off" rowId="${x}" max="100" min="1" value="${billsDetailsInstance.quantity}" placeholder="Cantidad" name="quantity" class="form-control cant-input m-0 p-0">
                     </td>
                     <td class="total-col">
                         <g:formatNumber number="${billsDetailsInstance.quantity * billsDetailsInstance.product.cost}" type="number" maxFractionDigits="0" />Gs
                     </td>
                     <td>
-                        <input value="${billsDetailsInstance.comment}" name="comentario" placeholder="Comentario" class="form-control m-0 p-0"/>
+                        <input value="${billsDetailsInstance.comment}" name="comment" placeholder="Comentario" class="form-control m-0 p-0"/>
                     </td>
                     <td>
                         <button id="${billsDetailsInstance?.id}" class="btn btn-outline-warning delete" type="button">
@@ -172,14 +176,10 @@
         $(".cant-input").each(function ( pos, td ){
             var rowId = "#row-"+td.attributes["rowId"].value;
             td.onchange = function(evt) {
-                console.log("evento activado", evt);
-                console.log("search id", rowId+" .total-col");
                 var sCosto = $(rowId+" .cost-col")[0].innerHTML.trim();
                 var cost = parseInt(sCosto.substr(0, sCosto.length - 2).replace(".", ""));
-                console.log(evt);
                 $(rowId+" .total-col")[0].innerHTML = format(cost*evt.target.valueAsNumber)+'Gs';
             };
-            console.log(rowId, td);
         });
     }
     setTotales();
@@ -215,50 +215,58 @@
         setTotales();
     });
     $('#save').click(function () {
-        var master = '{"bill":{';
+        var orderData = {};
+        var details = [];
+
         $('.master').each(function () {
             if($(this).find('input').attr("name") != undefined) {
-                master += '"'+$(this).find('input').attr("name")+'":';
-                master += '"'+$(this).find('input').val()+'",';
+                orderData[$(this).find('input').attr("name")] = $(this).find('input').val();
             }else {
-                master += '"'+$(this).find('select').attr("name")+'":';
-                master += '"'+$(this).find('select').val()+'",';
+                orderData[$(this).find('select').attr("name")] = $(this).find('select').val();
             }
         });
-        master = master.substring(0,master.length-1);
-        master += '}';
-        var rowCount = $('#myTable tr').length;
+
+        var rowCount = $('#detail-table tr').length;
         if(rowCount>1) {
-            var details = ',"BillsDetails":[';
-            $(".data").each(function () {
-                details += '{';
-                $(this).find('td').each(function () {
-                    details += '"' + $(this).find('input').attr("name") + '":';
-                    details += '"' + $(this).find('input').val() + '",';
+            $(".data").each( function() {
+                var detail = {};
+                $(this).find("input").each(function(pos, ele){
+                    detail[ele.name] = ele.value;
                 });
-                details = details.substring(0, details.length - 1) + '},';
+                details.push(detail);
             });
-            details = details.substring(0, details.length - 1);
-            details += ']}';
-            master += details;
-        }else {
-            master += '}'
         }
-        console.log(master);
-        var url;
+
+        var sendData = JSON.stringify({ order: orderData, details: details});
+        console.log("final data", sendData);
+        console.log("ACTION", "${action}");
         if("${action}" == "update"){
-            url= "/bills/"+"${action}"+"/"+"${params.id}"
+            $.ajax({
+                method:'post',
+                contentType:'application/json; charset=utf-8',
+                dataType: "json",
+                url:"/order/update/${params.id}",
+                data: sendData,
+                success: handleSuccess,
+                error: handleError
+            });
         }else {
-            url= "/bills/save"
+            $.ajax({
+                method:'post',
+                contentType:'application/json; charset=utf-8',
+                dataType: "json",
+                url: "/order/save",
+                data:sendData,
+                success: handleSuccess,
+                error: handleError
+            });
         }
-        $.ajax({
-            method:'post',
-            contentType:'application/json; charset=utf-8',
-            dataType: "json",
-            url:url,
-            data:master,
-            success: function(resp){
-            }
-        });
     });
+
+    function handleSuccess(response) {
+        console.log("Response", response);
+    }
+    function handleError(response) {
+        console.log("error", response.responseJSON);
+    }
 </g:javascript>

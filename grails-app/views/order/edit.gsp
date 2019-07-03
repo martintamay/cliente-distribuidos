@@ -24,8 +24,10 @@
             <div class="card-body">
                 <h3><g:message code="default.edit.label" args="[entityName]" /></h3>
                 <hr>
-                <g:hiddenField name="id" value="${orderInstance?.id}" />
                 <fieldset class="form">
+                    <div class="master">
+                    <g:hiddenField name="id" value="${orderInstance?.id}" />
+                    </div>
                     <g:render template="form"/>
                 </fieldset>
             </div>
