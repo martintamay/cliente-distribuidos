@@ -7,8 +7,8 @@
     <title>Agregar Paquete</title>
 </head>
 <body>
-<a href="#create-packages" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-<div id="create-packages" class="container padding-menu" role="main">
+<a href="#create-promotion" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+<div id="create-promotion" class="container padding-menu" role="main">
     <g:if test="${flash.message}">
         <div class="alert alert-info" role="status">${flash.message}</div>
     </g:if>
@@ -23,16 +23,9 @@
         <div class="card-body">
             <h3>Crear Paquete</h3>
             <hr>
-            <g:form action="save" >
-                <fieldset class="form">
-                    <g:render template="form"/>
-                </fieldset>
-                <hr>
-                <fieldset class="btn-group">
-                    <g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" >Crear</g:submitButton>
-                    <g:link class="btn btn-secondary" action="list">Lista de Paquetes</g:link>
-                </fieldset>
-            </g:form>
+            <fieldset class="form">
+                <g:render template="form"/>
+            </fieldset>
         </div>
     </div>
 </div>

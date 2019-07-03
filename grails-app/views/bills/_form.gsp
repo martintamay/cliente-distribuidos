@@ -1,119 +1,66 @@
-
-
-<div class="form-group master ${hasErrors(bean: billsInstance, field: 'ruc', 'error')} required">
-    <label for="ruc">
-        Ruc
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="ruc" maxlength="50" required="" value="${billsInstance?.ruc}" class="form-control"/>
-</div>
-
-
-<div class="form-group master ${hasErrors(bean: billsInstance, field: 'iva10', 'error')} required">
-    <label for="ruc">
-        Iva10
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="iva10" maxlength="50" required="" value="${billsInstance?.iva10}" class="form-control"/>
-</div>
-
-<div class="form-group master ${hasErrors(bean: billsInstance, field: 'total', 'error')} required">
-    <label for="ruc">
-        Total
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="total" maxlength="50" required="" value="${billsInstance?.total}" class="form-control"/>
-</div>
-
-<div class="form-group master ${hasErrors(bean: billsInstance, field: 'nombre', 'error')} required">
-    <label for="nombre">
-        Nombre
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="nombre" maxlength="50" required="" value="${billsInstance?.nombre}" class="form-control"/>
-</div>
-<div class="form-group master ${hasErrors(bean: billsInstance, field: 'fecha', 'error')} required">
-    <label for="fecha">
-        Fecha
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="fecha" maxlength="50" required="" value="${billsInstance?.fecha}" class="form-control"/>
-</div>
-
-<div class="form-group master ${hasErrors(bean: billsInstance, field: 'timbrado', 'error')} required">
-    <label for="timbrado">
-        Timbrado
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="timbrado" maxlength="50" required="" value="${billsInstance?.timbrado}" class="form-control"/>
-</div>
-<div class="form-group master ${hasErrors(bean: billsInstance, field: 'num1', 'error')} required">
-    <label for="num1">
-        Num1
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="num1" maxlength="50" required="" value="${billsInstance?.num1}" class="form-control"/>
-</div>
-<div class="form-group master ${hasErrors(bean: billsInstance, field: 'num2', 'error')} required">
-    <label for="num2">
-        Num2
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="num2" maxlength="50" required="" value="${billsInstance?.num2}" class="form-control"/>
-</div>
-<div class="form-group master ${hasErrors(bean: billsInstance, field: 'num3', 'error')} required">
-    <label for="num3">
-        Num3
-        <span class="required-indicator">*</span>
-    </label>
-    <g:textField name="num3" maxlength="50" required="" value="${billsInstance?.num3}" class="form-control"/>
-</div>
-
 <div class="form-row">
     <div class="col">
-        <div class="form-group">
-            <label for="fecha">Fecha</label>
-            <input class="form-control" id="fecha" type="date" value="2019-05-05" required="">
+        <div class="form-group master ${hasErrors(bean: billsInstance, field: 'fecha', 'error')} required">
+            <label for="fecha">
+                Fecha
+                <span class="required-indicator">*</span>
+            </label>
+            <g:textField name="fecha" maxlength="50" required="" value="${billsInstance?.fecha}" class="form-control"/>
         </div>
     </div>
     <div class="col">
-        <div class="form-group">
-            <label for="timbrado">Timbrado</label>
-            <input class="form-control" type="text" id="timbrado" value="8457856" required="">
+        <div class="form-group master ${hasErrors(bean: billsInstance, field: 'timbrado', 'error')} required">
+            <label for="timbrado">
+                Timbrado
+                <span class="required-indicator">*</span>
+            </label>
+            <g:textField name="timbrado" maxlength="50" required="" value="${billsInstance?.timbrado}" class="form-control"/>
         </div>
     </div>
     <div class="col">
         <div class="form-group"><label for="numero">Número</label>
             <div id="numero" class="input-group number-bill-group">
-                <input class="form-control" type="text" value="001" maxlength="3" minlength="3" required="">
-                <input class="form-control" type="text" value="001" maxlength="3" minlength="3" required="">
-                <input class="form-control" type="text" value="0000425" minlength="7" maxlength="7" required="">
+                <div class="form-control master ${hasErrors(bean: billsInstance, field: 'num1', 'error')} required">
+                    <g:textField name="num1" maxlength="50" required="" value="${billsInstance?.num1}" class="form-control"/>
+                </div>
+                <div class="form-control master ${hasErrors(bean: billsInstance, field: 'num2', 'error')} required">
+                    <g:textField name="num2" maxlength="50" required="" value="${billsInstance?.num2}" class="form-control"/>
+                </div>
+                <div class="form-control master ${hasErrors(bean: billsInstance, field: 'num3', 'error')} required">
+                    <g:textField name="num3" maxlength="50" required="" value="${billsInstance?.num3}" class="form-control"/>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <div class="form-row">
     <div class="col">
-        <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" class="form-control" type="text" value="Fulano Mengano" required="">
+        <div class="form-group master ${hasErrors(bean: billsInstance, field: 'nombre', 'error')} required">
+            <label for="nombre">
+                Nombre
+                <span class="required-indicator">*</span>
+            </label>
+            <g:textField name="nombre" maxlength="50" required="" value="${billsInstance?.nombre}" class="form-control"/>
         </div>
     </div>
 
     <div class="col">
-        <div class="form-group">
-            <label for="ruc">RUC</label>
-            <input id="ruc" class="form-control" type="text" value="4.315.943-0" required="">
+        <div class="form-group master ${hasErrors(bean: billsInstance, field: 'ruc', 'error')} required">
+            <label for="ruc">
+                Ruc
+                <span class="required-indicator">*</span>
+            </label>
+            <g:textField name="ruc" maxlength="50" required="" value="${billsInstance?.ruc}" class="form-control"/>
         </div>
     </div>
     <div class="col">
-        <div class="form-group">
+        <div class="form-group master">
             <label for="direccion">Dirección</label>
-            <input id="direccion" class="form-control" type="text" required="" placeholder="Opcional">
+            <g:textField name="direccion" maxlength="50" required="" value="${billsInstance?.direccion}" class="form-control"/>
         </div>
     </div>
 </div>
-<div class="master ${hasErrors(bean: billsInstance, field: 'order', 'error')} required">
+<div class="master ${hasErrors(bean: billsInstance, field: 'order', 'error')} required" style="display: none">
     <label for="order">
         Orden
         <span class="required-indicator">*</span>
@@ -121,15 +68,14 @@
     <g:select id="order" name="order" maxlength="50" from="${order}" optionKey="id" optionValue="orderNumber" required="" value="${billsInstance?.order?.id}" class="form-control"/>
 </div>
 <hr>
-
 <fieldset class="form">
     <br>
-<h4>Detalle</h4>
-    <g:set var="x" value="${1}"/>
+<h4>Detalles</h4>
+    <g:set var="x" value="${0}"/>
     <button id="add" class="btn btn-sm btn-info float-right">+</button>
 
     <div class="table-responsive">
-        <table class="table table-striped table-bordered">
+        <table id="myTable" class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>#</th>
@@ -139,27 +85,51 @@
                     <th>Total</th>
                     <th>10%</th>
                     <th>5%</th>
-                    <th>Exenta</th>
+                    <th style="display: none">Exenta</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <g:each in="${billsInstance.details}" status="i" var="billsDetailsInstance">
+                <g:each in="${billsInstance.billsDetails}" status="i" var="billsDetailsInstance">
                     <tr class="data">
 
-                        <td>
+                        <td style="display: none">
                             <g:textField labelFor="id"    name="id" labelClass="hide"
                                          inputMaxLength="10" value="${billsDetailsInstance?.id}" />
                         </td>
+                        <td style="display: none">
+                            <g:textField labelFor="id"    name="exenta" labelClass="hide"
+                                         inputMaxLength="10" value="${billsDetailsInstance?.exenta}" />
+                        </td>
 
-                        <th scope="row">${x++}</th>
-                        <td class="p-1 m-1"><input value="Cerveza" name="producto" placeholder="Producto" class="form-control m-0 p-0"/></td>
-                        <td>4.500Gs</td>
-                        <td class="p-1 m-1"><input type="number" max="100" min="1" value="6" placeholder="Cantidad" class="form-control m-0 p-0"></td>
-                        <td>27.000Gs</td>
-                        <td>2.454Gs</td>
-                        <td></td>
-                        <td></td>
+                        <th scope="row">${++x}</th>
+                        <td>
+                            <g:select style="width: 200px" id="${x}" name="product" maxlength="50" from="${products}" optionKey="id" value="${billsDetailsInstance?.product?.id}" optionValue="name" required=""  class="form-control"/>
+
+                        </td>
+
+                        <td>
+                            <g:field type="number" id="unitary${x}" name="unitary" class="form-control"
+                                         inputMaxLength="10" value="${billsDetailsInstance?.product?.cost}" />
+                        </td>
+
+                        <td>
+                            <g:field min="1" type="number" id="quantity${x}" name="quantity" class="form-control quantity"
+                                         inputMaxLength="10" value="${billsDetailsInstance?.quantity}"/>
+                        </td>
+                        <td>
+                            <g:textField id="total${x}" name="amount" class="form-control total"
+                                         inputMaxLength="10" value="${billsDetailsInstance.amount}"/>
+                        </td>
+                        <td>
+                            <g:textField id="iva10${x}" name="iva10" class="form-control"
+                                         inputMaxLength="10" value="${billsDetailsInstance?.iva10}"/>
+                        </td>
+                        <td>
+                            <g:textField id="iva5${x}" name="iva5" class="form-control"
+                                         inputMaxLength="10" value="${billsDetailsInstance?.iva5}"/>
+                        </td>
+                        <td style="display: none"></td>
                         <td><button id="${billsDetailsInstance?.id}" class="btn btn-outline-warning delete" type="button"><i class="fa fa-remove"></i></button></td>
                     </tr>
                 </g:each>
@@ -168,9 +138,58 @@
     </div>
 </fieldset>
 <br>
+
+<span class="d-flex justify-content-end master ${hasErrors(bean: billsInstance, field: 'iva10', 'error')} required" style="display: none">
+    <span for="ruc">
+        Iva10
+    </span>
+    <span>
+        <g:textField name="iva10" maxlength="50" required="" value="0" class="form-control"/>
+    </span>
+</span>
+<span class="d-flex justify-content-end master ${hasErrors(bean: billsInstance, field: 'total', 'error')} required">
+    <span for="ruc">
+        Total
+    </span>
+    <span>
+        <g:textField id="total" name="total" maxlength="50" required="" value="${billsInstance?.total}" class="form-control"/>
+    </span>
+</span>
 <button id="save" class="btn btn-primary">Guardar</button>
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <g:javascript>
+    var id = ${++x};
+    var json = JSON.parse('${json}')
+    var products = {};
+    console.log('${json}')
+    for (var i = 0, emp; i < json.length; i++) {
+       product = json[i];
+       products[ product.id ] = product;
+    }
+    function calcular(id, selectVal){
+        $("#unitary"+ id).val(products[selectVal].cost);
+        var total = $("#unitary"+ id).val()*$("#quantity"+ id).val();
+        $("#total"+ id).val(total);
+        $("#iva10"+ id).val(0.1*total);
+        $("#iva5"+ id).val(0.05*total);
+        var total = 0;
+        $('.total').each(function () {
+            total += parseInt($(this).val());
+        });
+        $('#total').val(total);
+    }
+    console.log(products[17])
+    function changeProduct() {
+        $("select").change(function() {
+            var pId = $(this).attr("id")
+            calcular(pId,$(this).val())
+        })
+        $(".quantity").bind("keyup change", function() {
+            var pId = $(this).attr("id").substr(8)
+            console.log(pId)
+            calcular(pId, $("#"+pId).val())
+        })
+    }
     function setDeletes(){
         $(".delete").click(function() {
             $(this).parent().parent().remove();
@@ -188,33 +207,51 @@
             }
         })
     }
+    changeProduct();
     setDeletes();
     $('#add').click(function () {
+        var select = $("<select></select>").attr("name", "product").attr("class","form-control").attr("id",id);
+           $.each(json,function(index,json){
+            select.append($("<option></option>").attr("value", json.id).text(json.name));
+           });
         var rowCount = $('#myTable tr').length;
         var campos =  '' +
 
             '<tr class="data">'+
 '    <th scope="row">'+rowCount+'</th>'+
-'    <td class="p-1 m-1"><input value="" placeholder="Producto" name="producto" class="form-control m-0 p-0"/></td>'+
-'    <td></td>'+
-'    <td class="p-1 m-1">' +
-'       <input type="number" max="100" min="1" value="" placeholder="Cantidad" class="form-control m-0 p-0">' +
+'    <td>'+select.prop('outerHTML')+'</td>'+
+'    <td>' +
+'       <input type="number" id="unitary'+id+'" name="unitary" value="'+products[$(select).val()].cost+'" class="form-control m-0 p-0">' +
 '    </td>'+
-'    <td></td>'+
-'    <td></td>'+
-'    <td></td>'+
-'    <td></td>'+
+'    <td>'+
+'    <input type="number" id="quantity'+id+'" name="quantity" min="1" value="1" placeholder="Cantidad" class="form-control quantity m-0 p-0">'+'</td>'+
+'    <td>' +
+     '<input type="number" id="total'+id+'" name="amount" value="" class="form-control total m-0 p-0">' +
+'    </td>'+
+'    <td>' +
+'    <input type="number" id="iva10'+id+'" name="iva10" value="" placeholder="Cantidad" class="form-control m-0 p-0">' +
+'    </td>'+
+'    <td>' +
+'    <input type="number" id="iva5'+id+'" name="iva5" value="" class="form-control m-0 p-0">' +
+'    </td>'+
+'    <td style="display: none">' +
+'    <input type="number" id="exenta'+id+'" name="exenta" value="0" class="form-control m-0 p-0">' +
+'    </td>'+
 '    <td class="p-1 m-1">' +
 '       <button id="none" class="btn btn-outline-warning delete" type="button">' +
 '           <i class="fa fa-remove"></i>' +
 '       </button>' +
 '    </td>'+
-'</tr>';
+'    </tr>';
         console.log("campo agregado");
         $('tbody').append(campos);
+        calcular(id, $(select).val());
+        changeProduct();
         setDeletes();
+        id++;
     });
     $('#save').click(function () {
+        $('.alert').alert()
         var master = '{"bill":{';
         $('.master').each(function () {
             if($(this).find('input').attr("name") != undefined) {
@@ -226,15 +263,21 @@
             }
         });
         master = master.substring(0,master.length-1);
-        master += '}';
+        master += '}'
         var rowCount = $('#myTable tr').length;
+        console.log(rowCount)
         if(rowCount>1) {
             var details = ',"BillsDetails":[';
             $(".data").each(function () {
                 details += '{';
                 $(this).find('td').each(function () {
-                    details += '"' + $(this).find('input').attr("name") + '":';
-                    details += '"' + $(this).find('input').val() + '",';
+                    if($(this).find('input').attr("name") != undefined) {
+                        details += '"'+$(this).find('input').attr("name")+'":';
+                        details += '"'+$(this).find('input').val()+'",';
+                    }else {
+                        details += '"'+$(this).find('select').attr("name")+'":';
+                        details += '"'+$(this).find('select').val()+'",';
+                    }
                 });
                 details = details.substring(0, details.length - 1) + '},';
             });

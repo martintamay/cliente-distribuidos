@@ -5,43 +5,148 @@
     <g:set var="entityName" value="${message(code: 'bills.label', default: 'Bills')}" />
     <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
-<body>
-<a href="#show-bills" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-    </ul>
-</div>
-<div id="show-bills" class="content scaffold-show" role="main">
-    <h1><g:message code="default.show.label" args="[entityName]" /></h1>
-    <g:if test="${flash.message}">
-        <div class="message" role="status">${flash.message}</div>
-    </g:if>
-    <f:display bean="bills" />
-    <g:link class="btn btn-primary pull-right" action="create" id="${billsInstance?.id}"><i class="fas fa-plus-square"></i></g:link>
+<br>
+<div class="card container content scaffold-edit ">
+    <div class="card-body">
+        <h1>Factura</h1>
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group master ${hasErrors(bean: billsInstance, field: 'fecha', 'error')} required">
+                    <label>
+                        Fecha
+                    </label>
+                    <p>${billsInstance?.fecha}</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group master ${hasErrors(bean: billsInstance, field: 'timbrado', 'error')} required">
+                    <label>
+                        Timbrado
+                    </label>
+                    <p> ${billsInstance?.timbrado}<p/>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group"><label for="numero">Número</label>
+                    <div id="numero" class="input-group number-bill-group">
+                        <div class="form-control master ${hasErrors(bean: billsInstance, field: 'num1', 'error')} required">
+                            ${billsInstance?.num1}
+                        </div>
+                        <div class="form-control master ${hasErrors(bean: billsInstance, field: 'num2', 'error')} required">
+                            ${billsInstance?.num2}
+                        </div>
+                        <div class="form-control master ${hasErrors(bean: billsInstance, field: 'num3', 'error')} required">
+                            ${billsInstance?.num3}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col">
+                <div class="form-group master ${hasErrors(bean: billsInstance, field: 'nombre', 'error')} required">
+                    <label>
+                        Nombre
+                    </label>
+                    <p>${billsInstance?.nombre}</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group master">
+                    <label>
+                        Direccion
+                    </label>
+                    <p>
+                        ${billsInstance?.direccion}
+                    </p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group master ${hasErrors(bean: billsInstance, field: 'ruc', 'error')} required">
+                    <label>
+                        RUC
+                    </label>
+                    <p>
+                        ${billsInstance?.ruc}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="master ${hasErrors(bean: billsInstance, field: 'order', 'error')} required" style="display: none">
+            <label for="order">
+                Orden
+                <span class="required-indicator">*</span>
+            </label>
+            <g:select id="order" name="order" maxlength="50" from="${order}" optionKey="id" optionValue="orderNumber" required="" value="${billsInstance?.order?.id}" class="form-control"/>
+        </div>
+        <hr>
+        <fieldset class="form">
+            <br>
+            <h4>Detalles</h4>
+            <g:set var="x" value="${0}"/>
 
-    <table class="table">
+            <div class="table-responsive">
+                <table id="myTable" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Producto</th>
+                        <th>Unitario</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                        <th>10%</th>
+                        <th>5%</th>
+                        <th style="display: none">Exenta</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <g:each in="${billsInstance.billsDetails}" status="i" var="billsDetailsInstance">
+                        <tr class="data">
 
-        <tbody>
-        <th>Total</th> <td>${billsInstance?.total}</td>
-        <tr> <th>Iva10</th><td>${billsInstance?.iva10}</td></tr>
-        <tr> <th>Numero De Orden</th><td>${billsInstance?.order.orderNumber}</td></tr>
+                            <td style="display: none">
+                                <g:textField labelFor="id"    name="id" labelClass="hide"
+                                             inputMaxLength="10" value="${billsDetailsInstance?.id}" />
+                            </td>
+                            <td style="display: none">
+                                <g:textField labelFor="id"    name="exenta" labelClass="hide"
+                                             inputMaxLength="10" value="${billsDetailsInstance?.exenta}" />
+                            </td>
 
-        </tbody>
+                            <th scope="row">${++x}</th>
+                            <td>
+                                ${billsDetailsInstance?.product?.name}
+                            </td>
 
-    </table>
+                            <td>
+                                ${billsDetailsInstance?.product?.cost}
+                            </td>
 
-
-
-
-    <g:form resource="${this.bills}" method="DELETE">
-        <fieldset class="buttons">
-            <g:link class="btn btn-outline-secondary" action="edit" id="${billsInstance?.id}"><i class="fa fa-pencil"></i> </g:link>
-            <g:link class="btn btn-outline-danger" action="delete" id="${billsInstance?.id}"><i class="fa fa-trash-o"></i> </g:link>
-
+                            <td>
+                                ${billsDetailsInstance?.quantity}
+                            </td>
+                            <td>
+                                ${billsDetailsInstance.amount}
+                            </td>
+                            <td>
+                                ${billsDetailsInstance?.iva10}
+                            </td>
+                            <td>
+                                ${billsDetailsInstance?.iva5}
+                            </td>
+                        </tr>
+                    </g:each>
+                    </tbody>
+                </table>
+            </div>
         </fieldset>
-    </g:form>
+        <span class="d-flex justify-content-end master ${hasErrors(bean: billsInstance, field: 'total', 'error')} required">
+            <span>
+                Total:
+            </span>
+            <span class="ml-2">
+                ${billsInstance?.total}
+            </span>
+        </span>
+    </div>
 </div>
-</body>
 </html>
