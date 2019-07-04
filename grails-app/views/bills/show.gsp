@@ -8,6 +8,7 @@
 <br>
 <div class="card container content scaffold-edit ">
     <div class="card-body">
+        <g:link class="btn btn-primary pull-right" action="list"><i class="fas fa fa-book"></i>Lista</g:link>
         <h1>Factura</h1>
         <div class="form-row">
             <div class="col">
