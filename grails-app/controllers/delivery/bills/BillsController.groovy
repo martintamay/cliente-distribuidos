@@ -1,6 +1,7 @@
 package delivery.bills
 
 import com.sma.delivery.beans.bills.BillsB
+import com.sma.delivery.beans.billsDetails.BillsDetailsB
 import com.sma.delivery.service.bills.IBillsService
 import com.sma.delivery.service.billsDetails.IBillsDetailsService
 import com.sma.delivery.service.order.IOrderService
@@ -42,6 +43,7 @@ class BillsController {
         def order=orderService.getById(Integer.valueOf(request.JSON.bill.order))
         def newBills = new BillsB(parametros)
         newBills.setOrder(order)
+        newBills.setBillsDetails(billsDetails(parametros))
         def billsInstance = billsService.save(newBills)
         if (!newBills?.getId()) {
             render(view: "create", model: [billsInstance: billsInstance])
