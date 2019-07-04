@@ -11,15 +11,12 @@ import org.grails.web.json.JSONArray;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OrderB extends BaseBean {
-	@Autowired
-	private IProductsService _productsService;
-	@Autowired
-	private IPromotionsService _promotionsService;
-	@Autowired
-	private IPackagesService _packagesService;
 
 	private static final long serialVersionUID = 1L;
 	private int orderNumber;
@@ -119,14 +116,6 @@ public class OrderB extends BaseBean {
 					detailData.put("comment", detail.getString("comment"));
 
 					OrdersDetailsB detailsB = new OrdersDetailsB(detailData);
-
-					if (detail.containsKey("productId"))
-						detailsB.setProduct(_productsService.getById(detail.getInt("productId")));
-					if (detail.containsKey("packageId"))
-						detailsB.setPackageB(_packagesService.getById(detail.getInt("packageId")));
-					if (detail.containsKey("promotionId"))
-						detailsB.setPromotion(_promotionsService.getById(detail.getInt("promotionId")));
-
 					details.add(detailsB);
 				}
 

@@ -3,10 +3,10 @@ package com.sma.delivery.beans.bills;
 import com.sma.delivery.beans.base.BaseBean;
 import com.sma.delivery.beans.billsDetails.BillsDetailsB;
 import com.sma.delivery.beans.order.OrderB;
-import org.grails.web.json.JSONArray;
 import org.grails.web.json.JSONObject;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 public class BillsB extends BaseBean{
     private static final long serialVersionUID = 1L;

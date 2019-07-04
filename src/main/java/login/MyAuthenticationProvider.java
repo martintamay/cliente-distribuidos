@@ -84,11 +84,9 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 		final Set<RoleB> roles = user.getRoles();
 		System.out.println("Revisando roles");
 		if(roles!=null){
-			System.out.print("Roles del usuario " + user.getEmail() + " ");//TODO: Borrar
 			for (RoleB roleB : roles) {
 
 				list.add(new SimpleGrantedAuthority(roleB.getName()));
-				System.out.print(roleB.getName()+" ");//TODO: Borrar
 			}
 		} else {
 
@@ -98,7 +96,6 @@ class MyAuthenticationProvider implements AuthenticationProvider {
 				for (RoleB roleB : rolesList) {
 
 					list.add(new SimpleGrantedAuthority("ROLE_"+roleB.getName()));
-					System.out.println("Rol>> ROLE_"+roleB.getName());//TODO: Borrar
 				}
 			} catch (ParseException e) {
 				//propoursly empy

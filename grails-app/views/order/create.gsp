@@ -19,21 +19,16 @@
             </g:eachError>
         </ul>
     </g:hasErrors>
-    <div class="container">
+    <div class="container pb-5">
         <div class="card">
             <div class="card-body">
+                <g:link class="btn btn-primary pull-right" action="list"><i class="fas fa fa-book"></i>Lista</g:link>
                 <h3>Crear Orden</h3>
                 <hr>
-                <g:form action="save" >
-                    <fieldset class="form">
-                        <g:render template="form"/>
-                    </fieldset>
-                    <hr>
-                    <fieldset class="btn-group">
-                        <g:submitButton name="create" class="btn btn-primary" value="${message(code: 'default.button.create.label', default: 'Create')}" >Crear</g:submitButton>
-                        <g:link class="btn btn-secondary" action="list">Lista de Ordenes</g:link>
-                    </fieldset>
-                </g:form>
+                <fieldset class="form">
+                    <g:render template="form"/>
+                </fieldset>
+                <hr>
             </div>
         </div>
     </div>

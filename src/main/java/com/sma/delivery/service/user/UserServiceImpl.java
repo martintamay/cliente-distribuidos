@@ -33,17 +33,17 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 	}
 
 	@Override
-	@CachePut(value="delivery-cacheC", key= "'userC_'+#user.id", condition = "#bean.id!=null")
+	@CachePut(value="delivery-cacheC", key= "'userClient_'+#user.id", condition = "#bean.id!=null")
 	public UserB save(UserB bean) throws ParseException {
 		final UserDTO user = convertBeanToDto(bean);
 		final UserDTO dto = _userResource.save(user);
 		final UserB userB = convertDtoToBean(dto);
 		if (bean.getId() == null) {
-			getCacheManager().getCache("delivery-cacheC").put("userC_" + dto.getId(), userB);
+			getCacheManager().getCache("delivery-cacheC").put("userClient_" + dto.getId(), userB);
 		}
 		return userB;
 	}
-	@CacheEvict(value = "delivery-cacheC", key = "'userC_' + #id")
+	@CacheEvict(value = "delivery-cacheC", key = "'userClient_' + #id")
 	public void delete(Integer id){
 		_userResource.delete(id);
 	}
@@ -62,7 +62,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 			final UserB bean = convertDtoToBean(dto);
 			users.add(bean);
 			if (bean.getId() != null) {
-				getCacheManager().getCache("delivery-cacheC").put("usersC_" + bean.getId(), bean);
+				getCacheManager().getCache("delivery-cacheC").put("userClient_" + bean.getId(), bean);
 			}
 		}
 		return users;
@@ -78,7 +78,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 			final UserB bean = convertDtoToBean(dto);
 			users.add(bean);
 			if (bean.getId() != null) {
-				getCacheManager().getCache("delivery-cacheC").put("usersC_" + bean.getId(), bean);
+				getCacheManager().getCache("delivery-cacheC").put("userClient_" + bean.getId(), bean);
 			}
 		}
 		return users;
@@ -123,7 +123,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserB,UserDTO> implements I
 
 
 	@Override
-	@Cacheable(value= "delivery-cacheC", key= "'usersC_'+#id")
+	@Cacheable(value= "delivery-cacheC", key= "'userClient_'+#id")
 	public UserB getById(Integer id)  {
 		final UserDTO dto = _userResource.getById(id);
 		final UserB bean = convertDtoToBean(dto);

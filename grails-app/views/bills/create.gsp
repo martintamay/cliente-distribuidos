@@ -21,6 +21,7 @@
     </g:hasErrors>
     <div class="card container">
         <div class="card-body ">
+            <g:link class="btn btn-primary pull-right" action="list"><i class="fas fa fa-book"></i>Lista</g:link>
             <h3>Nueva Factura</h3>
                 <fieldset class="form" enctype='application/json'>
                     <g:render template="form"/>

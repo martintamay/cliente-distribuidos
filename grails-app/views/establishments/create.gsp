@@ -23,6 +23,7 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
+                <g:link class="btn btn-primary pull-right" action="list"><i class="fas fa fa-book"></i>Lista</g:link>
                 <h3>Crear Establecimiento</h3>
                 <hr>
                 <g:form action="save" >

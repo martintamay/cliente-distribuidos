@@ -10,4 +10,5 @@ public interface IProductsResource extends IBaseResource<ProductDTO> {
     ProductResult find(String text, Integer page);
     ProductResult getAll(Integer page);
     ProductResult getProducts();
+    ProductResult byEstablishment(Integer establishmentId, String text, Integer page);
 }

@@ -11,6 +11,8 @@ import com.sma.delivery.service.establishments.IEstablishmentsService;
 import com.sma.delivery.service.ingredientsProducts.IIngredientsProductsService;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -36,10 +38,14 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
         final ProductDTO dto = _productsResource.save(products);
 
         final ProductsB productsB = convertDtoToBean(dto);
+        if (bean.getId() == null) {
+            getCacheManager().getCache("delivery-cacheC").put("productClients_" + dto.getId(), productsB);
+        }
         return productsB;
     }
 
     @Override
+    @CacheEvict(value = "delivery-cacheC", key = "'productClients_' + #id")
     public void delete(Integer id){
         _productsResource.delete(id);
     }
@@ -54,11 +60,15 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
         for (ProductDTO dto : cList) {
             final ProductsB bean = convertDtoToBean(dto);
             products.add(bean);
+            if (bean.getId() == null) {
+                getCacheManager().getCache("delivery-cacheC").put("productClients_" + dto.getId(), bean);
+            }
         }
         return products;
     }
 
     @Override
+    @Cacheable(value= "delivery-cacheC", key= "'productClients_'+#id")
     public ProductsB getById(Integer id)  {
         final ProductDTO dto = _productsResource.getById(id);
         final ProductsB bean = convertDtoToBean(dto);
@@ -77,7 +87,24 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
             final ProductsB bean = convertDtoToBean(dto);
             products.add(bean);
             if (bean.getId() != null) {
-                getCacheManager().getCache("delivery-cacheC").put("productsC_" + bean.getId(), bean);
+                getCacheManager().getCache("delivery-cacheC").put("productClients_" + bean.getId(), bean);
+            }
+        }
+        return products;
+    }
+
+    @Override
+    public List<ProductsB> byEstablishment(Integer establishmentId, String text, Integer page){
+        final ProductResult result = _productsResource.byEstablishment(establishmentId, text, page);
+        final List<ProductDTO> cList = null == result.getProducts() ? new ArrayList<>()
+                : result.getProducts();
+
+        final List<ProductsB> products = new ArrayList<ProductsB>();
+        for (ProductDTO dto : cList) {
+            final ProductsB bean = convertDtoToBean(dto);
+            products.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("productClients_" + bean.getId(), bean);
             }
         }
         return products;

@@ -1,8 +1,6 @@
 package com.sma.delivery.service.orderDetails;
 
-import com.sma.delivery.beans.billsDetails.BillsDetailsB;
 import com.sma.delivery.beans.orderDetails.OrdersDetailsB;
-import com.sma.delivery.dto.bills_details.BillDetailDTO;
 import com.sma.delivery.dto.order_details.OrderDetailDTO;
 import com.sma.delivery.service.base.IBaseService;
 

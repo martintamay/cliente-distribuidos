@@ -21,6 +21,7 @@
     </g:hasErrors>
     <div class="card">
         <div class="card-body">
+            <g:link class="btn btn-primary pull-right" action="list"><i class="fas fa fa-book"></i>Lista</g:link>
             <h3>Crear Promoción</h3>
             <hr>
             <fieldset class="form">

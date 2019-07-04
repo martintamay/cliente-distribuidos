@@ -8,6 +8,9 @@ import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.bills.IBillsService;
 import com.sma.delivery.service.products.IProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -29,15 +32,19 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
     }
 
     @Override
+    @CachePut(value="delivery-cacheC", key= "'billsDetailsClients_'+#bean.id", condition = "#bean.id!=null")
     public BillsDetailsB save(BillsDetailsB bean)  {
         final BillDetailDTO billsDetails = convertBeanToDto(bean);
         final BillDetailDTO dto = _billsDetailsResource.save(billsDetails);
-
         final BillsDetailsB billsDetailsB = convertDtoToBean(dto);
+        if (bean.getId() == null) {
+            getCacheManager().getCache("delivery-cacheC").put("billsDetailsClients_" + dto.getId(), billsDetailsB);
+        }
         return billsDetailsB;
     }
 
     @Override
+    @CacheEvict(value= "delivery-cacheC", key="'billsDetailsClients_'+#id")
     public void delete(Integer id){
         _billsDetailsResource.delete(id);
     }
@@ -52,10 +59,14 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
         for (BillDetailDTO dto : cList) {
             final BillsDetailsB bean = convertDtoToBean(dto);
             billsDetails.add(bean);
+            if (bean.getId() == null) {
+                getCacheManager().getCache("delivery-cacheC").put("billsDetailsClients_" + dto.getId(), bean);
+            }
         }
         return billsDetails;
     }
     @Override
+    @Cacheable(value="delivery-cacheC", key= "'billsDetailsClients_'+#id")
     public BillsDetailsB getById(Integer id)  {
         final BillDetailDTO dto = _billsDetailsResource.getById(id);
         final BillsDetailsB bean = convertDtoToBean(dto);
@@ -74,6 +85,9 @@ public class BillsDetailsServiceImpl extends BaseServiceImpl<BillsDetailsB, Bill
         for (BillDetailDTO dto : cList) {
             final BillsDetailsB bean = convertDtoToBean(dto);
             bills.add(bean);
+            if (bean.getId() == null) {
+                getCacheManager().getCache("delivery-cacheC").put("billsDetailsClients_" + dto.getId(), bean);
+            }
         }
         return bills;
     }

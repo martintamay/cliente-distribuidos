@@ -4,6 +4,7 @@ import com.sma.delivery.beans.base.BaseBean;
 import com.sma.delivery.beans.bills.BillsB;
 import com.sma.delivery.beans.products.ProductsB;
 import org.apache.commons.lang.StringUtils;
+
 import java.util.Map;
 
 public class BillsDetailsB extends BaseBean{

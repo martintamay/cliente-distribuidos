@@ -66,13 +66,13 @@ class IngredientsController {
         redirect(action: "list")
     }
 
-    def search(String text){
-        def ingredients = ingredientsService.find(text);
-        render(view: "_list", model: [ingredientsInstanceList: ingredients])
+    def search(String text,Integer page) {
+        def ingredients = ingredientsService.find(text, page)
+        def next = ingredientsService.find(text, page + 1).size()
+        render(view: "_list", model: [ingredientsInstanceList: ingredients, next: next, page: page])
     }
     def show(Integer id){
         def ingredientsInstance = ingredientsService.getById(id)
         [ingredientsInstance: ingredientsInstance]
     }
 }
-

@@ -27,7 +27,7 @@ public class IngredientsServiceImpl extends BaseServiceImpl<IngredientsB, Ingred
     }
 
     @Override
-    @CachePut(value="delivery-cacheC", key= "'commentsClients_'+#ingredients.id", condition = "#bean.id!=null")
+    @CachePut(value="delivery-cacheC", key= "'ingredientsClients_'+#ingredients.id", condition = "#bean.id!=null")
     public IngredientsB save(IngredientsB bean)  {
         final IngredientDTO comments = convertBeanToDto(bean);
         final IngredientDTO dto = _ingredientsResource.save(comments);

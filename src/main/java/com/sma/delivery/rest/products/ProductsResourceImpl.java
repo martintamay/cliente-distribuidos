@@ -36,5 +36,11 @@ public class ProductsResourceImpl extends BaseResourceImpl<ProductDTO> implement
     public ProductResult getProducts() {
         return getWebResource().path("/" + 1 + "/" + 200).get(ProductResult.class);
     }
+
+    @Override
+    public ProductResult byEstablishment(Integer establishmentId, String text, Integer page) {
+        final ProductResult result = getWebResource().path("/establishment/"+establishmentId+"/"+page+"/"+3+"/"+text).get(ProductResult.class);
+        return result;
+    }
 }
 

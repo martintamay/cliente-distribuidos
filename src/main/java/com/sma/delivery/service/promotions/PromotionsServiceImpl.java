@@ -11,6 +11,9 @@ import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.productHasPromotions.IProductHasPromotionsService;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,14 +32,19 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
     }
 
     @Override
+    @CachePut(value="delivery-cacheC", key= "'promotionsClients_'+#bean.id", condition = "#bean.id!=null")
     public PromotionsB save(PromotionsB bean)  {
         final PromotionDTO promotions = convertBeanToDto(bean);
         final PromotionDTO dto = promotionsResource.save(promotions);
         final PromotionsB promotionsB = convertDtoToBean(dto);
+        if (bean.getId() == null) {
+            getCacheManager().getCache("delivery-cacheC").put("promotionsClients_" + dto.getId(), promotionsB);
+        }
         return promotionsB;
     }
 
     @Override
+    @CacheEvict(value = "delivery-cacheC", key = "'promotionsClients_' + #id")
     public void delete(Integer id){
         promotionsResource.delete(id);
     }
@@ -52,6 +60,9 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
         for (PromotionDTO dto : cList) {
             final PromotionsB bean = convertDtoToBean(dto);
             promotions.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("promotionsClients_" + bean.getId(), bean);
+            }
         }
         return promotions;
     }
@@ -65,12 +76,13 @@ public class PromotionsServiceImpl extends BaseServiceImpl<PromotionsB, Promotio
             final PromotionsB bean = convertDtoToBean(dto);
             promotion.add(bean);
             if (bean.getId() != null) {
-                getCacheManager().getCache("delivery-cacheC").put("promotionsC_" + bean.getId(), bean);
+                getCacheManager().getCache("delivery-cacheC").put("promotionsClients_" + bean.getId(), bean);
             }
         }
         return promotion;
     }
     @Override
+    @Cacheable(value= "delivery-cacheC", key= "'promotionsClients_'+#id")
     public PromotionsB getById(Integer id)  {
         final PromotionDTO dto = promotionsResource.getById(id);
         final PromotionsB bean = convertDtoToBean(dto);
