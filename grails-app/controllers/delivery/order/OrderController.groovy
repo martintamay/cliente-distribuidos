@@ -101,7 +101,7 @@ class OrderController {
         newOrder.setUser(user)
         newOrder.setDetails(orderDetails(parametros))
         System.out.println("Cant detail: "+newOrder.getDetails().size())
-        orderService.save(newOrder)
+        def orderInstance = orderService.save(newOrder)
         System.out.println("paso el save")
 
         if (!newOrder?.getId()) {
