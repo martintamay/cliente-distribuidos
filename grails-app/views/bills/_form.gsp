@@ -251,7 +251,6 @@
         id++;
     });
     $('#save').click(function () {
-        $('.alert').alert()
         var master = '{"bill":{';
         $('.master').each(function () {
             if($(this).find('input').attr("name") != undefined) {

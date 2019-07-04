@@ -12,6 +12,7 @@ import com.sma.delivery.service.order.IOrderService;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +33,13 @@ public class BillsServiceImpl extends BaseServiceImpl<BillsB, BillDTO> implement
     }
 
     @Override
+    @CachePut(value="delivery-cacheC", key= "'billsClients_'+#bean.id", condition = "#bean.id!=null")
     public BillsB save(BillsB bean)  {
         final BillDTO bills = convertBeanToDto(bean);
         final BillDTO dto = _billsResource.save(bills);
         final BillsB billsB = convertDtoToBean(dto);
         if (bean.getId() == null) {
+            getCacheManager().getCache("delivery-cacheC").put("billsClients_" + dto.getId(), billsB);
         }
         return billsB;
     }

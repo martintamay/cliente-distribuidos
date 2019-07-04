@@ -6,6 +6,8 @@ import com.sma.delivery.dto.establishments.EstablishmentResult;
 import com.sma.delivery.rest.establishments.IEstablishmentsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,14 +25,19 @@ public class EstablishmentsServiceImpl extends BaseServiceImpl<EstablishmentsB, 
     }
 
     @Override
+    @CachePut(value="delivery-cacheC", key= "'establishmentsClients_'+#bean.id", condition = "#bean.id!=null")
     public EstablishmentsB save(EstablishmentsB bean)  {
         final EstablishmentDTO establishments = convertBeanToDto(bean);
         final EstablishmentDTO dto = _establishmentsResources.save(establishments);
         final EstablishmentsB establishmentsB = convertDtoToBean(dto);
+        if (bean.getId() == null) {
+            getCacheManager().getCache("delivery-cacheC").put("establishmentsClients_" + dto.getId(), establishmentsB);
+        }
         return establishmentsB;
     }
 
     @Override
+    @CacheEvict(value = "delivery-cacheC", key = "'establishmentsClients_' + #id")
     public void delete(Integer id) {
         _establishmentsResources.delete(id);
     }
@@ -45,6 +52,9 @@ public class EstablishmentsServiceImpl extends BaseServiceImpl<EstablishmentsB, 
         for (EstablishmentDTO dto : cList) {
             final EstablishmentsB bean = convertDtoToBean(dto);
             establishments.add(bean);
+            if (bean.getId() == null) {
+                getCacheManager().getCache("delivery-cacheC").put("establishmentsClients_" + dto.getId(), bean);
+            }
         }
         return establishments;
     }
@@ -68,7 +78,7 @@ public class EstablishmentsServiceImpl extends BaseServiceImpl<EstablishmentsB, 
             final EstablishmentsB bean = convertDtoToBean(dto);
             users.add(bean);
             if (bean.getId() != null) {
-                getCacheManager().getCache("delivery-cacheC").put("establishmentsC_" + bean.getId(), bean);
+                getCacheManager().getCache("delivery-cacheC").put("establishmentsClients_" + bean.getId(), bean);
             }
         }
         return users;

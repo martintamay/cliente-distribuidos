@@ -45,7 +45,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 	}
 
 	@Override
-	//@CachePut(value="delivery-cacheC", key= "'commentsClients_'+#bean.id", condition = "#bean.id!=null")
+	@CachePut(value="delivery-cacheC", key= "'ordersClients_'+#bean.id", condition = "#bean.id!=null")
 	public OrderB save(OrderB bean)  {
 		final OrderDTO order = convertBeanToDto(bean);
 		final OrderDTO dto = ordersResource.save(order);
@@ -72,7 +72,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 			final OrderB bean = convertDtoToBean(dto);
 			order.add(bean);
 			if (bean.getId() != null) {
-				getCacheManager().getCache("delivery-cacheC").put("ordersC_" + bean.getId(), bean);
+				getCacheManager().getCache("delivery-cacheC").put("ordersClients_" + bean.getId(), bean);
 			}
 		}
 		return order;
