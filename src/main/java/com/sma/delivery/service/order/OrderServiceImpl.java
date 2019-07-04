@@ -1,13 +1,11 @@
 package com.sma.delivery.service.order;
 
-import com.google.gson.JsonObject;
 import com.sma.delivery.beans.order.OrderB;
 import com.sma.delivery.beans.orderDetails.OrdersDetailsB;
 import com.sma.delivery.dto.order_details.OrderDetailDTO;
 import com.sma.delivery.dto.orders.OrderDTO;
 import com.sma.delivery.dto.orders.OrderResult;
 import com.sma.delivery.rest.order.IOrderResource;
-import com.sma.delivery.rest.promotions.IPromotionsResource;
 import com.sma.delivery.service.base.BaseServiceImpl;
 import com.sma.delivery.service.establishments.IEstablishmentsService;
 import com.sma.delivery.service.orderDetails.IOrderDetailService;
@@ -15,6 +13,7 @@ import com.sma.delivery.service.packages.IPackagesService;
 import com.sma.delivery.service.products.IProductsService;
 import com.sma.delivery.service.promotions.IPromotionsService;
 import com.sma.delivery.service.user.IUserService;
+import org.grails.web.json.JSONArray;
 import org.grails.web.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -35,12 +34,18 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 	private IOrderDetailService _orderDetailsService;
 	@Autowired
 	private IUserService _userService;
+	@Autowired
+	private IProductsService productsService;
+	@Autowired
+	private IPromotionsService promotionsService;
+	@Autowired
+	private IPackagesService packagesService;
 
 	public OrderServiceImpl() {
 	}
 
 	@Override
-	@CachePut(value="delivery-cacheC", key= "'commentsClients_'+#bean.id", condition = "#bean.id!=null")
+	//@CachePut(value="delivery-cacheC", key= "'commentsClients_'+#bean.id", condition = "#bean.id!=null")
 	public OrderB save(OrderB bean)  {
 		final OrderDTO order = convertBeanToDto(bean);
 		final OrderDTO dto = ordersResource.save(order);
@@ -110,42 +115,49 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderB, OrderDTO> implemen
 		order.put("state", dto.getState());
 		order.put("totalCost", String.valueOf(dto.getTotalCost()));
 
-		List<JSONObject> details = new ArrayList<>();
-		for (OrderDetailDTO detail : dto.getOrderDetails()){
-			JSONObject jDetail = new JSONObject();
-			if (detail.getId() != null)
-				jDetail.put("id", detail.getId());
-
-			if (detail.getProductId() != null)
-				jDetail.put("productId", detail.getProductId());
-			if (detail.getPackageId() != null)
-				jDetail.put("packageId", detail.getPackageId());
-			if (detail.getPromotionId() != null)
-				jDetail.put("promotionId", detail.getPromotionId());
-
-			jDetail.put("cost", detail.getCost());
-			jDetail.put("quantity", detail.getQuantity());
-			jDetail.put("comment", detail.getComment());
-
-			details.add(jDetail);
-		}
-
 		JSONObject orderParams = new JSONObject();
 		orderParams.put("order", order.toString());
-		orderParams.put("details", details.toString());
 
 		params.put("order", orderParams.toString());
 
 		final OrderB orderB = new OrderB(params);
 		orderB.setUser(_userService.getById(dto.getUserId()));
 		orderB.setEstablishments(_establishmentsService.getById(dto.getEstablishmentId()));
+
+		List<OrdersDetailsB> details = new ArrayList<>();
+		for (OrderDetailDTO detail : dto.getOrderDetails()){
+			Map<String, String> detailData = new HashMap<>();
+			if (detail.getId() != null)
+				detailData.put("id", detail.getId().toString());
+
+
+			detailData.put("cost", Integer.toString(detail.getCost()));
+			detailData.put("quantity", Integer.toString(detail.getQuantity()));
+			detailData.put("comment", detail.getComment());
+
+			OrdersDetailsB detailsB = new OrdersDetailsB(detailData);
+
+			if (detail.getPromotionId() != null)
+				detailsB.setPromotion(promotionsService.getById(detail.getPromotionId()));
+
+			if (detail.getProductId() != null)
+				detailsB.setProduct(productsService.getById(detail.getProductId()));
+
+			if (detail.getPackageId() != null)
+				detailsB.setPackageB(packagesService.getById(detail.getPackageId()));
+
+			details.add(detailsB);
+		}
+
+		orderB.setDetails(details);
 		return orderB;
 	}
 
 	@Override
 	protected OrderDTO convertBeanToDto(OrderB bean) {
 		final OrderDTO dto = new OrderDTO();
-		dto.setId(bean.getId());
+		if (bean.getId() != null)
+			dto.setId(bean.getId());
 		dto.setOrderNumber(bean.getOrderNumber());
 		dto.setAddress(bean.getAddress());
 		dto.setContactNumber(bean.getContactNumber());

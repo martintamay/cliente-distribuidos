@@ -84,6 +84,23 @@ public class ProductsServiceImpl extends BaseServiceImpl<ProductsB, ProductDTO> 
     }
 
     @Override
+    public List<ProductsB> byEstablishment(Integer establishmentId, String text, Integer page){
+        final ProductResult result = _productsResource.byEstablishment(establishmentId, text, page);
+        final List<ProductDTO> cList = null == result.getProducts() ? new ArrayList<>()
+                : result.getProducts();
+
+        final List<ProductsB> products = new ArrayList<ProductsB>();
+        for (ProductDTO dto : cList) {
+            final ProductsB bean = convertDtoToBean(dto);
+            products.add(bean);
+            if (bean.getId() != null) {
+                getCacheManager().getCache("delivery-cacheC").put("productsC_" + bean.getId(), bean);
+            }
+        }
+        return products;
+    }
+
+    @Override
     protected ProductsB convertDtoToBean(ProductDTO dto)  {
         final Map<String, String> params = new HashMap<String, String>();
         JSONObject products = new JSONObject();

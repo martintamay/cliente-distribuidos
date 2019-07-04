@@ -92,50 +92,61 @@
             </thead>
 
             <g:set var="x" value="${0}"/>
-            <g:each in="${orderInstance.details}" status="i" var="billsDetailsInstance">
-                <tr id="row-${++x}" class="data">
-                    <g:hiddenField labelFor="id" name="id"
-                                 inputMaxLength="10" value="${billsDetailsInstance?.id}" />
+            <tbody>
+                <g:each in="${orderInstance.details}" status="i" var="orderDetailsInstance">
+                    <tr id="row-${++x}" class="data">
+                        <g:hiddenField labelFor="id" name="id"
+                                     inputMaxLength="10" value="${orderDetailsInstance?.id}" />
 
 
-                    <th scope="row">${x}</th>
-                    <td class="p-1 m-1">
-                        <g:if test="${ billsDetailsInstance.product != null }">
-                            <input value="${billsDetailsInstance.product.name}" type="text" autocomplete="off" name="producto" placeholder="Producto" class="form-control m-0 p-0"/>
-                            <g:set var="cost" value="${ billsDetailsInstance.product.cost }" />
-                            <g:hiddenField name="productId" value="${billsDetailsInstance.product.id}" />
-                        </g:if>
-                        <g:elseif test="${ billsDetailsInstance.promotion != null }">
-                            <input value="${billsDetailsInstance.promotion.name}" type="text" autocomplete="off" name="promotion" placeholder="Promotion" class="form-control m-0 p-0"/>
-                            <g:set var="cost" value="0" />
-                            <g:hiddenField name="promotionId" value="${billsDetailsInstance.promotion.id}" />
-                        </g:elseif>
-                        <g:elseif test="${ billsDetailsInstance.packageB != null }">
-                            <input value="${billsDetailsInstance.packageB.name}" type="text" autocomplete="off" name="package" placeholder="Package" class="form-control m-0 p-0"/>
-                            <g:set var="cost" value="${ billsDetailsInstance.packageB.cost }" />
-                            <g:hiddenField name="packageId" value="${billsDetailsInstance.packageB.id}" />
-                        </g:elseif>
-                    </td>
-                    <td class="cost-col">
-                        <g:formatNumber number="${cost}" type="number" maxFractionDigits="0" />Gs
-                        <g:hiddenField name="cost" value="${cost}" />
-                    </td>
-                    <td class="p-1 m-1">
-                        <input type="number" autocomplete="off" rowId="${x}" max="100" min="1" value="${billsDetailsInstance.quantity}" placeholder="Cantidad" name="quantity" class="form-control cant-input m-0 p-0">
-                    </td>
-                    <td class="total-col">
-                        <g:formatNumber number="${billsDetailsInstance.quantity * billsDetailsInstance.product.cost}" type="number" maxFractionDigits="0" />Gs
-                    </td>
-                    <td>
-                        <input value="${billsDetailsInstance.comment}" name="comment" placeholder="Comentario" class="form-control m-0 p-0"/>
-                    </td>
-                    <td>
-                        <button id="${billsDetailsInstance?.id}" class="btn btn-outline-warning delete" type="button">
-                            <i class="fa fa-remove"></i>
-                        </button>
-                    </td>
-                </tr>
-            </g:each>
+                        <th scope="row">${x}</th>
+                        <td class="p-1 m-1">
+                            <g:if test="${ orderDetailsInstance.product != null }">
+                                <select value="1:${orderDetailsInstance.product.id}" type="text" autocomplete="off"
+                                       name="option" placeholder="Escriba para buscar"
+                                        class="select-box form-control m-0 p-0" onchange="productSelected">
+                                    <option cost="${orderDetailsInstance.product.cost}" value="1:${orderDetailsInstance.product.id}">${orderDetailsInstance.product.name}</option>
+                                </select>
+                                <g:hiddenField id="option" name="productId" value="${orderDetailsInstance.product.id}" />
+                            </g:if>
+                            <g:elseif test="${ orderDetailsInstance.promotion != null }">
+                                <select value="${orderDetailsInstance.promotion.id}" type="text" autocomplete="off"
+                                       name="option" placeholder="Escriba para buscar"
+                                       class="select-box form-control m-0 p-0">
+                                    <option cost="0" value="1:${orderDetailsInstance.promotion.id}">${orderDetailsInstance.promotion.name}</option>
+                                </select>
+                                <g:hiddenField id="option" name="promotionId" value="${orderDetailsInstance.promotion.id}" />
+                            </g:elseif>
+                            <g:elseif test="${ orderDetailsInstance.packageB != null }">
+                                <select value="${orderDetailsInstance.packageB.name}" type="text"
+                                       autocomplete="off" name="option" placeholder="Escriba para buscar"
+                                       class="select-box form-control m-0 p-0">
+                                    <option cost="${orderDetailsInstance.packageB.cost}" value="1:${orderDetailsInstance.packageB.id}">${orderDetailsInstance.packageB.name}</option>
+                                </select>
+                                <g:hiddenField id="option" name="packageId" value="${orderDetailsInstance.packageB.id}" />
+                            </g:elseif>
+                        </td>
+                        <td class="cost-col">
+                            <label><g:formatNumber number="${orderDetailsInstance.cost}" type="number" maxFractionDigits="0" />Gs</label>
+                            <g:hiddenField name="cost" value="${orderDetailsInstance.cost}" autocomplete="off" />
+                        </td>
+                        <td class="p-1 m-1">
+                            <input type="number" autocomplete="off" rowId="${x}" max="100" min="1" value="${orderDetailsInstance.quantity}" placeholder="Cantidad" name="quantity" class="form-control cant-input m-0 p-0">
+                        </td>
+                        <td class="total-col">
+                            <g:formatNumber number="${orderDetailsInstance.quantity * orderDetailsInstance.cost}" type="number" maxFractionDigits="0" />Gs
+                        </td>
+                        <td>
+                            <input value="${orderDetailsInstance.comment}" name="comment" placeholder="Comentario" class="form-control m-0 p-0"/>
+                        </td>
+                        <td>
+                            <button id="${orderDetailsInstance?.id}" class="btn btn-outline-warning delete" type="button">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </g:each>
+            </tbody>
         </table>
     </div>
 </fieldset>
@@ -143,8 +154,74 @@
 
 <br>
 <button id="save" class="btn btn-primary">Guardar</button>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <g:javascript>
+    $(document).ready(function() {
+        initChosen();
+        setTotales();
+        setDeletes();
+    });
+
+    function productSelected(event) {
+        var types = {"1": "productId", "2": "promotionId", "3": "packageId"};
+        var  target = $(event.target);
+        var selected = target.val().split(":");
+        var field = target.parent().find("#option")[0];
+        field.name = types[selected[0]];
+        field.value = selected[1];
+
+        //se trae el precio
+        var precio = "";
+        $(".select-box").find("option").each(function(ind, ele) {
+            if (ele.value == target.val()){
+                precio = ele.attributes.cost.value;
+            }
+        });
+
+        var colCost = $(event.target).parentsUntil("tbody").find(".cost-col");
+        var cant = $(event.target).parentsUntil("tbody").find(".cant-input")[0];
+        var totalCol = $(event.target).parentsUntil("tbody").find(".total-col")[0];
+        console.log("colCost", colCost);
+        colCost.find("label")[0].innerText = format(precio)+"Gs";
+        colCost.find("input")[0].value = precio;
+        totalCol.innerHTML = format(cant.valueAsNumber * precio)+"Gs";
+        setTotales()
+    }
+
+    function initChosen(){
+        $(".select-box").chosen();
+        $('.chosen-search input').autocomplete({
+            source: function( request, response ) {
+                $.ajax({
+                    url: "/order/options?q="+request.term,
+                    dataType: "json",
+                    success: function( data ) {
+                        var selectBox = $('.chosen-search input:focus').parentsUntil("tr").find('.select-box');
+                        var cambio = false;
+                        if(data.length > 0){
+                            response( $.map( data, function( item ) {
+                                var yaesta = false;
+                                selectBox.find("option").each(function(ind, ele) {
+                                    if (ele.value == item.value){
+                                        yaesta = true;
+                                        console.log("ya estaba");
+                                    }
+                                });
+                                if (!yaesta){
+                                    selectBox.append('<option cost="'+item.cost+'" value="'+item.value+'">' + item.text + '</option>');
+                                    cambio = true;
+                                }
+                            }));
+                        }
+
+                        if (cambio)
+                            selectBox.trigger("chosen:updated");
+                    }
+                });
+            }
+        });
+        $(".select-box").chosen().change(productSelected);
+    }
+
     function setDeletes(){
         $(".delete").click(function() {
             $(this).parent().parent().remove();
@@ -162,7 +239,6 @@
             }
         })
     }
-    setDeletes();
 
     // fuente: https://tydw.wordpress.com/2008/07/03/javascript-como-formatear-un-numero-con-separador-de-miles/
     function format(num) {
@@ -176,32 +252,38 @@
         $(".cant-input").each(function ( pos, td ){
             var rowId = "#row-"+td.attributes["rowId"].value;
             td.onchange = function(evt) {
-                var sCosto = $(rowId+" .cost-col")[0].innerHTML.trim();
-                var cost = parseInt(sCosto.substr(0, sCosto.length - 2).replace(".", ""));
-                $(rowId+" .total-col")[0].innerHTML = format(cost*evt.target.valueAsNumber)+'Gs';
+                var colCost = $(evt.target).parentsUntil("tbody").find(".cost-col input")[0];
+                var cant = $(evt.target).parentsUntil("tbody").find(".cant-input")[0];
+                var totalCol = $(evt.target).parentsUntil("tbody").find(".total-col")[0];
+                console.log("cost", colCost);
+                console.log("cant", cant);
+                console.log("total", totalCol);
+                totalCol.innerHTML = format(parseInt(cant.value) * parseInt(colCost.value))+"Gs";
             };
         });
     }
-    setTotales();
 
     $('#add').click(function () {
         var rowCount = $('#detail-table tr').length;
         var campos = '' +
             '<tr id="row-' + rowCount + '" class="data">'+
-            '    <input type="hidden" name="id" value="none" />'+
             '    <th scope="row">' + rowCount + '</th>'+
             '    <td class="p-1 m-1">'+
-            '        <input value="" name="producto" placeholder="Producto" class="form-control m-0 p-0"/>'+
+            '        <select value="" type="text" autocomplete="off" name="option" placeholder="Escriba para buscar" class="select-box form-control m-0 p-0">'+
+            '           <option value="" disabled>Escriba para buscar un producto</option> '+
+            '        </select>'+
+            '        <input type="hidden" name="productId" value="" id="option" />'+
             '    </td>'+
             '    <td class="cost-col">'+
+            '        <label></label><input  type="hidden" value="0" name="cost" />'+
             '    </td>'+
             '    <td class="p-1 m-1">'+
-            '        <input type="number" rowId="' + rowCount + '" max="100" min="1" value="1" placeholder="Cantidad" class="form-control cant-input m-0 p-0">'+
+            '        <input type="number" name="quantity" rowId="' + rowCount + '" max="100" min="1" value="1" placeholder="Cantidad" class="form-control cant-input m-0 p-0">'+
             '    </td>'+
             '    <td class="total-col">'+
             '   </td>'+
             '   <td>'+
-            '       <input value="" name="comentario" placeholder="Comentario" class="form-control m-0 p-0"/>'+
+            '       <input value="" name="comment" placeholder="Comentario" class="form-control m-0 p-0"/>'+
             '    </td>'+
             '    <td>'+
             '        <button class="btn btn-outline-warning delete" type="button">'+
@@ -211,6 +293,7 @@
             '</tr>';
         console.log("campo agregado");
         $('tbody').append(campos);
+        initChosen();
         setDeletes();
         setTotales();
     });

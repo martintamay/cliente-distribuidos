@@ -82,12 +82,14 @@ public class OrderDetailServiceImpl extends BaseServiceImpl<OrdersDetailsB, Orde
 		dto.setQuantity(bean.getQuantity());
 		if (bean.getOrder() != null)
 			dto.setOrderId(bean.getOrder().getId());
-		ProductsB product = bean.getProduct();
-		dto.setProductId(product != null ? product.getId() : 0);
-		PromotionsB promotion = bean.getPromotion();
-		dto.setPromotionId(promotion != null ? promotion.getId() : 0);
-		PackagesB packageB = bean.getPackageB();
-		dto.setPackageId(packageB != null ? packageB.getId() : 0);
+		if (bean.getProduct() != null){
+			System.out.println("product in bean to dto");
+			dto.setProductId(bean.getProduct().getId());
+		}
+		if (bean.getPromotion() != null)
+			dto.setPromotionId(bean.getPromotion().getId());
+		if (bean.getPackageB() != null)
+			dto.setPackageId(bean.getPackageB().getId());
 		return dto;
 	}
 

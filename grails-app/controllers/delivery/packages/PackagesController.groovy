@@ -1,11 +1,11 @@
 package delivery.packages
 
 import com.sma.delivery.beans.packages.PackagesB
+import com.sma.delivery.service.packages.IPackagesService
 import com.sma.delivery.service.productHasPackages.IProductHasPackagesService
 import com.sma.delivery.service.products.IProductsService
-import com.sma.delivery.service.packages.IPackagesService
 import delivery.productHasPackages.ProductHasPackages
-import delivery.products.Products
+
 class PackagesController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
 
@@ -23,11 +23,11 @@ class PackagesController {
         def packages
         def page = null == params['id'] ? 1 : Integer.valueOf(params['id'])
         if (params['text'] != null) {
-            packages = packagesService.find(params['text']);
+            packages = packagesService.find(params['text'])
         } else {
             packages = packagesService.getAll(page)
         }
-        def next = packagesService.getAll(page + 1).size();
+        def next = packagesService.getAll(page + 1).size()
         [packagesInstanceList: packages, packagesInstanceTotal: packages?.size(), page: page, next: next]
     }
 
@@ -55,7 +55,7 @@ class PackagesController {
 
     def edit(Integer id) {
         def packagesInstance = packagesService.getById(id)
-        Map <String,String> p = new HashMap<>();
+        Map <String,String> p = new HashMap<>()
         p.put("packagesId", id.toString())
         packagesInstance.setProductHasPromotions(productHasPackagesService.getAllBy(p))
         if (!packagesInstance) {
@@ -72,11 +72,11 @@ class PackagesController {
     }
 
     def update(Long id, Long version) {
-        def parametros = new HashMap<String,String>();
-        parametros.put("packages", request.JSON.toString());
-        def newPackages = new PackagesB(parametros);
-        newPackages.setId(Integer.valueOf(params['id']));
-        packagesService.save(newPackages);
+        def parametros = new HashMap<String,String>()
+        parametros.put("packages", request.JSON.toString())
+        def newPackages = new PackagesB(parametros)
+        newPackages.setId(Integer.valueOf(params['id']))
+        packagesService.save(newPackages)
         redirect(action: "list")
     }
 
@@ -86,7 +86,7 @@ class PackagesController {
     }
 
     def search(String text) {
-        def packages = packagesService.find(text);
+        def packages = packagesService.find(text)
         render(view: "_list", model: [packagesInstanceList: packages])
     }
 

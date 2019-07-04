@@ -6,6 +6,8 @@ import com.sma.delivery.service.ingredients.IIngredientsService
 import com.sma.delivery.service.ingredientsProducts.IIngredientsProductsService
 import com.sma.delivery.service.products.IProductsService
 import delivery.ingredientsProducts.IngredientsProducts
+import org.grails.web.json.JSONArray
+import org.grails.web.json.JSONObject
 
 class ProductsController {
     static allowedMethods = [save: "POST", update: "POST", delete: "POST", delete: "DELETE", delete: "GET"]
@@ -24,6 +26,7 @@ class ProductsController {
         products = productsService.getAll(page)
         def next = productsService.getAll(page+1).size()
         [productsInstanceList: products, productsInstanceTotal: products?.size(),page: page,next:next]
+
     }
 
     def create() {
