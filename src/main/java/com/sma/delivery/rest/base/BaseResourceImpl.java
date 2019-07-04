@@ -4,18 +4,29 @@ import com.sma.delivery.dto.base.BaseDTO;
 import com.sma.delivery.service.auth.IAuthService;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+import grails.config.Config;
+import grails.core.support.GrailsConfigurationAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class BaseResourceImpl<DTO extends BaseDTO> implements IBaseResource<DTO> {
+public abstract class BaseResourceImpl<DTO extends BaseDTO> implements IBaseResource<DTO>, GrailsConfigurationAware {
     private final String _resourcePath;
     private final Class<DTO> _dtoClass;
     private final ConfiguredWebResource _webResource;
 
-    private static final String BASE_URL = "http://localhost:28080/delivery/rest";
+    //private static final String BASE_URL = "http://localhost:28080/delivery/rest";
+    private static String BASE_URL;
+    public static String TOKEN;
 
 
     @Autowired
     private IAuthService authService;
+
+    @Override
+    public void setConfiguration(Config co) {
+        BASE_URL = co.getRequiredProperty("api.base_url");
+        TOKEN = co.getRequiredProperty("api.token");
+        System.out.println("api url " + BASE_URL);
+    }
 
     public BaseResourceImpl(Class<DTO> dtoClass, String resourcePath) {
         _dtoClass = dtoClass;

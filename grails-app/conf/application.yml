@@ -138,3 +138,8 @@ environments:
 grails:
     cache:
         enabled: false
+        
+---
+api:
+    base_url: "http://localhost:28080/delivery/rest"
+    token: "C661444F7C361A3C615E54D222E3AC1C5534E86B"

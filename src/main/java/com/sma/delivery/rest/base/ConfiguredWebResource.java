@@ -1,12 +1,11 @@
 package com.sma.delivery.rest.base;
 
+import com.sma.delivery.rest.user.UserResourceImpl;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.ClientFilter;
 
 public class ConfiguredWebResource {
     private final WebResource _webResource;
-    private static final String TOKEN = "C661444F7C361A3C615E54D222E3AC1C5534E86B";
-
     public ConfiguredWebResource(WebResource wr){
         _webResource = wr;
     }
@@ -48,7 +47,7 @@ public class ConfiguredWebResource {
     }
 
     public WebResource.Builder getBuilder(){
-        return _webResource.header("token", TOKEN);
+        return _webResource.header("token", BaseResourceImpl.TOKEN);
     }
 
     public WebResource getWebResource(){
