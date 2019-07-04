@@ -14,7 +14,7 @@ public class BillsResourceImpl extends BaseResourceImpl<BillDTO> implements IBil
 
     @Override
     public BillResult getAll(Integer page) {
-        final BillResult result = getWebResource().path("/"+page+"/"+20).get(BillResult.class);
+        final BillResult result = getWebResource().path("/"+page+"/"+5).get(BillResult.class);
         return result;
     }
 

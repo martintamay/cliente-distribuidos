@@ -15,7 +15,7 @@ public class PackagesResourceImpl extends BaseResourceImpl<PackageDTO> implement
     @Override
     public PackageResult getAll(Integer page) {
         setWebResourceBasicAuthFilter();
-        final PackageResult result = getWebResource().path("/"+page+"/"+20).get(PackageResult.class);
+        final PackageResult result = getWebResource().path("/"+page+"/"+5).get(PackageResult.class);
         return result;
     }
 

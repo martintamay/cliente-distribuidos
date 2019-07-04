@@ -14,7 +14,7 @@ public class IngredientsResourceImpl extends BaseResourceImpl<IngredientDTO> imp
 
     @Override
     public IngredientResult getAll(Integer page) {
-        final IngredientResult result = getWebResource().path("/"+page+"/"+20).get(IngredientResult.class);
+        final IngredientResult result = getWebResource().path("/"+page+"/"+5).get(IngredientResult.class);
         return result;
     }
 

@@ -16,7 +16,7 @@ public class BillsDetailsResourceImpl extends BaseResourceImpl<BillDetailDTO> im
 
     @Override
     public BillDetailResult getAll(Integer page) {
-        final BillDetailResult result = getWebResource().path("/"+page+"/"+20).get(BillDetailResult.class);
+        final BillDetailResult result = getWebResource().path("/"+page+"/"+5).get(BillDetailResult.class);
         return result;
     }
 

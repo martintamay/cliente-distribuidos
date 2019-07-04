@@ -14,7 +14,7 @@ public class CommentsResourceImpl extends BaseResourceImpl<CommentDTO> implement
 
     @Override
     public CommentResult getAll(Integer page) {
-        final CommentResult result = getWebResource().path("/"+page+"/"+20).get(CommentResult.class);
+        final CommentResult result = getWebResource().path("/"+page+"/"+5).get(CommentResult.class);
         return result;
     }
 

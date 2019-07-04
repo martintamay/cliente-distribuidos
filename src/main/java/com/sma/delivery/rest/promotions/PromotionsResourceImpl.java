@@ -14,7 +14,7 @@ public class PromotionsResourceImpl extends BaseResourceImpl<PromotionDTO> imple
     @Override
     public PromotionResult getAll(Integer page) {
         setWebResourceBasicAuthFilter();
-        final PromotionResult result = getWebResource().path("/"+page+"/"+20).get(PromotionResult.class);
+        final PromotionResult result = getWebResource().path("/"+page+"/"+5).get(PromotionResult.class);
         return result;
     }
 

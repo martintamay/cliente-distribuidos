@@ -14,7 +14,7 @@ public class EstablishmentsResourceImpl extends BaseResourceImpl<EstablishmentDT
 
     @Override
     public EstablishmentResult getAll(Integer page) {
-        final EstablishmentResult result = getWebResource().path("/"+page+"/"+20).get(EstablishmentResult.class);
+        final EstablishmentResult result = getWebResource().path("/"+page+"/"+5).get(EstablishmentResult.class);
         return result;
     }
 

@@ -15,7 +15,7 @@ public class OrderResourceImpl extends BaseResourceImpl<OrderDTO> implements IOr
 	@Override
 	public OrderResult getAll(Integer page) {
 		setWebResourceBasicAuthFilter();
-		final OrderResult result = getWebResource().path("/"+page+"/"+20).get(OrderResult.class);
+		final OrderResult result = getWebResource().path("/"+page+"/"+5).get(OrderResult.class);
 		return result;
 	}
 
